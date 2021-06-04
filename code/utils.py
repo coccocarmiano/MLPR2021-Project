@@ -1,14 +1,25 @@
 import numpy as np
-import pandas as pd
-from matplotlib import pyplot as plt
+import matplotlib.patches as ptc
+
 
 train_data_file = '../data/Train.txt'
+test_data_file = '../data/Test.txt'
 nfeats = 11
+
+green = '#00b330'
+"""
+The color green choose for plotting
+"""
+
+red = '#b30000'
+"""
+The color red choose for plotting
+"""
+
 
 def load_train_data():
     '''
-    Returns data from `Train.txt` organized as column samples.
-    Labels > 6 are converted to 1.
+    Returns the data from `Train.txt` organized as column samples. Last field is label.
     '''
     train_file = open(train_data_file, 'r')
     lines = [line.strip() for line in train_file]
@@ -22,27 +33,26 @@ def load_train_data():
     matrix = np.array(splits).T
     return matrix
 
+
 def PCA(dataset, stats=False):
     '''
-    Params:
+    Execute eigenvalue decompsition on `dataset`.
 
-    `dataset` Dataset to analyze.
-    Assumes last feature to be label.
+    Parameters:
+    
+    `dataset`: numpy matrix of column samples. Assumes last feat to label.
 
-    `stats` Default `False`. If true prints some stats about
-    the dataset eigenvalues.
+    `stats` (opt): Print some stats like information retention and (soon) correlation matrix.
 
     Returns:
-
-    `w` Descending order sorted egienvalues
-
-    `v` Corresponding normalized eigenvectors
+    
+    The (already sorted) array `w` of eigenvalues and `v` of eigenvectors.
     '''
 
     feats = dataset[:-1, :]
 
     f_means = feats.mean(axis=1).reshape((11, 1))
-    cent = feats -f_means
+    cent = feats - f_means
     mult = cent.dot(cent.T) / dataset.shape[1]
     w, v = np.linalg.eigh(mult)
     w, v = w[::-1], v[:, ::-1]
@@ -52,6 +62,14 @@ def PCA(dataset, stats=False):
             print(f"{i+1} Features: {sum(w[:i+1])/wsum*100:.4f}%")
         print("Eigenvalues: ", w)
 
-        # Todo: Covariance to Correlation 
+        # Todo: Covariance to Correlation
     return w, v
-    
+
+
+def get_patches():
+    '''
+    Returns: patches list to be passed to either `legend` or `figlegend` (to the `handles` attribute).
+    '''
+    bpatch = ptc.Patch(color=red, label="Bad Wine")
+    gpatch = ptc.Patch(color=green, label="Good Wine")
+    return [gpatch, bpatch]

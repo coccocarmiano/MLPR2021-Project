@@ -1,5 +1,5 @@
 import numpy as np
-from utils import load_train_data, PCA
+from utils import load_train_data, PCA, get_patches, green, red
 from matplotlib import pyplot as plt
 
 fout = '../img/scatter.jpg'
@@ -17,17 +17,25 @@ if __name__ == '__main__':
     x = pdata[0, :]
     y = pdata[1, :]
 
+    plt.figure(figsize=(12, 8))
+
     plt.subplot(2, 1, 1)
-    plt.scatter(x[labels == 1], y[labels == 1], alpha=0.3, color='blue')
-    plt.scatter(x[labels == 0], y[labels == 0], alpha=0.3, color='red')
+    plt.scatter(x[labels == 1], y[labels == 1], alpha=0.3, color=green)
+    plt.scatter(x[labels == 0], y[labels == 0], alpha=0.3, color=red)
+    plt.xticks([], [])
+    plt.yticks([], [])
     plt.title("Scatter of the 2 Most Discriminant Features")
 
     w, v = w[:-1], v[:, -1]
     pdata = v.T.dot(cdata)
+
     plt.subplot(2, 1, 2)
-    plt.hist(np.sort(pdata[labels==1]), bins=70, alpha=0.8, color='blue')
-    plt.hist(np.sort(pdata[labels==0]), bins=70, alpha=0.8, color='red')
+    plt.hist(np.sort(pdata[labels == 1]), bins=70, alpha=0.8, color=green)
+    plt.hist(np.sort(pdata[labels == 0]), bins=70, alpha=0.8, color=red)
+    plt.xticks([], [])
+    plt.yticks([], [])
+
     plt.title("Histogram of the Most Discriminating Feature")
-    # plt.show()
-    # Todo: add legend
+    plt.figlegend(handles=get_patches(), loc='upper right')
     plt.savefig(fout, format='jpg')
+    # plt.show()
