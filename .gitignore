@@ -11,3 +11,5 @@ main.ent
 main.out
 main.run.xml
 main-blx.bib
+*.log
+*.gz
