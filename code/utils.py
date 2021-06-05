@@ -73,3 +73,9 @@ def get_patches():
     bpatch = ptc.Patch(color=red, label="Bad Wine")
     gpatch = ptc.Patch(color=green, label="Good Wine")
     return [gpatch, bpatch]
+
+def mcol(v):
+    '''
+    Reshape a 1D array to a column vector with same dimension
+    '''
+    return v.reshape((v.shape[0], 1))
