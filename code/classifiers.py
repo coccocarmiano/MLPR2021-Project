@@ -29,12 +29,41 @@ def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tu
     Returns a tuple with the scores and the predictions
     '''
     data = evaluation_dataset[:-1]
-    scores = np.array([np.dot(w.T, x)+b for x in data.T])
+    scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)  
     return (scores, predictions)
 
-def SVM_lin():
-    pass
+def SVM_lin(dataset: np.ndarray, K: float, C: float) -> tuple[np.ndarray, float]:
+    '''
+    Computes the w vector and b value for linear SVM 
+    '''
+    data, labels = dataset[:-1], dataset[-1]
+
+    z = (2*labels - 1).reshape(1, labels.shape[0]) # zi = +-1, 1 if belongs to class Ht, -1 if belongs to class Hf
+    
+    hat_data = np.vstack([data, K*np.ones(data.shape[1])])
+
+    hat_H = np.dot(z.T*hat_data.T, z*hat_data)
+
+    alphas = np.ones((hat_data.shape[1], 1))/2
+
+    boundaries = [(.0, C) for _ in alphas]
+
+    def grad_hat_Ld(alphas, hat_H):
+        return (np.dot(hat_H, alphas) - 1)
+
+    def hat_Ld(alphas, hat_H):
+        return  -(-1/2*np.dot(alphas.T, np.dot(hat_H, alphas)) + np.dot(alphas.T, np.ones(alphas.shape[0]))).item()
+
+    best_alphas, _, _ = scipy.optimize.fmin_l_bfgs_b(hat_Ld, alphas*C, fprime=grad_hat_Ld, args=(hat_H,), bounds=boundaries, factr=0.0)
+    w = (best_alphas*z*hat_data).sum(axis=1)
+    return w[:-1], K*w[-1]
+
+def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray]:
+    data = evaluation_dataset[:-1]
+    scores = np.dot(w.T, data) + b
+    predictions = (scores > 0).astype(int)
+    return (scores, predictions)
 
 def SVM_kernel(dataset, kernel=None):
     pass
