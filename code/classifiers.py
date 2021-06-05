@@ -60,6 +60,10 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> tuple[np.ndarray, float]
     return w[:-1], K*w[-1]
 
 def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray]:
+    '''
+    Computes the scores for an evaluation dataset, given the model parameters.
+    Returns a tuple with the scores and the predictions
+    '''
     data = evaluation_dataset[:-1]
     scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)
