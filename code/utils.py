@@ -66,7 +66,7 @@ def PCA(dataset, stats=False):
     return w, v
 
 
-def get_patches():
+def get_patches() -> list[ptc.Patch]:
     '''
     Returns: patches list to be passed to either `legend` or `figlegend` (to the `handles` attribute).
     '''
