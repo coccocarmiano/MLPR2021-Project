@@ -1,6 +1,6 @@
 # Roadmap
 
-* Linear SVM (primal loss)
-* Kernel SVM (primal and dual loss)
+* Linear SVM
+* Kernel SVM
 * K-fold
 * DCF and min DCF
