@@ -106,7 +106,6 @@ def kfold(dataset : np.ndarray, n : int=5) -> tuple[list[np.ndarray], list[tuple
         train, test = splits[sel != i], splits[sel == i]
         train = np.concatenate(train[:], axis=1)
         test = np.concatenate(test[:], axis=1)
-        print(train.shape, test.shape)
         folds.append((train, test))
     splits = [split for split in splits]
     return splits, folds
