@@ -2,3 +2,12 @@
 __pycache__/
 *.pyc
 .venv/
+main.aux
+main.log
+main.toc
+main.bbl
+main.blg
+main.ent
+main.out
+main.run.xml
+main-blx.bib
