@@ -73,3 +73,40 @@ def get_patches():
     bpatch = ptc.Patch(color=red, label="Bad Wine")
     gpatch = ptc.Patch(color=green, label="Good Wine")
     return [gpatch, bpatch]
+
+
+def kfold(dataset : np.ndarray, n : int=5) -> tuple[list[np.ndarray], list[tuple[np.ndarray, np.ndarray]]]:
+    '''
+    Splits `dataset` in `n` folds. Returns a tuple.
+
+    First list contains `n` evenly divided subsets of `dataset`.
+
+    Second list contains `n` tuples. Each tuple has `n-1` folds
+    of samples from `dataset` and the the remaining `1`.
+    '''
+    if (len(dataset.shape) > 2):
+        print("Error: Wrong Dataset Shape")
+        exit()
+    
+    _, c = dataset.shape
+    frac = c / n
+    splits = []
+
+    for i in range(n):
+        a = int(i*frac)
+        b = int((i+1)*frac)
+        fold = dataset[:, a:b]
+        splits.append(fold)
+    
+    splits = np.array(splits)
+
+    folds = []
+    sel = np.arange(n)
+    for i in range(n):
+        train, test = splits[sel != i], splits[sel == i]
+        train = np.concatenate(train[:], axis=1)
+        test = np.concatenate(test[:], axis=1)
+        print(train.shape, test.shape)
+        folds.append((train, test))
+    splits = [split for split in splits]
+    return splits, folds
