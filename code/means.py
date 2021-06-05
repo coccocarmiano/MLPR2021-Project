@@ -1,4 +1,4 @@
-from utils import load_train_data
+from utils import load_train_data, get_patches, green, red
 from matplotlib import pyplot as plt
 import matplotlib.patches as ptc
 import numpy as np
@@ -30,20 +30,18 @@ def visualize(data):
         fvarT = fT.std()
         fvarF = fF.std()
 
-        plt.bar(i-0.05, fmeanT, yerr=fvarT, width=0.1, color='blue')
-        plt.bar(i+0.05, fmeanF, yerr=fvarF, width=0.1, color='red')
+        plt.bar(i-0.05, fmeanT, yerr=fvarT, width=0.1, density=True, color=green)
+        plt.bar(i+0.05, fmeanF, yerr=fvarF, width=0.1, density=True, color=red)
 
     plt.suptitle("(Normalized) Feature Mean and STD")
-    redpatch = ptc.Patch(color="red", label="$Quality_{wine} < 6$")
-    bluepatch = ptc.Patch(color="blue", label="$Quality_{wine} > 6$")
-    plt.figlegend(handles=[redpatch, bluepatch],
+    plt.figlegend(handles=get_patches(),
                   handlelength=1, loc='upper right')
     plt.tight_layout()
     plt.xlabel("Feature #")
     plt.xticks(xaxis, xaxis+1)
     plt.yticks([], [])
     plt.savefig(fout, format='jpg')
-    # plt.show()
+    plt.show()
 
 
 def main():

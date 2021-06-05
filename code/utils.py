@@ -8,12 +8,12 @@ nfeats = 11
 
 green = '#00b330'
 """
-The color green choose for plotting
+The color green choosen for plotting
 """
 
 red = '#b30000'
 """
-The color red choose for plotting
+The color red choosen for plotting
 """
 
 

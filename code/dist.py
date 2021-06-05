@@ -14,9 +14,9 @@ def visualize(data):
     plt.figure(figsize=(12, 8))
     for i in range(nfeatures-1):
         plt.subplot(4, 3, i+1)
-        plt.hist(np.sort(data[i, selectorT]), stacked=True,
+        plt.hist(np.sort(data[i, selectorT]), density=True, stacked=True,
                  color=green, alpha=.7, bins=nbins)
-        plt.hist(np.sort(data[i, selectorF]), stacked=True,
+        plt.hist(np.sort(data[i, selectorF]), density=True, stacked=True,
                  color=red, alpha=.7, bins=nbins)
         plt.xticks([], [])
         plt.yticks([], [])

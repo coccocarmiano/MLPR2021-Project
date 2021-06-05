@@ -30,8 +30,8 @@ if __name__ == '__main__':
     pdata = v.T.dot(cdata)
 
     plt.subplot(2, 1, 2)
-    plt.hist(np.sort(pdata[labels == 1]), bins=70, alpha=0.8, color=green)
-    plt.hist(np.sort(pdata[labels == 0]), bins=70, alpha=0.8, color=red)
+    plt.hist(np.sort(pdata[labels == 1]), bins=100, alpha=0.8, density=True, color=green)
+    plt.hist(np.sort(pdata[labels == 0]), bins=100, alpha=0.8, density=True, color=red)
     plt.xticks([], [])
     plt.yticks([], [])
 
