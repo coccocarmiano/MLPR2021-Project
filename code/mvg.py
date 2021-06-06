@@ -3,23 +3,23 @@ from numpy import pi, log, exp
 from classifiers import gaussian_classifier
 import utils
 
-def latex_report(toprint):
-    outfiletex = '../data/mvgacctable.tex'
+def latex(toprint):
+    outfiletex = '../data/mvg_acctable.tex'
     f = open(outfiletex, "w")
     print(r"\begin{center}", file=f)
     print(r"\begin{longtable}{|c|c|c|}", file=f)
-    print(r"\caption{MVG Classifier Error Rates}\label{tab:mvgacctable}", file=f)
+    print(r"\caption{MVG}\label{tab:mvg_acctable}\\", file=f)
     print(r"\hline", file=f)
-    print(r"Prior & PCA & \% Errors \\", file=f)
+    print(r"$\pi_T$ & PCA & Error Rate\\", file=f)
     print(r"\hline", file=f)
     
-    for line in toprint:
-        print(line, file=f)
+    for tup in toprint:
+        print(f"{tup[0]} & {tup[1]} & {(1-tup[2])*100:.3f}\\% \\\\", file=f)
+        print(r"\hline", file=f)
 
+    print(r"\hline", file=f)
     print(r"\end{longtable}", file=f)
     print(r"\end{center}", file=f)
-
-    f.close()
 
 if __name__ == '__main__':
     toprint = [] #ignore this var
@@ -46,10 +46,8 @@ if __name__ == '__main__':
             scores, labels = gaussian_classifier(pdata, [gmean, bmean], [gcov, bcov], prior_t=prior)
             nc = (labels == telab).sum()
             nt = len(telab)
+            acc = nc/nt
+            if acc > 0.6:
+                toprint.append((prior, n, acc))
 
-###########Ignore this part
-            toprint.append(f"{prior} & {n} & {(1-(nc/nt))*100:.3f}\\% \\\\")
-            toprint.append(r"\hline")
-        toprint.append(r"\hline")
-
-    latex_report(toprint)
+    latex(toprint)
