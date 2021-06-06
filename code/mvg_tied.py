@@ -40,15 +40,22 @@ if __name__ == '__main__':
     for prior in priors:
         for n in it:
             vt = v[:, :n]
-            pdata = vt.T.dot(tesamp)
-            gmean, bmean = utils.fc_mean(pdata[:, telab > 0]), utils.fc_mean(pdata[:, telab < 1])
-            cov = utils.fc_cov(pdata)
-            gcov, bcov = cov, cov
-            scores, labels = gaussian_classifier(pdata, [gmean, bmean], [gcov, bcov], prior_t=prior)
-            nc = (labels == telab).sum()
-            nt = len(telab)
-            acc = nc / nt
-            if acc > 0.6:
+
+            ptrdata = vt.T.dot(trsamp)
+            gsamples, bsamples = ptrdata[:, trlab > 0], ptrdata[:, trlab < 1]
+            gmean, bmean = utils.fc_mean(gsamples), utils.fc_mean(bsamples)
+            #gcov, bcov = utils.fc_cov(gsamples), utils.fc_cov(bsamples)
+            cov = utils.fc_cov(ptrdata)
+
+            ptedata = vt.T.dot(tesamp)
+            scores, predictions = gaussian_classifier(ptedata, [gmean, bmean], [cov, cov])
+            nt = len(predictions)
+            nc = (predictions == telab).sum()
+            acc = nc/nt
+
+            print(acc)
+            
+            if acc > 0.5:
                 toprint.append((prior, n, acc))
 
     latex(toprint)

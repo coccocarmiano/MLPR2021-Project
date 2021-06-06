@@ -9,17 +9,19 @@ def SVM_lin(dataset):
 def SVM_kernel(dataset, kernel=None):
     pass
 
-def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5):
+def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> tuple[np.ndarray, np.ndarray]:
     '''
     Computes scores and labels from a gaussian classifiers given the covariances.
-    Assumes centered dataset without label feature.
+    Assumes no label feature.
+
+    Returns matrix of scores and predictions
     '''
-    scores = np.zeros((2, test_dataset.shape[1]))
+    scores = np.zeros((len(means), test_dataset.shape[1]))
     N = test_dataset.shape[0]
     cterm = N * log(2*pi)
     priors = [log(prior_t), log(1-prior_t)]
 
-    for i in range(2):
+    for i in range(len(means)):
         _, cov = np.linalg.slogdet(covs[i])
         invcov = np.linalg.inv(covs[i])
         centered = test_dataset - means[i]
