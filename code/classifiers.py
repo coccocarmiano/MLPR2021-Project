@@ -25,6 +25,5 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
         contributes = np.diag(centered.T.dot(invcov).dot(centered))
         scores[i] += -0.5 * (cterm + cov + contributes) + priors[i]#+ log(prior_t if i == 1 else 1-prior_t)
 
-    labels = np.argmax(scores, axis=0)
-
-    return scores - logsumexp(scores, axis=0), labels
+    scores = scores - logsumexp(scores, axis=0)
+    return scores,  np.argmax(scores, axis=0)
