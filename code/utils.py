@@ -74,7 +74,6 @@ def get_patches():
     gpatch = ptc.Patch(color=green, label="Good Wine")
     return [gpatch, bpatch]
 
-<<<<<<< HEAD
 
 def kfold(dataset : np.ndarray, n : int=5) -> tuple[list[np.ndarray], list[tuple[np.ndarray, np.ndarray]]]:
     '''
@@ -111,10 +110,9 @@ def kfold(dataset : np.ndarray, n : int=5) -> tuple[list[np.ndarray], list[tuple
         folds.append((train, test))
     splits = [split for split in splits]
     return splits, folds
-=======
+    
 def mcol(v):
     '''
     Reshape a 1D array to a column vector with same dimension
     '''
     return v.reshape((v.shape[0], 1))
->>>>>>> ruggero
