@@ -30,8 +30,8 @@ def visualize(data):
         fvarT = fT.std()
         fvarF = fF.std()
 
-        plt.bar(i-0.05, fmeanT, yerr=fvarT, width=0.1, density=True, color=green)
-        plt.bar(i+0.05, fmeanF, yerr=fvarF, width=0.1, density=True, color=red)
+        plt.bar(i-0.05, fmeanT, yerr=fvarT, width=0.1, color=green)
+        plt.bar(i+0.05, fmeanF, yerr=fvarF, width=0.1, color=red)
 
     plt.suptitle("(Normalized) Feature Mean and STD")
     plt.figlegend(handles=get_patches(),
