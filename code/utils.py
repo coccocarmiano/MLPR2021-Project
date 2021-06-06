@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.patches as ptc
-
+from typing import List, Tuple
 
 train_data_file = '../data/Train.txt'
 test_data_file = '../data/Test.txt'
@@ -67,10 +67,10 @@ def PCA(dataset, stats=False):
     '''
 
     feats = dataset[:-1, :]
-
-    f_means = feats.mean(axis=1).reshape((11, 1))
+    r, c = dataset.shape
+    f_means = fc_mean(feats)
     cent = feats - f_means
-    mult = cent.dot(cent.T) / dataset.shape[1]
+    mult = (cent @ cent.T) / c
     w, v = np.linalg.eigh(mult)
     w, v = w[::-1], v[:, ::-1]
     if stats:
@@ -83,7 +83,7 @@ def PCA(dataset, stats=False):
     return w, v
 
 
-def get_patches() -> list[ptc.Patch]:
+def get_patches() -> List[ptc.Patch]:
     '''
     Returns: patches list to be passed to either `legend` or `figlegend` (to the `handles` attribute).
     '''
@@ -92,7 +92,7 @@ def get_patches() -> list[ptc.Patch]:
     return [gpatch, bpatch]
 
 
-def kfold(dataset: np.ndarray, n: int = 5) -> tuple[list[np.ndarray], list[tuple[np.ndarray, np.ndarray]]]:
+def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple[np.ndarray, np.ndarray]]]:
     '''
     Splits `dataset` in `n` folds. Returns a tuple.
 
