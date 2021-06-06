@@ -30,17 +30,20 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
     return scores,  np.argmax(scores, axis=0)
 
 
-def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> np.ndarray:
+def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> tuple[np.ndarray, np.ndarray, float]:
     '''
-    Returns the `alpha` array and the corresponding `z_i` terms as a tuple.
+    Returns a tuple containing:
+        -> 0: scores of the trained SVM
+        -> 1: predictions of the trained SVM
+        -> 2: accuracy (not percentage) of the trained SVM
 
-    `dataset` must include feature label (last one).
+    `dataset` and `test_dataset` must include feature label (last one).
 
-    `gamma` is the gamma RBF parameter, use intermediate values (1.-10.)
+    `gamma` is the gamma RBF parameter, use intermediate values (1.0, ..., 10.0)
 
-    `reg_bias` is the regularized bias term. Use small values (0.-1.)
+    `reg_bias` is the regularized bias term. Use small values (0.0, ..., 1.0)
 
-    `boundary` for each `alpha` term, constraining to `0 - boundary`. Use small values (0.-1.)
+    `boundary` for `alpha` terms, constraining to `0 - boundary`. Use small values (0.0, ..., 1.0)
     '''
     # Preparing our Hij matrix
     features, labels = dataset[:-1, :], dataset[-1, :]
