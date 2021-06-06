@@ -2,6 +2,7 @@ import numpy as np
 from numpy import log, pi
 from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b as minimize
+from typing import Tuple
 
 def SVM_lin(dataset):
     pass
@@ -9,8 +10,10 @@ def SVM_lin(dataset):
 def SVM_kernel(dataset, kernel=None):
     pass
 
-def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> tuple[np.ndarray, np.ndarray]:
+def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
     '''
+    'BAD' MEAN/COV GO FIRST IN LIST!
+
     Computes scores and labels from a gaussian classifiers given the covariances.
     Assumes no label feature.
 
@@ -32,7 +35,7 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
     return scores,  np.argmax(scores, axis=0)
 
 
-def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> tuple[np.ndarray, np.ndarray, float]:
+def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
     Returns a tuple containing:
         -> 0: scores of the trained SVM
