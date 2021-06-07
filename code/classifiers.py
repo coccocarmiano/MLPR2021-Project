@@ -26,15 +26,16 @@ def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
     v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=0)
     return v[:-1], v[-1]
 
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray]:
+def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
     '''
-    data = evaluation_dataset[:-1]
+    data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
-    predictions = (scores > 0).astype(int)  
-    return (scores, predictions)
+    predictions = (scores > 0).astype(int)
+    accuracy = (predictions == labels).sum() / len(predictions)
+    return (scores, predictions, accuracy)
 
 def SVM_lin(dataset: np.ndarray, K: float, C: float) -> tuple[np.ndarray, float]:
     '''
@@ -62,18 +63,16 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> tuple[np.ndarray, float]
     w = (best_alphas*z*hat_data).sum(axis=1)
     return w[:-1], K*w[-1]
 
-def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray]:
+def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
     '''
-    data = evaluation_dataset[:-1]
+    data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)
-    return (scores, predictions)
-
-def SVM_kernel(dataset, kernel=None):
-    pass
+    accuracy = (predictions == labels).sum() / len(predictions)
+    return (scores, predictions, accuracy)
 
 def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5):
     '''
