@@ -73,7 +73,7 @@ def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tu
     else:
         feats = dataset
 
-    r, c = dataset.shape
+    _, c = dataset.shape
     f_means = fc_mean(feats)
     cent = feats - f_means
     mult = (cent @ cent.T) / c
