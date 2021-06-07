@@ -177,18 +177,29 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
-def normalize(dataset : np.ndarray, has_labels=False) -> np.ndarray:
+
+def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
-    Write me
+    Z-Normalize a (two) dataset(s).
+
+    If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
+    `dataset, other`, otherwise just normalized dataset.
+
+    If `has_labels` is `True`, discars label feature (assumed last one).
     '''
     if has_labels:
         dataset = dataset[:-1, :]
-    
-    r, c = dataset.shape
+        if other is not None:
+            other = other[:-1, :]
+
+    r, _ = dataset.shape
     mean = fc_mean(dataset)
     std = dataset.std(axis=1).reshape((r, 1))
     dataset -= mean
     dataset /= std
 
-    return dataset
+    if other is not None:
+        other = (other - mean) / std
+        return (dataset, other)
 
+    return dataset
