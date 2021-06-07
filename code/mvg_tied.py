@@ -6,9 +6,11 @@ import utils
 def latex(toprint):
     outfiletex = '../data/mvg_tiedacctable.tex'
     f = open(outfiletex, "w")
+    print(r"\caption{Tied Covariance MVG}\label{tab:mvg_tiedcov}", file=f)
+    print(r"\begin{center}", file=f)
     print(r"\begin{tabular}{|c|c|c|c|}", file=f)
     print(r"\hline", file=f)
-    print(r"$\pi_T$ & PCA & Error Rate & $DCF_{norm}$\\", file=f)
+    print(r"$\pi_T$ & PCA & Error Rate & $DCF_{min}$\\", file=f)
     print(r"\hline", file=f)
     
     toprint.sort(key=lambda x: x[3])
@@ -18,42 +20,40 @@ def latex(toprint):
         print(r"\hline", file=f)
 
     print(r"\end{tabular}", file=f)
-    print(r"\caption{Tied Covariance MVG}\label{tab:mvg_tiedcov}", file=f)
+    print(r"\end{center}", file=f)
+
+    f.close()
 
 if __name__ == '__main__':
     toprint = [] #ignore this var
     trdataset = utils.load_train_data()
-    tedataset = utils.load_test_data()
 
-    trsamp, trlab = trdataset[:-1, :], trdataset[-1, :]
-    tesamp, telab = tedataset[:-1, :], tedataset[-1, :]
+    _, folds = utils.kfold(trdataset)
 
-    gmean, bmean = utils.fc_mean(trsamp[:, trlab > 0]), utils.fc_mean(trsamp[:, trlab < 1])
-    cov = utils.fc_cov(trsamp)
+    priors = [.33, .5, .67]
+    pca_it = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    r, c = trsamp.shape
+    for fold in folds:
+        trs, trl = fold[0][:-1, :], fold[0][-1, :]
+        tes, tel = fold[1][:-1, :], fold[1][-1, :]
 
-    it = np.arange(r)
-    it = it[-1:0:-1]
+        gmean, bmean = utils.fc_mean(trs[:, trl > 0]), utils.fc_mean(trs[:, trl < 1])
+        cov = utils.fc_cov(trs)
 
-    w, v = utils.PCA(trdataset)
-    priors = (np.arange(9)+1)/10
-    
-    for prior in priors:
-        for n in it:
-            vt = v[:, :n]
+        w, v = utils.PCA(trs, feat_label=False)
 
-            pdata = vt.T @ tesamp
-            pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
-            pcov = vt.T @ cov @ vt
+        for prior in priors:
+            for n in pca_it:
+                vt = v[:, :n]
+                proj = vt.T @ tes
+                pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
+                pcov = vt.T @ cov @ vt
+                scores, predictions = gaussian_classifier(proj, [pbmean, pgmean], [pcov, pcov], prior_t=prior)
 
-            scores, predictions = gaussian_classifier(pdata, [pbmean, pgmean], [pcov, pcov], prior_t=prior)
-
-            nt = len(predictions)
-            nc = (predictions == telab).sum()
-            acc = nc/nt
-
-            dcf, _ = utils.DCF(predictions, telab, prior_t=prior)
-            toprint.append((prior, n, acc, dcf))
+                nt = len(predictions)
+                nc = (predictions == tel).sum()
+                acc = nc/nt
+                dcf, _ = utils.DCF(predictions, tel, prior_t=prior)
+                toprint.append((prior, n, acc, dcf))
 
     latex(toprint)
