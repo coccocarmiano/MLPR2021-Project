@@ -51,7 +51,7 @@ def load_test_data():
     return matrix
 
 
-def PCA(dataset : np.ndarray, feat_label : bool=True, stats : bool=False) -> Tuple[np.ndarray, np.ndarray]:
+def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Execute eigenvalue decompsition on `dataset`.
 
@@ -72,7 +72,7 @@ def PCA(dataset : np.ndarray, feat_label : bool=True, stats : bool=False) -> Tup
         feats = dataset[:-1, :]
     else:
         feats = dataset
-    
+
     r, c = dataset.shape
     f_means = fc_mean(feats)
     cent = feats - f_means
@@ -155,3 +155,24 @@ def fc_cov(dataset: np.ndarray) -> np.ndarray:
     centered = dataset - dmean
     cov = centered.dot(centered.T) / c
     return cov
+
+
+def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    '''
+    Returns the normalized and unnormalized DCF values
+
+    `predictions` are the assigned labels after classificaton
+
+    `labels` are the real labels
+
+    `prior_t` is the prior probability of class T
+
+    `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
+    '''
+    FPR = (predictions == 1 and labels == 0).sum()
+    FNR = (predictions == 0 and labels == 1).sum()
+    unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
+    factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
+    norm_dcf = unnorm_dcf / factr
+
+    return (norm_dcf, unnorm_dcf)
