@@ -25,6 +25,7 @@
 {\centering\includegraphics[width=\textwidth]{scatter.jpg}}
 
 % Gaussian Cliassifiers Reulsts, put in a sep file??
+\newpage
 \begin{table}[!htb]
 \centering
 \input{../data/mvg_acctable.tex}
@@ -35,7 +36,21 @@
 \end{table}
 
 
+% Normalize Gaussian, put in a sep file??
+\newpage
+\begin{table}[!htb]
+\input{../data/mvgn_acctable.tex}
+
+\input{../data/mvgn_naiveacctable.tex}
+
+\input{../data/mvgn_tiedacctable.tex}
+
+
+\end{table}
+
+
 % Kernel RBF Results, put in a sep file??
+\newpage
 \begin{table}[!htb]
 \centering
     \input{../data/svm_rbf_acc.tex}
@@ -44,4 +59,5 @@
 
     \input{../data/svm_rbfpcan_acc.tex}
 \end{table}
+
 \end{document}
