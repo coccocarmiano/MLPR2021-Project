@@ -15,10 +15,7 @@ def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
         w, b = v[:-1], v[-1]
         w = mcol(w)
         # computes objective function
-        partial = 0
-        for i in range(data.shape[1]):
-            partial = partial + labels[i]*np.log1p(np.exp(- np.dot(w.T, data[:, i]) - b)) + (1 - labels[i])*np.log1p(np.exp(np.dot(w.T, data[:, i]) + b))
-        partial =  partial/data.shape[1] + l/2*np.dot(w.T, w).flatten()
+        partial = (labels*np.log1p(np.exp(- np.dot(w.T, data) - b)) + (1 - labels)*np.log1p(np.exp(np.dot(w.T, data) + b))).sum(axis=1) /data.shape[1] + l/2*np.dot(w.T, w).flatten()
 
         return partial
 
