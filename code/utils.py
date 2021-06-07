@@ -51,13 +51,15 @@ def load_test_data():
     return matrix
 
 
-def PCA(dataset, stats=False):
+def PCA(dataset : np.ndarray, feat_label : bool=True, stats : bool=False) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Execute eigenvalue decompsition on `dataset`.
 
     Parameters:
 
     `dataset`: numpy matrix of column samples. Assumes last feat to label.
+
+    `feat_label`: if false assumes no label feature
 
     `stats` (opt): Print some stats like information retention and (soon) correlation matrix.
 
@@ -66,7 +68,11 @@ def PCA(dataset, stats=False):
     The (already sorted) array `w` of eigenvalues and `v` of eigenvectors.
     '''
 
-    feats = dataset[:-1, :]
+    if feat_label:
+        feats = dataset[:-1, :]
+    else:
+        feats = dataset
+    
     r, c = dataset.shape
     f_means = fc_mean(feats)
     cent = feats - f_means
