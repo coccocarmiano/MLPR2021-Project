@@ -6,7 +6,6 @@ import utils
 def latex(toprint):
     outfiletex = '../data/mvg_acctable.tex'
     f = open(outfiletex, "w")
-    print(r"\begin{center}", file=f)
     print(r"\begin{longtable}{|c|c|c|c|}", file=f)
     print(r"\caption{MVG}\label{tab:mvg_acctable}\\", file=f)
     print(r"\hline", file=f)
@@ -19,9 +18,7 @@ def latex(toprint):
         print(f"{tup[0]} & {tup[1]} & {(1-tup[2])*100:.3f}\\% & {tup[3]:.3f}\\\\", file=f)
         print(r"\hline", file=f)
 
-    print(r"\hline", file=f)
     print(r"\end{longtable}", file=f)
-    print(r"\end{center}", file=f)
 
 if __name__ == '__main__':
     toprint = [] #ignore this var

@@ -176,3 +176,9 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
     norm_dcf = unnorm_dcf / factr
 
     return (norm_dcf, unnorm_dcf)
+
+def normalize():
+    '''
+    Write me
+    '''
+    pass
