@@ -24,18 +24,24 @@
 \lipsum[2]
 {\centering\includegraphics[width=\textwidth]{scatter.jpg}}
 
-
+% Gaussian Cliassifiers Reulsts, put in a sep file??
 \begin{table}[!htb]
 \centering
 \input{../data/mvg_acctable.tex}
 
-\centering
 \input{../data/mvg_naiveacctable.tex}
 
-\centering
 \input{../data/mvg_tiedacctable.tex}
 \end{table}
 
-\input{../data/svm_rbf_acc.tex}
 
+% Kernel RBF Results, put in a sep file??
+\begin{table}[!htb]
+\centering
+    \input{../data/svm_rbf_acc.tex}
+
+    \input{../data/svm_rbfpca_acc.tex}
+
+    \input{../data/svm_rbfpcan_acc.tex}
+\end{table}
 \end{document}
