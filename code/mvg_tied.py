@@ -6,8 +6,7 @@ import utils
 def latex(toprint):
     outfiletex = '../data/mvg_tiedacctable.tex'
     f = open(outfiletex, "w")
-    print(r"\begin{longtable}{|c|c|c|c|}", file=f)
-    print(r"\caption{Tied Covariance MVG}\label{tab:mvg_tiedcov}\\", file=f)
+    print(r"\begin{tabular}{|c|c|c|c|}", file=f)
     print(r"\hline", file=f)
     print(r"$\pi_T$ & PCA & Error Rate & $DCF_{norm}$\\", file=f)
     print(r"\hline", file=f)
@@ -18,7 +17,8 @@ def latex(toprint):
         print(f"{tup[0]} & {tup[1]} & {(1-tup[2])*100:.3f}\\% & {tup[3]:.3f}\\\\", file=f)
         print(r"\hline", file=f)
 
-    print(r"\end{longtable}", file=f)
+    print(r"\end{tabular}", file=f)
+    print(r"\caption{Tied Covariance MVG}\label{tab:mvg_tiedcov}", file=f)
 
 if __name__ == '__main__':
     toprint = [] #ignore this var

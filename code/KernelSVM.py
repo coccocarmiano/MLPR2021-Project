@@ -6,8 +6,7 @@ def latex(toprint):
     outfiletex = '../data/svm_rbf_acc.tex'
     f = open(outfiletex, "w")
     print(r"\begin{center}", file=f)
-    print(r"\begin{longtable}{|c|c|c|c|}", file=f)
-    print(r"\caption{Kernel SVM}\label{tab:svm_rbf_acctable}\\", file=f)
+    print(r"\begin{tabular}{|c|c|c|c|}", file=f)
     print(r"\hline", file=f)
     print(r"Bias & $\gamma$ & $C$ & Error Rate \\", file=f)
     print(r"\hline", file=f)
@@ -17,8 +16,9 @@ def latex(toprint):
         print(f"{tup[0]} & {tup[1]} & {tup[2]} & {(1-tup[3])*100:.3f}\\% \\\\", file=f)
         print(r"\hline", file=f)
 
-    print(r"\end{longtable}", file=f)
+    print(r"\end{tabular}", file=f)
     print(r"\end{center}", file=f)
+    print(r"\caption{Kernel SVM}\label{tab:svm_rbf_acctable}", file=f)
 
 if __name__ == '__main__':
     trdataset = utils.load_train_data()
