@@ -121,7 +121,10 @@ def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple
         fold = dataset[:, a:b]
         splits.append(fold)
 
-    splits = np.array(splits)
+    e = np.empty(n, dtype=object)
+    for i in range(n):
+        e[i] = splits[i]
+    splits = e
 
     folds = []
     sel = np.arange(n)
