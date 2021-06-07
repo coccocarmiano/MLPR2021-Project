@@ -177,8 +177,18 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
-def normalize():
+def normalize(dataset : np.ndarray, has_labels=False) -> np.ndarray:
     '''
     Write me
     '''
-    pass
+    if has_labels:
+        dataset = dataset[:-1, :]
+    
+    r, c = dataset.shape
+    mean = fc_mean(dataset)
+    std = dataset.std(axis=1).reshape((r, 1))
+    dataset -= mean
+    dataset /= std
+
+    return dataset
+
