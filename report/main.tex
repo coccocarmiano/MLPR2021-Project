@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[twocolumn]{article}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{lipsum}
@@ -7,7 +7,7 @@
 \graphicspath{{../img/}}
 \usepackage{endnotes}
 \title{Wine Project Report}
-\author{Ruggero Nocera (SXXXXXX) \\ Quarta Matteo (SXXXXXX)}
+\author{Ruggero Nocera (SXXXXX1) \\ Quarta Matteo (SXXXXXX)}
 \date{}
 \begin{document}
 
@@ -18,16 +18,15 @@
 \lipsum[1]
 
 \begin{center}
-{\centering\includegraphics[width=\textwidth]{dist.jpg}}
+{\includegraphics[width=\linewidth]{dist.jpg}}
 \end{center}
 
 \lipsum[2]
-{\centering\includegraphics[width=\textwidth]{scatter.jpg}}
+{\includegraphics[width=\linewidth]{scatter.jpg}}
 
 % Gaussian Cliassifiers Reulsts, put in a sep file??
 \newpage
-\begin{table}[!htb]
-\centering
+\begin{table}
 \input{../data/mvg_acctable.tex}
 
 \input{../data/mvg_naiveacctable.tex}
@@ -38,7 +37,7 @@
 
 % Normalize Gaussian, put in a sep file??
 \newpage
-\begin{table}[!htb]
+\begin{table}
 \input{../data/mvgn_acctable.tex}
 
 \input{../data/mvgn_naiveacctable.tex}
@@ -51,8 +50,7 @@
 
 % Kernel RBF Results, put in a sep file??
 \newpage
-\begin{table}[!htb]
-\centering
+\begin{table}
     \input{../data/svm_rbf_acc.tex}
 
     \input{../data/svm_rbfpca_acc.tex}
