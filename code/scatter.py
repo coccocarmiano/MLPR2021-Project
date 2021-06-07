@@ -29,11 +29,8 @@ if __name__ == '__main__':
     dstd = data.std(axis=1).reshape((11, 1))
     norm = (data - dmean) / dstd
 
-    print(w)
     w, v = utils.PCA(norm, feat_label=False)
     w, v = w[:2], v[:, :2]
-    print(w)
-    print(v.shape, norm.shape)
     pnorm = v.T @ norm
 
     x = pnorm[0, :]
