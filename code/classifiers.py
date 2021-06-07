@@ -88,7 +88,6 @@ def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarra
     start = np.zeros(c)
     alphas, _, __ = minimize(to_minimize, start, bounds=boundaries, factr=1)
     alphas[alphas < 0] = 0
-    print(alphas[alphas < 0].sum())
 
     # Here we begin the scoring part
     r, c = test_dataset.shape
