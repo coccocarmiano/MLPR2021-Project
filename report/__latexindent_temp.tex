@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{hyperref}
+\usepackage{minipage-marginpar}
 \usepackage[style=numeric-comp,useprefix,hyperref,backend=bibtex]{biblatex}
 \graphicspath{{../img/}}
 \usepackage{endnotes}
@@ -24,17 +25,15 @@
 \lipsum[2]
 {\centering\includegraphics[width=\textwidth]{scatter.jpg}}
 \begin{table}
-    \begin{minipage}{0.5\linewidth}
+    \being{minipage}{.5\linewidth}
     \input{../data/mvg_acctable.tex}
     \end{minipage}
     \quad
-    \begin{minipage}{.5\linewidth}
+    \being{minipage}{.5\linewidth}
     \input{../data/mvg_naiveacctable.tex}
 \end{minipage}
     
 \input{../data/mvg_tiedacctable.tex}
 \end{table}
-
-\input{../data/svm_rbf_acc.tex}
 
 \end{document}
