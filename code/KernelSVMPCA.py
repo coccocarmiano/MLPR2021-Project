@@ -17,7 +17,6 @@ def latex(toprint):
         print(f"{tup[0]} & {tup[1]} & {tup[2]} & {tup[3]} & {(1-tup[4])*100:.3f}\\% \\\\", file=f)
         print(r"\hline", file=f)
 
-    print(r"\hline", file=f)
     print(r"\end{longtable}", file=f)
     print(r"\end{center}", file=f)
 

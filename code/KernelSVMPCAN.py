@@ -26,13 +26,13 @@ if __name__ == '__main__':
 
     trsamp, trlab = trdataset[:-1, :], trdataset[-1, :]
     tesamp, telab = tedataset[:-1, :], tedataset[-1, :]
-    trsamp, tesamp = utils.normalize(trsamp), utils.normalize(tesamp)
+    trsamp, tesamp = utils.normalize(trsamp, other=tesamp)
 
     w, v = utils.PCA(trsamp, feat_label=False)
 
     toprint = []
-    biases = [0, 0.1, 0.5]
-    boundaries = [.1, 1]
+    biases = [0, 0.1]
+    boundaries = [.1, 0.5, 1]
     gammas = [0.1, 0.3, 0.5]
     nPCA = [10, 9, 8]
     for bias in biases:
