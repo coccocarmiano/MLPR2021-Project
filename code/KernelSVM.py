@@ -12,7 +12,8 @@ def latex(toprint):
     print(r"Bias & $\gamma$ & $C$ & Error Rate \\", file=f)
     print(r"\hline", file=f)
     
-    for tup in toprint:
+    toprint.sort(key=lambda x: x[3], reverse=True)
+    for tup in toprint[:10]:
         print(f"{tup[0]} & {tup[1]} & {tup[2]} & {(1-tup[3])*100:.3f}\\% \\\\", file=f)
         print(r"\hline", file=f)
 
@@ -24,9 +25,9 @@ if __name__ == '__main__':
     trdataset = utils.load_train_data()
     tedataset = utils.load_test_data()
     toprint = []
-    biases = [0, 5., 10.]
-    boundaries = [.1, .5, 1]
-    gammas = [1, 5, 10]
+    biases = [0, 1.]
+    boundaries = [.1, 1.]
+    gammas = [5, 10]
     for bias in biases:
         for gamma in gammas:
             for boundary in boundaries:
