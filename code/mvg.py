@@ -48,13 +48,13 @@ if __name__ == '__main__':
             pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
             pgcov, pbcov = vt.T @ gcov @ vt, vt.T @ bcov @ vt
 
-            scores, predictions = gaussian_classifier(pdata, [pbmean, pgmean], [pbcov, pgcov])
+            scores, predictions = gaussian_classifier(pdata, [pbmean, pgmean], [pbcov, pgcov], prior_t=prior)
 
             nt = len(predictions)
             nc = (predictions == telab).sum()
             acc = nc/nt
 
-            if acc > 0.5:
+            if acc > 0.82:
                 toprint.append((prior, n, acc))
 
 
