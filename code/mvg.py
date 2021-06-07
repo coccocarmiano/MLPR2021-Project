@@ -7,14 +7,16 @@ def latex(toprint):
     outfiletex = '../data/mvg_acctable.tex'
     f = open(outfiletex, "w")
     print(r"\begin{center}", file=f)
-    print(r"\begin{longtable}{|c|c|c|}", file=f)
+    print(r"\begin{longtable}{|c|c|c|c|}", file=f)
     print(r"\caption{MVG}\label{tab:mvg_acctable}\\", file=f)
     print(r"\hline", file=f)
-    print(r"$\pi_T$ & PCA & Error Rate\\", file=f)
+    print(r"$\pi_T$ & PCA & Error Rate & $DCF_{norm}$\\", file=f)
     print(r"\hline", file=f)
     
+    toprint.sort(key=lambda x: x[3])
+    toprint = toprint[:10]
     for tup in toprint:
-        print(f"{tup[0]} & {tup[1]} & {(1-tup[2])*100:.3f}\\% \\\\", file=f)
+        print(f"{tup[0]} & {tup[1]} & {(1-tup[2])*100:.3f}\\% & {tup[3]:.3f}\\\\", file=f)
         print(r"\hline", file=f)
 
     print(r"\hline", file=f)
@@ -53,9 +55,8 @@ if __name__ == '__main__':
             nt = len(predictions)
             nc = (predictions == telab).sum()
             acc = nc/nt
-
-            if acc > 0.82:
-                toprint.append((prior, n, acc))
+            dcf, _ = utils.DCF(predictions, telab, prior_t=prior)
+            toprint.append((prior, n, acc, dcf))
 
 
     latex(toprint)

@@ -169,8 +169,8 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
     '''
-    FPR = (predictions == 1 and labels == 0).sum()
-    FNR = (predictions == 0 and labels == 1).sum()
+    FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
+    FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
     unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
     factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
     norm_dcf = unnorm_dcf / factr
