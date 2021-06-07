@@ -4,9 +4,9 @@ from classifiers import gaussian_classifier
 import utils
 
 def latex(toprint):
-    outfiletex = '../data/mvg_naiveacctable.tex'
+    outfiletex = '../data/mvgn_tiedacctable.tex'
     f = open(outfiletex, "w")
-    print(r"\caption{Naive Bayes MVG}\label{tab:mvg_naiveacctable}", file=f)
+    print(r"\caption{Tied Covariance MVG (Normalized Samples)}\label{tab:mvgn_tiedcov}", file=f)
     print(r"\begin{center}", file=f)
     print(r"\begin{tabular}{|c|c|c|c|}", file=f)
     print(r"\hline", file=f)
@@ -21,7 +21,7 @@ def latex(toprint):
 
     print(r"\end{tabular}", file=f)
     print(r"\end{center}", file=f)
-
+    
     f.close()
 
 if __name__ == '__main__':
@@ -36,10 +36,10 @@ if __name__ == '__main__':
     for fold in folds:
         trs, trl = fold[0][:-1, :], fold[0][-1, :]
         tes, tel = fold[1][:-1, :], fold[1][-1, :]
+        trs, tes = utils.normalize(trs, other=tes)
 
         gmean, bmean = utils.fc_mean(trs[:, trl > 0]), utils.fc_mean(trs[:, trl < 1])
-        gcov, bcov = utils.fc_cov(trs[:, trl > 0]), utils.fc_cov(trs[:, trl < 1])
-        gcov, bcov = diag(diag(gcov)), diag(diag(bcov))
+        cov = utils.fc_cov(trs)
 
         w, v = utils.PCA(trs, feat_label=False)
 
@@ -48,8 +48,8 @@ if __name__ == '__main__':
                 vt = v[:, :n]
                 proj = vt.T @ tes
                 pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
-                pgcov, pbcov = vt.T @ gcov @ vt, vt.T @ bcov @ vt
-                scores, predictions = gaussian_classifier(proj, [pbmean, pgmean], [pbcov, pgcov], prior_t=prior)
+                pcov = vt.T @ cov @ vt
+                scores, predictions = gaussian_classifier(proj, [pbmean, pgmean], [pcov, pcov], prior_t=prior)
 
                 nt = len(predictions)
                 nc = (predictions == tel).sum()

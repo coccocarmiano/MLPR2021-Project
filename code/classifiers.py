@@ -4,6 +4,7 @@ from utils import mcol
 from numpy import log, pi
 from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b as minimize
+from typing import Tuple
 
 def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
     '''
@@ -75,17 +76,21 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
 def SVM_kernel(dataset, kernel=None):
     pass
 
-def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5):
+def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
     '''
+    'BAD' MEAN/COV GO FIRST IN LIST!
+
     Computes scores and labels from a gaussian classifiers given the covariances.
-    Assumes centered dataset without label feature.
+    Assumes no label feature.
+
+    Returns matrix of scores and predictions
     '''
-    scores = np.zeros((2, test_dataset.shape[1]))
+    scores = np.zeros((len(means), test_dataset.shape[1]))
     N = test_dataset.shape[0]
     cterm = N * log(2*pi)
     priors = [log(prior_t), log(1-prior_t)]
 
-    for i in range(2):
+    for i in range(len(means)):
         _, cov = np.linalg.slogdet(covs[i])
         invcov = np.linalg.inv(covs[i])
         centered = test_dataset - means[i]
@@ -96,14 +101,14 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
     return scores,  np.argmax(scores, axis=0)
 
 
-def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> tuple[np.ndarray, np.ndarray, float]:
+def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarray=None, test_datasetl : np.ndarray=None, gamma : float=1., reg_bias : float=0., boundary : float=1.) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
     Returns a tuple containing:
         -> 0: scores of the trained SVM
         -> 1: predictions of the trained SVM
         -> 2: accuracy (not percentage) of the trained SVM
 
-    `dataset` and `test_dataset` must include feature label (last one).
+    If `datasetl` and `test_datasetl` are `None` `dataset` and `test_dataset` must include feature label (last one).
 
     `gamma` is the gamma RBF parameter, use intermediate values (1.0, ..., 10.0)
 
@@ -112,10 +117,16 @@ def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., re
     `boundary` for `alpha` terms, constraining to `0 - boundary`. Use small values (0.0, ..., 1.0)
     '''
     # Preparing our Hij matrix
-    features, labels = dataset[:-1, :], dataset[-1, :]
+    if (datasetl is None and test_datasetl is None):
+        features, labels = dataset[:-1, :], dataset[-1, :]
+        test_dataset, test_labels = test_dataset[:-1, :], test_dataset[-1, :]
+    else:
+        features, labels = dataset, datasetl
+        test_dataset, test_labels = test_dataset, test_datasetl
+
     r, c = features.shape
     zlabels = (2*labels-1).reshape((1, c))
-    Zij = zlabels.T.dot(zlabels)
+    Zij = zlabels.T @ zlabels
     kernmat = np.zeros((c, c))
     
     # Basically we exploit broadcasting to compute `c` times a matrix
@@ -135,17 +146,16 @@ def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, gamma : float=1., re
     
     # Here do the actual minimization (maximization)
     def to_minimize(alpha):
-        value = 0.5 * alpha.T.dot(Hij).dot(alpha) - alpha.sum()
-        gradient = Hij.dot(alpha)-1
+        value = (0.5 * alpha.T @ Hij @ alpha) - alpha.sum()
+        gradient = ( Hij @ alpha )-1
         return (value, gradient)
     
     boundaries = [(0, boundary) for elem in range(c)]
     start = np.zeros(c)
-    alphas, _, __ = minimize(to_minimize, start, bounds=boundaries)
-    alphas = np.array(alphas > 0., dtype=float)
+    alphas, _, __ = minimize(to_minimize, start, bounds=boundaries, factr=1)
+    alphas[alphas < 0] = 0
 
     # Here we begin the scoring part
-    test_dataset, test_labels = test_dataset[:-1, :], test_dataset[-1, :]
     r, c = test_dataset.shape
     scores = np.zeros(c)
 

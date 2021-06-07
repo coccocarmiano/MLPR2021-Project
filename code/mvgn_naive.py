@@ -4,9 +4,9 @@ from classifiers import gaussian_classifier
 import utils
 
 def latex(toprint):
-    outfiletex = '../data/mvg_naiveacctable.tex'
+    outfiletex = '../data/mvgn_naiveacctable.tex'
     f = open(outfiletex, "w")
-    print(r"\caption{Naive Bayes MVG}\label{tab:mvg_naiveacctable}", file=f)
+    print(r"\caption{Naive Bayes MVG (Normalized Samples)}\label{tab:mvgn_naiveacctable}", file=f)
     print(r"\begin{center}", file=f)
     print(r"\begin{tabular}{|c|c|c|c|}", file=f)
     print(r"\hline", file=f)
@@ -36,6 +36,7 @@ if __name__ == '__main__':
     for fold in folds:
         trs, trl = fold[0][:-1, :], fold[0][-1, :]
         tes, tel = fold[1][:-1, :], fold[1][-1, :]
+        trs, tes = utils.normalize(trs, other=tes)
 
         gmean, bmean = utils.fc_mean(trs[:, trl > 0]), utils.fc_mean(trs[:, trl < 1])
         gcov, bcov = utils.fc_cov(trs[:, trl > 0]), utils.fc_cov(trs[:, trl < 1])

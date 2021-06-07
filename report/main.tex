@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[twocolumn]{article}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{lipsum}
@@ -7,7 +7,7 @@
 \graphicspath{{../img/}}
 \usepackage{endnotes}
 \title{Wine Project Report}
-\author{Ruggero Nocera (SXXXXXX) \\ Quarta Matteo (SXXXXXX)}
+\author{Ruggero Nocera (SXXXXX1) \\ Quarta Matteo (SXXXXXX)}
 \date{}
 \begin{document}
 
@@ -18,23 +18,44 @@
 \lipsum[1]
 
 \begin{center}
-{\centering\includegraphics[width=\textwidth]{dist.jpg}}
+{\includegraphics[width=\linewidth]{dist.jpg}}
 \end{center}
 
 \lipsum[2]
-{\centering\includegraphics[width=\textwidth]{scatter.jpg}}
+{\includegraphics[width=\linewidth]{scatter.jpg}}
+
+% Gaussian Cliassifiers Reulsts, put in a sep file??
+\newpage
 \begin{table}
-    \begin{minipage}{0.5\linewidth}
-    \input{../data/mvg_acctable.tex}
-    \end{minipage}
-    \quad
-    \begin{minipage}{.5\linewidth}
-    \input{../data/mvg_naiveacctable.tex}
-\end{minipage}
-    
+{\centering\input{../data/mvg_acctable.tex}}
+
+\input{../data/mvg_naiveacctable.tex}
+\quad
 \input{../data/mvg_tiedacctable.tex}
 \end{table}
 
-\input{../data/svm_rbf_acc.tex}
+
+% Normalize Gaussian, put in a sep file??
+\newpage
+\begin{table}
+\input{../data/mvgn_acctable.tex}
+
+\input{../data/mvgn_naiveacctable.tex}
+
+\input{../data/mvgn_tiedacctable.tex}
+
+
+\end{table}
+
+
+% Kernel RBF Results, put in a sep file??
+\newpage
+\begin{table}
+    \input{../data/svm_rbf_acc.tex}
+
+    \input{../data/svm_rbfpca_acc.tex}
+
+    \input{../data/svm_rbfpcan_acc.tex}
+\end{table}
 
 \end{document}
