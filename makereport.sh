@@ -1,49 +1,45 @@
 #!/bin/bash
+rm ./report/main.pdf
+
+echo "Entering ./code"
+cd code
+
+echo "Deleting __pycache__"
+rm -rf __pycache__
 
 pyfiles=`find . | grep ".py"`
-
 for file in $pyfiles
 do
     echo -n "Processing $(basename $file)..."
-    #python $file
+    python $file
     echo " done"
 done
 
-echo "Processing is done"
-echo -n "Running pdflatex [1]..."
-pdflatex -interaction=nonstopmode ./report/main.tex > /dev/null
+echo "Processing is done, going back to root"
+cd ..
 
-if [ $? -gt 0 ]
-then
-    echo "LaTeX compilation failed, exiting"
-    exit 1
-fi
+echo "Entering ./report"
+cd report
 
-echo -n "Running BibTex..."
-bibtex ./report/main.tex
+echo "Running pdflatex [1]..."
+pdflatex -interaction=nonstopmode ./main.tex > /dev/null
+
+echo "Running BibTex..."
+bibtex main
+
+echo "Running pdflatex [2]..."
+pdflatex -interaction=nonstopmode ./main.tex > /dev/null
+
+echo "Running pdflatex [3]..."
+pdflatex -interaction=nonstopmode ./main.tex > /dev/null
+
+echo "Copying report"
+cp .main.pdf ../report.pdf
 
 if [ $? -gt 0]
 then
-    echo "BibTeX Error"
-    exit 1
+    echo "Something went wrong"
 fi
 
-echo -n "Running pdflatex [2]..."
-pdflatex -interaction=nonstopmode ./report/main.tex > /dev/null
-
-if [ $? -gt 0 ]
-then
-    echo "LaTeX compilation failed, exiting"
-    exit 1
-fi
-
-
-echo -n "Running pdflatex [3]..."
-pdflatex -interaction=nonstopmode ./report/main.tex > /dev/null
-
-if [ $? -gt 0 ]
-then
-    echo "LaTeX compilation failed, exiting"
-    exit 1
-fi
-
+echo "Going back to root"
+cd ..
