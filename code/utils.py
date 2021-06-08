@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.patches as ptc
-
+from typing import List, Tuple
 
 train_data_file = '../data/Train.txt'
 test_data_file = '../data/Test.txt'
@@ -51,13 +51,15 @@ def load_test_data():
     return matrix
 
 
-def PCA(dataset, stats=False):
+def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Execute eigenvalue decompsition on `dataset`.
 
     Parameters:
 
     `dataset`: numpy matrix of column samples. Assumes last feat to label.
+
+    `feat_label`: if false assumes no label feature
 
     `stats` (opt): Print some stats like information retention and (soon) correlation matrix.
 
@@ -66,11 +68,15 @@ def PCA(dataset, stats=False):
     The (already sorted) array `w` of eigenvalues and `v` of eigenvectors.
     '''
 
-    feats = dataset[:-1, :]
+    if feat_label:
+        feats = dataset[:-1, :]
+    else:
+        feats = dataset
 
-    f_means = feats.mean(axis=1).reshape((11, 1))
+    _, c = dataset.shape
+    f_means = fc_mean(feats)
     cent = feats - f_means
-    mult = cent.dot(cent.T) / dataset.shape[1]
+    mult = (cent @ cent.T) / c
     w, v = np.linalg.eigh(mult)
     w, v = w[::-1], v[:, ::-1]
     if stats:
@@ -83,7 +89,7 @@ def PCA(dataset, stats=False):
     return w, v
 
 
-def get_patches() -> list[ptc.Patch]:
+def get_patches() -> List[ptc.Patch]:
     '''
     Returns: patches list to be passed to either `legend` or `figlegend` (to the `handles` attribute).
     '''
@@ -92,7 +98,7 @@ def get_patches() -> list[ptc.Patch]:
     return [gpatch, bpatch]
 
 
-def kfold(dataset: np.ndarray, n: int = 5) -> tuple[list[np.ndarray], list[tuple[np.ndarray, np.ndarray]]]:
+def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple[np.ndarray, np.ndarray]]]:
     '''
     Splits `dataset` in `n` folds. Returns a tuple.
 
@@ -115,7 +121,10 @@ def kfold(dataset: np.ndarray, n: int = 5) -> tuple[list[np.ndarray], list[tuple
         fold = dataset[:, a:b]
         splits.append(fold)
 
-    splits = np.array(splits)
+    e = np.empty(n, dtype=object)
+    for i in range(n):
+        e[i] = splits[i]
+    splits = e
 
     folds = []
     sel = np.arange(n)
@@ -155,3 +164,51 @@ def fc_cov(dataset: np.ndarray) -> np.ndarray:
     centered = dataset - dmean
     cov = centered.dot(centered.T) / c
     return cov
+
+
+def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    '''
+    Returns the normalized and unnormalized DCF values
+
+    `predictions` are the assigned labels after classificaton
+
+    `labels` are the real labels
+
+    `prior_t` is the prior probability of class T
+
+    `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
+    '''
+    FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
+    FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
+    unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
+    factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
+    norm_dcf = unnorm_dcf / factr
+
+    return (norm_dcf, unnorm_dcf)
+
+
+def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+    '''
+    Z-Normalize a (two) dataset(s).
+
+    If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
+    `dataset, other`, otherwise just normalized dataset.
+
+    If `has_labels` is `True`, discars label feature (assumed last one).
+    '''
+    if has_labels:
+        dataset = dataset[:-1, :]
+        if other is not None:
+            other = other[:-1, :]
+
+    r, _ = dataset.shape
+    mean = fc_mean(dataset)
+    std = dataset.std(axis=1).reshape((r, 1))
+    dataset -= mean
+    dataset /= std
+
+    if other is not None:
+        other = (other - mean) / std
+        return (dataset, other)
+
+    return dataset
