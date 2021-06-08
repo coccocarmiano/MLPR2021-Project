@@ -33,7 +33,7 @@ if __name__ == '__main__':
     toprint = []
     biases = [0, 1, 5., 10.]
     boundaries = [.1, 1]
-    nPCA = [10, 9, 8]
+    nPCA = [10, 8, 6, 4]
     for bias in biases:
         for boundary in boundaries:
             for n in nPCA:

@@ -6,8 +6,7 @@ def latex(toprint):
     outfiletex = '../data/logreg_acc.tex'
     f = open(outfiletex, "w")
     print(r"\begin{center}", file=f)
-    print(r"\begin{longtable}{|c|c|}", file=f)
-    print(r"\caption{Logistic Regression}\label{tab:logreg}\\", file=f)
+    print(r"\begin{tabular}{|c|c|}", file=f)
     print(r"\hline", file=f)
     print(r"$\lambda$ & Error Rate \\", file=f)
     print(r"\hline", file=f)
@@ -17,8 +16,9 @@ def latex(toprint):
         print(r"\hline", file=f)
 
     print(r"\hline", file=f)
-    print(r"\end{longtable}", file=f)
+    print(r"\end{tabular}", file=f)
     print(r"\end{center}", file=f)
+    print(r"\caption{Logistic Regression}\label{tab:logreg}", file=f)
 
 if __name__ == '__main__':
     trdataset = utils.load_train_data()
