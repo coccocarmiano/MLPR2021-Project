@@ -74,28 +74,25 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
 
 def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
     '''
-    'BAD' MEAN/COV GO FIRST IN LIST!
-
     Computes scores and labels from a gaussian classifiers given the covariances.
     Assumes no label feature.
 
     Returns matrix of scores and predictions
     '''
-    scores = np.zeros((len(means), test_dataset.shape[1]))
-    N = test_dataset.shape[0]
-    cterm = N * log(2*pi)
-    priors = [log(prior_t), log(1-prior_t)]
+    t = np.log(1-prior_t) - np.log(prior_t)
+    r, c = test_dataset.shape
+    scores = np.zeros((2, c))
+    cterm = r * log(2*pi)
 
-    for i in range(len(means)):
-        _, cov = np.linalg.slogdet(covs[i])
+    for i in range(2):
+        _, det = np.linalg.slogdet(covs[i])
         invcov = np.linalg.inv(covs[i])
         centered = test_dataset - means[i]
-        contributes = np.diag(centered.T.dot(invcov).dot(centered))
-        scores[i] += -0.5 * (cterm + cov + contributes) + priors[i]
+        contributes = np.diag(centered.T @ invcov @ centered)
+        scores[i] += -0.5 * (cterm +  det + contributes)
 
-    scores = scores - logsumexp(scores, axis=0)
-    return scores,  np.argmax(scores, axis=0)
-
+    llr = scores[1]-scores[0]
+    return llr,  llr > t
 
 def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarray=None, test_datasetl : np.ndarray=None, gamma : float=1., reg_bias : float=0., boundary : float=1., prior : float=0.5) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
