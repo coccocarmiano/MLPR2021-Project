@@ -51,7 +51,7 @@ def load_test_data():
     return matrix
 
 
-def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tuple[np.ndarray, np.ndarray]:
+def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Execute eigenvalue decompsition on `dataset`.
 
@@ -60,8 +60,6 @@ def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tu
     `dataset`: numpy matrix of column samples. Assumes last feat to label.
 
     `feat_label`: if false assumes no label feature
-
-    `stats` (opt): Print some stats like information retention and (soon) correlation matrix.
 
     Returns:
 
@@ -74,18 +72,12 @@ def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tu
         feats = dataset
 
     _, c = dataset.shape
-    f_means = fc_mean(feats)
-    cent = feats - f_means
+    mean = fc_mean(feats)
+    cent = feats - mean
     mult = (cent @ cent.T) / c
     w, v = np.linalg.eigh(mult)
     w, v = w[::-1], v[:, ::-1]
-    if stats:
-        wsum = sum(w)
-        for i in range(nfeats):
-            print(f"{i+1} Features: {sum(w[:i+1])/wsum*100:.4f}%")
-        print("Eigenvalues: ", w)
 
-        # Todo: Covariance to Correlation
     return w, v
 
 
@@ -100,12 +92,12 @@ def get_patches() -> List[ptc.Patch]:
 
 def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple[np.ndarray, np.ndarray]]]:
     '''
-    Splits `dataset` in `n` folds. Returns a tuple.
+    Splits a dataset. Returns a tuple.
 
-    First list contains `n` evenly divided subsets of `dataset`.
+    First element is `n` evenly split subsets of `dataset`.
 
-    Second list contains `n` tuples. Each tuple has `n-1` folds
-    of samples from `dataset` and the the remaining `1`.
+    Second element are `n` tuples. Each tuple contains in the first element a subset of
+    `N-1` parts of `dataset` and in the second the remaining one.
     '''
     if (len(dataset.shape) > 2):
         print("Error: Wrong Dataset Shape")
@@ -130,8 +122,8 @@ def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple
     sel = np.arange(n)
     for i in range(n):
         train, test = splits[sel != i], splits[sel == i]
-        train = np.concatenate(train[:], axis=1)
-        test = np.concatenate(test[:], axis=1)
+        train = np.concatenate(train, axis=1)
+        test = np.concatenate(test, axis=1)
         folds.append((train, test))
     splits = [split for split in splits]
     return splits, folds
@@ -154,11 +146,17 @@ def fc_cov(dataset: np.ndarray) -> np.ndarray:
     Assumes no label feat.
     '''
     _, c = dataset.shape
-    dmean = fc_mean(dataset)
-    centered = dataset - dmean
-    cov = centered.dot(centered.T) / c
+    mean = fc_mean(dataset)
+    cent = dataset - mean
+    cov = cent @ cent.T / c
     return cov
 
+def fc_std(dataset: np.ndarray) -> np.ndarray:
+    '''
+    '''
+    r, _ = dataset.shape
+    std = dataset.std(axis=1).reshape((r, 1))
+    return std
 
 def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
     '''

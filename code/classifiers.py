@@ -17,17 +17,17 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
 
     Returns matrix of scores and predictions
     '''
-    t = -log( prior_t / (1-prior_t))
+    t = np.log(1-prior_t) - np.log(prior_t)
     r, c = test_dataset.shape
     scores = np.zeros((2, c))
     cterm = r * log(2*pi)
 
     for i in range(2):
-        _, cov = np.linalg.slogdet(covs[i])
+        _, det = np.linalg.slogdet(covs[i])
         invcov = np.linalg.inv(covs[i])
         centered = test_dataset - means[i]
         contributes = np.diag(centered.T @ invcov @ centered)
-        scores[i] += -0.5 * (cterm +  cov + contributes)
+        scores[i] += -0.5 * (cterm +  det + contributes)
 
     llr = scores[1]-scores[0]
     return llr,  llr > t
