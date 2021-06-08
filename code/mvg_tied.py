@@ -31,7 +31,7 @@ if __name__ == '__main__':
     trlab = trdataset[-1, :]
     nt = len(trlab)
 
-    _, folds = utils.kfold(trdataset, n=20)
+    _, folds = utils.kfold(trdataset)
 
     priors = [.33, .50, .67]
     npca = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]

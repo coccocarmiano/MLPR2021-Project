@@ -6,7 +6,7 @@ import utils
 def latex(toprint):
     outfiletex = '../data/mvg_acctable.tex'
     f = open(outfiletex, "w")
-    print(r"\caption{MVG}\label{tab:mvg_acctable}", file=f)
+    print(r"\caption{Full-Covariance MVG}\label{tab:mvg_acctable}", file=f)
     print(r"\begin{center}", file=f)
     print(r"\begin{tabular}{|c|c||c|c|}", file=f)
     print(r"\hline", file=f)
@@ -17,7 +17,7 @@ def latex(toprint):
     toprint = toprint[:3]
     for tup in toprint:
         for i in range(len(tup[0])):
-            print(f"$\\pi_T = {tup[3][i]:.2f}$ & {tup[1]} & {tup[2][i]*100:.3f} & {tup[0][i]:.3f} \\\\", file=f)
+            print(f"$\\pi_T = {tup[3][i]:.2f}$ & {tup[1]} & {tup[2][i]*100:.2f} & {tup[0][i]:.3f} \\\\", file=f)
         print(r"\hline", file=f)
 
     print(r"\end{tabular}", file=f)
@@ -31,10 +31,10 @@ if __name__ == '__main__':
     trlab = trdataset[-1, :]
     nt = len(trlab)
 
-    _, folds = utils.kfold(trdataset)
+    _, folds = utils.kfold(trdataset, n=3)
 
     priors = [.33, .50, .67]
-    npca = [11, 10, 9, 8, 7, 6, 5, 4]
+    npca = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
    
     for nred in npca:
@@ -64,6 +64,7 @@ if __name__ == '__main__':
             dcf, _ = utils.DCF(pscores, labels, prior_t=prior)
             dcfs.append(dcf)
             ers.append(er)
+            print(er)
         toprint.append((dcfs, nred, ers, priors))
         
 
