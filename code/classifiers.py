@@ -16,12 +16,15 @@ def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
         w, b = v[:-1], v[-1]
         w = mcol(w)
         # computes objective function
-        partial = (labels*np.log1p(np.exp(- np.dot(w.T, data) - b)) + (1 - labels)*np.log1p(np.exp(np.dot(w.T, data) + b))).sum(axis=1) /data.shape[1] + l/2*np.dot(w.T, w).flatten()
+        tmp = np.dot(w.T, data) + b
+        #first = np.exp(-tmp)
+        #second = np.exp(tmp)
+        partial = (labels*np.logaddexp(0, -tmp) + (1 - labels)*np.logaddexp(0, tmp)).sum(axis=1) /data.shape[1] + l/2*np.dot(w.T, w).flatten()
 
         return partial
 
     v0 = np.zeros(data.shape[0] + 1)
-    v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=0)
+    v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=1.0)
     return v[:-1], v[-1]
 
 def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
