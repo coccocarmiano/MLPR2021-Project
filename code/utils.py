@@ -200,6 +200,39 @@ def minDCF(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list
     
     return mindcf, mindcfp, points
 
+def minDCF_SVM(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list) -> Tuple[float, float, np.ndarray]:
+    '''
+    SVM Counterpart of minDFC
+
+    Differently from `minDCF` this returns the score `s` which obtained the lowest DCF
+
+    Still returns the `points` to plot how the DCF changes with the varying of the application prior
+    '''
+    order = np.argsort(scores)
+    scores = scores[order]
+    labels = labels[order]
+
+    points = []
+    mindcf = 1e6
+    minscore = 1e6
+
+    for score in scores:
+        pred = scores > score
+        for prior in priors:
+            dcf, _ = DCF(pred, labels, prior_t=prior)
+
+            if dcf < mindcf:
+                mindcf = dcf
+                minscore = score
+
+    points = []
+    for prior in priors:
+        pred = scores > score
+        dcf, _ = DCF(pred, labels, prior_t=prior)
+        points.append((prior, dcf))
+    
+    return mindcf, minscore, points
+
 
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
