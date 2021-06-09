@@ -180,7 +180,9 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
 def minDCF(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list) -> Tuple[float, float, np.ndarray]:
     '''
-    Write me!
+    Computes minDCF given an array (list) of priors.
+
+    Return the `minDCF`, the `prior` at which it was obtained, and the `points` to plot the functions.
     '''
     points = []
     mindcf = 1e6
@@ -230,6 +232,9 @@ def minDCF_SVM(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or 
         pred = scores > score
         dcf, _ = DCF(pred, labels, prior_t=prior)
         points.append((prior, dcf))
+        nc = (labels == labels).sum()
+        nt = len(labels)
+        print("acc", f"{nc/nt*100:3f}")
     
     return mindcf, minscore, points
 
