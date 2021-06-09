@@ -184,6 +184,14 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
+def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    DCFmin = np.Inf
+    for t in np.sort(scores):
+        predictions = scores > t
+        dcf, _ = DCF(predictions, labels, prior_t, costs)
+        if(dcf < DCFmin):
+            DCFmin = dcf
+    return DCFmin
 
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
