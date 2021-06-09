@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import log, pi
 from scipy.special import logsumexp
-from scipy.optimize import fmin_l_bfgs_b as minimize
+from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
 def SVM_lin(dataset):
@@ -32,77 +32,72 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
     llr = scores[1]-scores[0]
     return llr,  llr > t
 
-def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarray=None, test_datasetl : np.ndarray=None, gamma : float=1., reg_bias : float=0., boundary : float=1., prior : float=0.67) -> Tuple[np.ndarray, np.ndarray, float]:
-    '''
-    Returns a tuple containing:
-        -> 0: scores of the trained SVM
-        -> 1: predictions of the trained SVM
-        -> 2: accuracy (not percentage) of the trained SVM
 
-    If `datasetl` and `test_datasetl` are `None` `dataset` and `test_dataset` must include feature label (last one).
+def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound : float=.5):
+    feats, labels = dataset[:-1, :], dataset[-1, :]
+    r, c = feats.shape
 
-    `gamma` is the gamma RBF parameter, use intermediate values (1.0, ..., 10.0)
+    def linear(x1, x2):
+        return x1.T @ x2
 
-    `reg_bias` is the regularized bias term. Use small values (0.0, ..., 1.0)
+    if function is None:
+        function = linear
 
-    `boundary` for `alpha` terms, constraining to `0 - boundary`. Use small values (0.0, ..., 1.0)
-    '''
-    # Preparing our Hij matrix
-    if (datasetl is None and test_datasetl is None):
-        features, labels = dataset[:-1, :], dataset[-1, :]
-        test_dataset, test_labels = test_dataset[:-1, :], test_dataset[-1, :]
-    else:
-        features, labels = dataset, datasetl
-        test_dataset, test_labels = test_dataset, test_datasetl
+    def minimize(H):
+        def f(alpha):
+            value = 0.5 * (alpha.T @ H @ alpha) - alpha.sum()
+            gradient = (H @ alpha) - 1
+            return value, gradient
+        return f
 
-    t = -np.log( prior / (1-prior))
-    r, c = features.shape
-    zlabels = (2*labels-1).reshape((1, c))
-    Zij = zlabels.T @ zlabels
-    kernmat = np.zeros((c, c))
+
+    # Prepare the Z_ij matrix
+    z_i = (2*labels-1).reshape((r, 1))
+    Zij = z_i.T @ z_i
+
+    # Prepare the H_ij matrix
+    # Since tr(x_i^T x_j) = tr(x_j^T x_i) we know that Hij is symmetric
+    # To save time we compute the lower triangular half of the matrix and then add
+    # herself to the transposed to get H_ij
+
+    Hij = np.zeros((c, c))
+
+    for i in range(c):
+        for j in range(i):
+            Hij[i][j] = function(dataset[:, i], dataset[:, j])
+
+    Hij += Hij - np.diag(np.diag(Hij)) + Hij.T
+    Hij *= Zij
+
+    zero = np.zero(c)
+    minimize_me = minimize(Hij)
+    boundaries = [(0, bound) for i in range(c)]
+    alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, bounds=boundaries)
+    alphas[alphas < .0] = .0
+    return alphas
+
+def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndarray, function=None, bias : float=.0):
+
+    def linear(x1, x2):
+        return x1.T @ x2
+
+    if function is None:
+        function = linear
+
+    trs, trl = trdataset[:-1, :], trdataset[-1, :]
+    tes, tel = tedataset[:-1, :], tedataset[-1, :]
+
+    trr, trc = trs.shape
+    ter, tec = tes.shape
+
+    trl = (2*trl-1).reshape((trr, 1))
+    tel = (2*tel-1).reshape((ter, 1))
+
+    scores = np.zeros((tec, 1))
+
+    for i in range(tec):
+        for j in range(trc):
+            scores[i] += alphas[i] * function(trs[:, j], tedataset[:, i]) * trl[i]
+        scores[i] += bias
     
-    # Basically we exploit broadcasting to compute `c` times a matrix
-    # Which contains the diff of sample `i` with all other
-    # Then we sum along the rows to compute the `i-th` row of matrix H
-    for idx in range(c):
-        xi = features[:, idx].reshape((r, 1))
-        diff = features - xi
-        norm = (diff * diff).sum(axis=0)
-        kernmat[idx] += norm
-    
-    kernmat *= -gamma
-    kernmat = np.exp(kernmat)
-    kernmat += reg_bias
-    Hij = Zij * kernmat
-    
-    
-    # Here do the actual minimization (maximization)
-    def to_minimize(alpha):
-        value = (0.5 * alpha.T @ Hij @ alpha) - alpha.sum()
-        gradient = ( Hij @ alpha )-1
-        return (value, gradient)
-    
-    boundaries = [(0, boundary) for elem in range(c)]
-    start = np.zeros(c)
-    alphas, _, __ = minimize(to_minimize, start, bounds=boundaries, factr=1)
-    alphas[alphas < 0] = 0
-
-    # Here we begin the scoring part
-    r, c = test_dataset.shape
-    scores = np.zeros(c)
-
-    # Here we do a process very similar to the one done before
-    for idx in range(c):
-        x_t = test_dataset[:, idx].reshape((r, 1))
-        diff = features - x_t
-        norm = (diff * diff).sum(axis=0)
-        expterm = norm * -gamma
-        expterm = np.exp(expterm)
-        expterm = expterm + reg_bias
-        summatory = expterm * alphas * zlabels
-        scores[idx] = summatory.sum()
-
-    predictions = scores > 0
-    accuracy = (predictions == test_labels).sum() / len(predictions)
-
-    return scores, scores > t, accuracy
+    return scores
