@@ -27,11 +27,15 @@ def latex(toprint):
 
 if __name__ == '__main__':
     toprint = [] #ignore this var
-    trdataset = utils.load_train_data()
-    trlab = trdataset[-1, :]
-    nt = len(trlab)
 
-    _, folds = utils.kfold(trdataset, n=3)
+    trdataset = utils.load_train_data()
+    r, c = trdataset.shape
+
+    feats, labels = utils.normalize(trdataset, has_labels=True), trdataset[-1, :].reshape((1, c))
+    trdataset = np.vstack((feats, labels))
+
+    _, folds = utils.kfold(trdataset, n=20)
+    _, v = utils.PCA(trdataset, feat_label=True)
 
     priors = [.33, .50, .67]
     npca = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
@@ -40,26 +44,22 @@ if __name__ == '__main__':
     for nred in npca:
         tot_scores = []
         tot_labels = []
+        vt = v[:, :nred]
         for fold in folds:
             trs, trl = fold[0][:-1, :], fold[0][-1, :]
             tes, tel = fold[1][:-1, :], fold[1][-1, :]
 
-
-            trmean = utils.fc_mean(trs)
-            trstd = utils.fc_std(trs)
-            trs, tes = trs - trmean, tes - trmean
-            trs, tes = trs / trstd, tes / trstd
-
             gmean, bmean = utils.fc_mean(trs[:, trl > 0]), utils.fc_mean(trs[:, trl < 1])
             gcov, bcov = utils.fc_cov(trs[:, trl > 0]), utils.fc_cov(trs[:, trl < 1])
-            _, v = utils.PCA(trs, feat_label=False)
-            vt = v[:, :nred]
+
             pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
             pgcov, pbcov = vt.T @ gcov @ vt, vt.T @ bcov @ vt
             ptes = vt.T @ tes
+
             scores, _ = gaussian_classifier(ptes, [pbmean, pgmean], [pbcov, pgcov])
             tot_scores.append(scores)
             tot_labels.append(tel)
+
         scores = np.concatenate(tot_scores)
         labels = np.concatenate(tot_labels)
         

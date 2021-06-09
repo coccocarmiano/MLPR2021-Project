@@ -31,24 +31,28 @@ if __name__ == '__main__':
     trlab = trdataset[-1, :]
     nt = len(trlab)
 
-    _, folds = utils.kfold(trdataset, n=3)
+    _, v = utils.PCA(trdataset)
+    _, folds = utils.kfold(trdataset, n=20)
 
     priors = [.33, .50, .67]
     npca = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
 
    
     for nred in npca:
         tot_scores = []
         tot_labels = []
+        vt = v[:, :nred]
         for fold in folds:
             trs, trl = fold[0][:-1, :], fold[0][-1, :]
             tes, tel = fold[1][:-1, :], fold[1][-1, :]
+
             gmean, bmean = utils.fc_mean(trs[:, trl > 0]), utils.fc_mean(trs[:, trl < 1])
             gcov, bcov = utils.fc_cov(trs[:, trl > 0]), utils.fc_cov(trs[:, trl < 1])
-            _, v = utils.PCA(trs, feat_label=False)
-            vt = v[:, :nred]
+
             pgmean, pbmean = vt.T @ gmean, vt.T @ bmean
             pgcov, pbcov = vt.T @ gcov @ vt, vt.T @ bcov @ vt
+
             ptes = vt.T @ tes
             scores, _ = gaussian_classifier(ptes, [pbmean, pgmean], [pbcov, pgcov])
             tot_scores.append(scores)
