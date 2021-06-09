@@ -150,8 +150,7 @@ def plot_mindcf(results):
     plt.title(f"{printsettings['method']} MVG DCF vs $\pi_T$ (PCA = {npca})")
     plt.xlabel(r"$-log(\frac{\pi_T}{1-\pi_T})$")
     plt.ylabel(r"$DCF$")
-
-    plt.savefig(f'../img/figtitle.jpg')
+    plt.savefig(f"../img/{printsettings['figname']}.jpg")
 
 def table_mindcf(results):
     results.sort(key=lambda res: res['mindcf'])
