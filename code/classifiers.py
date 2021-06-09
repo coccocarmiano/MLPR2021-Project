@@ -52,7 +52,7 @@ def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound
 
 
     # Prepare the Z_ij matrix
-    z_i = (2*labels-1).reshape((r, 1))
+    z_i = (2*labels-1).reshape((c, 1))
     Zij = z_i.T @ z_i
 
     # Prepare the H_ij matrix
@@ -69,7 +69,7 @@ def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound
     Hij += Hij - np.diag(np.diag(Hij)) + Hij.T
     Hij *= Zij
 
-    zero = np.zero(c)
+    zero = np.zeros(c)
     minimize_me = minimize(Hij)
     boundaries = [(0, bound) for i in range(c)]
     alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, bounds=boundaries)
@@ -90,14 +90,14 @@ def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndar
     trr, trc = trs.shape
     ter, tec = tes.shape
 
-    trl = (2*trl-1).reshape((trr, 1))
-    tel = (2*tel-1).reshape((ter, 1))
+    trl = (2*trl-1).reshape((trc, 1))
+    tel = (2*tel-1).reshape((tec, 1))
 
     scores = np.zeros((tec, 1))
 
     for i in range(tec):
         for j in range(trc):
-            scores[i] += alphas[i] * function(trs[:, j], tedataset[:, i]) * trl[i]
+            scores[i] += alphas[i] * function(trs[:, j], tes[:, i]) * trl[i]
         scores[i] += bias
     
     return scores
