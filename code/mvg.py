@@ -164,7 +164,7 @@ if __name__ == '__main__':
     toprint = []  # ignore this var
     to_plot = []
     trdataset = utils.load_train_data()
-    nfolds = 5
+    nfolds = 4
 
     _, v = utils.PCA(trdataset)
     _, folds = utils.kfold(trdataset, n=nfolds)
@@ -178,11 +178,11 @@ if __name__ == '__main__':
 
     printsettings['method'] = 'Naive Bayes'
     printsettings['figname'] = 'mvgnaive.jpg'
-    fullcov(folds, priors, npca, v)
+    naive(folds, priors, npca, v)
 
     printsettings['method'] = 'Tied Covariance'
     printsettings['figname'] = 'mvgtied.jpg'
-    fullcov(folds, priors, npca, v)
+    tied(folds, priors, npca, v)
 
     feats, labels = trdataset[:-1, :], trdataset[-1, :]
     feats = utils.normalize(feats)
@@ -197,8 +197,8 @@ if __name__ == '__main__':
 
     printsettings['method'] = 'Normalized Naive Bayes'
     printsettings['figname'] = 'mvgnaivenorm.jpg'
-    fullcov(folds, priors, npca, v)
+    naive(folds, priors, npca, v)
 
     printsettings['method'] = 'Normalized Tied Covariance'
     printsettings['figname'] = 'mvgtiednorm.jpg'
-    fullcov(folds, priors, npca, v)
+    tied(folds, priors, npca, v)
