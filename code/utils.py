@@ -188,7 +188,7 @@ def minDCF(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list
 
     for prior in priors:
         t = np.log(1-prior) - np.log(prior)
-        pred = scores > labels
+        pred = scores > t
         dcf, _ = DCF(pred, labels, prior_t=prior)
 
         if dcf < mindcf:
