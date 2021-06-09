@@ -13,7 +13,7 @@ def polysvm(folds, biases, degrees):
 
         return f
 
-    priors = np.linspace(.1, .9, 7)
+    priors = np.linspace(0.1, 0.9, 3)
 
     for degree in degrees:
         function = get_polyfunction(1, degree)
@@ -36,7 +36,7 @@ def polysvm(folds, biases, degrees):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset)
+    _, folds = utils.kfold(dataset, 3)
 
     degrees = [4, 3, 2]
     biases = [1, 10, 100]
