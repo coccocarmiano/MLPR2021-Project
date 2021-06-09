@@ -32,7 +32,7 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
     llr = scores[1]-scores[0]
     return llr,  llr > t
 
-def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarray=None, test_datasetl : np.ndarray=None, gamma : float=1., reg_bias : float=0., boundary : float=1., prior : float=0.5) -> Tuple[np.ndarray, np.ndarray, float]:
+def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarray=None, test_datasetl : np.ndarray=None, gamma : float=1., reg_bias : float=0., boundary : float=1., prior : float=0.67) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
     Returns a tuple containing:
         -> 0: scores of the trained SVM
@@ -55,7 +55,7 @@ def RBF_SVM(dataset : np.ndarray, test_dataset: np.ndarray, datasetl : np.ndarra
         features, labels = dataset, datasetl
         test_dataset, test_labels = test_dataset, test_datasetl
 
-    t = np.log( prior / (1-prior))
+    t = -np.log( prior / (1-prior))
     r, c = features.shape
     zlabels = (2*labels-1).reshape((1, c))
     Zij = zlabels.T @ zlabels
