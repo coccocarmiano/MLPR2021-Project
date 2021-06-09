@@ -178,6 +178,28 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
+def minDCF(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list) -> Tuple[float, float, np.ndarray]:
+    '''
+    Write me!
+    '''
+    points = []
+    mindcf = 1e6
+    mindcfp = -1
+
+    for prior in priors:
+        t = np.log(1-prior) - np.log(prior)
+        pred = scores > labels
+        dcf, _ = DCF(pred, labels, prior_t=prior)
+
+        if dcf < mindcf:
+            mindcf = dcf
+            mindcfp = prior
+
+        points.append((t, dcf))
+    
+    
+    return mindcf, mindcfp, points
+
 
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
