@@ -71,11 +71,8 @@ def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.nd
     else:
         feats = dataset
 
-    _, c = dataset.shape
-    mean = fc_mean(feats)
-    cent = feats - mean
-    mult = (cent @ cent.T) / c
-    w, v = np.linalg.eigh(mult)
+    cov = fc_cov(feats)
+    w, v = np.linalg.eigh(cov)
     w, v = w[::-1], v[:, ::-1]
 
     return w, v
@@ -162,81 +159,54 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
     '''
     Returns the normalized and unnormalized DCF values
 
-    `predictions` are the assigned labels after classificaton
+    `predictions` are the predicted samples
 
-    `labels` are the real labels
+    `labels` are the actual samples labels
 
-    `prior_t` is the prior probability of class T
+    `prior_t` is P(C = 1) (default: 0.5)
 
-    `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
+    `costs` is a tuple containing (P(C = 0), P(C = 1)) (default: (1, 1))
     '''
     FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
     FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
     unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
-    factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
-    norm_dcf = unnorm_dcf / factr
+    norm_dcf = unnorm_dcf / min(prior_t * costs[0], (1-prior_t) * costs[1])
 
     return (norm_dcf, unnorm_dcf)
 
-def minDCF(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list) -> Tuple[float, float, np.ndarray]:
-    '''
-    Computes minDCF given an array (list) of priors.
 
-    Return the `minDCF`, the `prior` at which it was obtained, and the `points` to plot the functions.
-    '''
-    points = []
-    mindcf = 1e6
-    mindcfp = -1
+def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    DCFmin = np.Inf
+    for t in np.sort(scores):
+        predictions = scores > t
+        dcf, _ = DCF(predictions, labels, prior_t, costs)
+        if(dcf < DCFmin):
+            DCFmin = dcf
+    return DCFmin
 
-    for prior in priors:
-        t = np.log(1-prior) - np.log(prior)
-        pred = scores > t
-        dcf, _ = DCF(pred, labels, prior_t=prior)
+def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresholds : np.ndarray = None) -> Tuple[float, float, np.ndarray]:
+    '''
+    Computes minDCF and optimal threshold for the given prior
+
+    If `thresholds` is None defaults to 1000 default thresholds
+    '''
+
+    mindcf = np.Inf
+    best_threshold = .0
+
+    if thresholds is None:
+        thresholds = np.linspace(.01, .99, 1000)
+        thresholds = np.log(1-thresholds) - np.log(thresholds)
+
+    for threshold in thresholds:
+        pred = scores > threshold
+        dcf, _ = DCF(pred, labels, prior_t=prior_t)
 
         if dcf < mindcf:
-            mindcf = dcf
-            mindcfp = prior
-
-        points.append((t, dcf))
+            dcf = mindcf
+            best_threshold = threshold
     
-    
-    return mindcf, mindcfp, points
-
-def minDCF_SVM(scores : np.ndarray, labels : np.ndarray, priors : np.ndarray or list) -> Tuple[float, float, np.ndarray]:
-    '''
-    SVM Counterpart of minDFC
-
-    Differently from `minDCF` this returns the score `s` which obtained the lowest DCF
-
-    Still returns the `points` to plot how the DCF changes with the varying of the application prior
-    '''
-    order = np.argsort(scores)
-    scores = scores[order]
-    labels = labels[order]
-
-    points = []
-    mindcf = 1e6
-    minscore = 1e6
-
-    for score in scores:
-        pred = scores > score
-        for prior in priors:
-            dcf, _ = DCF(pred, labels, prior_t=prior)
-
-            if dcf < mindcf:
-                mindcf = dcf
-                minscore = score
-
-    points = []
-    for prior in priors:
-        pred = scores > score
-        dcf, _ = DCF(pred, labels, prior_t=prior)
-        points.append((prior, dcf))
-        nc = (labels == labels).sum()
-        nt = len(labels)
-        print("acc", f"{nc/nt*100:3f}")
-    
-    return mindcf, minscore, points
+    return mindcf, best_threshold
 
 
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
