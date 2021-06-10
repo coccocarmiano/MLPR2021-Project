@@ -39,6 +39,7 @@ def plot_PCA_lambda_minDCF(values):
 
     for ax in axs.flat:
         ax.set(xlabel='λ', ylabel='minDCF', xscale='log')
+
     
     axs[0, 0].set_xlabel(None)
     axs[0, 1].set_xlabel(None)
@@ -48,8 +49,10 @@ def plot_PCA_lambda_minDCF(values):
     for n, ax in zip(nPCA, axs.flat):
         ax.set_title(f"PCA (n = {n})" if n < nPCA[0] else "No PCA")
         for i, p in enumerate(priors):
-            lambdas, dcfs = values[n][p]
+            lambdas, dcfs, _ = values[n][p]
+            ax.minorticks_on()
             ax.plot(lambdas, dcfs, color=brg[i])
+
 
     fig.tight_layout()
     plt.subplots_adjust(right=0.825)
@@ -59,10 +62,11 @@ def plot_PCA_lambda_minDCF(values):
 def compute_PCA_lambda_minDCF(dataset):
     lambdas = np.logspace(-4, 3, 8)
     dcfs = np.empty(len(lambdas))
+    thresholds = np.empty(len(lambdas))
     priors = [.1, .5, .9]
     nPCA = [11, 9, 7, 5]
     values_to_plot = {}
-
+    
     #Check if data has been already computed and try to load them
     data_computed = True
     values_to_plot = {}
@@ -73,8 +77,8 @@ def compute_PCA_lambda_minDCF(dataset):
                 data_computed = False
                 break
             else:
-                values_to_plot[n][p] = (lambdas, np.load(f"../trained/logreg_dcfs_{n}_{i}.npy"))
-              
+                loaded_data = np.load(f"../trained/logreg_dcfs_{n}_{i}.npy")
+                values_to_plot[n][p] = (lambdas, loaded_data[0], loaded_data[1])
 
     if data_computed is False:
         values_to_plot = {}
@@ -96,11 +100,11 @@ def compute_PCA_lambda_minDCF(dataset):
                         tot_label.append(tedata[-1])
                     tot_scores = np.concatenate(tot_scores)
                     tot_label = np.concatenate(tot_label)
-                    dcfs[j] = utils.min_DCF(tot_scores, tot_label, p)
-                    with open(f"../trained/logreg_dcfs_{n}_{i}.npy", 'wb') as fname:
-                        np.save(fname, dcfs)
+                    dcfs[j], thresholds[j] = utils.min_DCF(tot_scores, tot_label, p)
+                with open(f"../trained/logreg_dcfs_{n}_{i}.npy", 'wb') as fname:
+                    np.save(fname, np.vstack([dcfs, thresholds]))
             
-            values_to_plot[n][p] = (lambdas, dcfs)
+            values_to_plot[n][p] = (lambdas, dcfs, thresholds)
 
     return values_to_plot
 
