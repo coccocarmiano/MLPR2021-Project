@@ -170,8 +170,14 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     `costs` is a tuple containing (P(C = 0), P(C = 1)) (default: (1, 1))
     '''
-    FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
-    FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
+    FP = ((predictions == 1) == (labels == 0)).sum()
+    FN = ((predictions == 0) == (labels == 1)).sum()
+    TP = ((predictions == 1) == (labels == 1)).sum()
+    TN = ((predictions == 0) == (labels == 0)).sum()
+
+    FPR = FP / (FP + TN)
+    FNR = FN / (FN + TP)
+
     unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
     norm_dcf = unnorm_dcf / min(prior_t * costs[0], (1-prior_t) * costs[1])
 
