@@ -35,7 +35,7 @@ def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 
 
 def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound : float=.5):
     feats, labels = dataset[:-1, :], dataset[-1, :]
-    r, c = feats.shape
+    _, c = feats.shape
 
     def linear(x1, x2):
         return x1.T @ x2
@@ -52,28 +52,24 @@ def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound
 
 
     # Prepare the Z_ij matrix
-    z_i = (2*labels-1).reshape((c, 1))
-    Zij = z_i.T @ z_i
+    z_i = (2*labels-1)
 
     # Prepare the H_ij matrix
-    # Since tr(x_i^T x_j) = tr(x_j^T x_i) we know that Hij is symmetric
-    # To save time we compute the lower triangular half of the matrix and then add
-    # herself to the transposed to get H_ij
-
+    # Exploit trace property to save time
+    
     Hij = np.zeros((c, c))
 
     for i in range(c):
-        for j in range(i):
-            Hij[i][j] = function(dataset[:, i], dataset[:, j])
+        for j in range(i+1):
+            Hij[i, j] = function(dataset[:, i], dataset[:, j]) * z_i[i] * z_i[j]
 
-    Hij += Hij - np.diag(np.diag(Hij)) + Hij.T
-    Hij *= Zij
+    Hij = Hij -np.eye(c) * Hij + Hij.T
+
 
     zero = np.zeros(c)
     minimize_me = minimize(Hij)
     boundaries = [(0, bound) for i in range(c)]
     alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, bounds=boundaries)
-    alphas[alphas < .0] = .0
     return alphas
 
 def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndarray, function=None, bias : float=.0):
@@ -87,17 +83,17 @@ def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndar
     trs, trl = trdataset[:-1, :], trdataset[-1, :]
     tes, tel = tedataset[:-1, :], tedataset[-1, :]
 
-    trr, trc = trs.shape
-    ter, tec = tes.shape
+    _, trc = trs.shape
+    _, tec = tes.shape
 
     trl = (2*trl-1).reshape((trc, 1))
     tel = (2*tel-1).reshape((tec, 1))
 
-    scores = np.zeros((tec, 1))
+    scores = np.zeros(tec)
 
     for i in range(tec):
         for j in range(trc):
-            scores[i] += alphas[i] * function(trs[:, j], tes[:, i]) * trl[i]
+            scores[i] += alphas[j] * function(trs[:, j], tes[:, i]) * trl[j]
         scores[i] += bias
     
     return scores

@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.patches as ptc
 from typing import List, Tuple
+from scipy import stats
+
+ppf = stats.norm.ppf
 
 train_data_file = '../data/Train.txt'
 test_data_file = '../data/Test.txt'
@@ -38,9 +41,9 @@ def load_test_data():
     '''
     Returns the data from `Test.txt` organized as column samples. Last field is label.
     '''
-    train_file = open(test_data_file, 'r')
-    lines = [line.strip() for line in train_file]
-    train_file.close()
+    test_fil = open(test_data_file, 'r')
+    lines = [line.strip() for line in test_fil]
+    test_fil.close()
 
     splits = []
     for line in lines:
@@ -203,7 +206,7 @@ def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresho
         dcf, _ = DCF(pred, labels, prior_t=prior_t)
 
         if dcf < mindcf:
-            dcf = mindcf
+            mindcf = dcf
             best_threshold = threshold
     
     return mindcf, best_threshold
@@ -216,7 +219,7 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -
     If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
     `dataset, other`, otherwise just normalized dataset.
 
-    If `has_labels` is `True`, discars label feature (assumed last one).
+    If `has_labels` is `True`, discards label feature (assumed last one).
     '''
     if has_labels:
         dataset = dataset[:-1, :]
@@ -234,3 +237,43 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -
         return (dataset, other)
 
     return dataset
+
+
+def gaussianize(dataset : np.ndarray , other : np.ndarray = None, feat_label : bool = False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+    '''
+    Write me
+    '''
+    shape = dataset.shape
+
+    if (len(shape) < 2):
+        r, c = 1, len(dataset)
+        dataset = dataset.reshape((r, c))
+    else:
+        r, c = dataset.shape
+    gdataset = np.zeros((r, c))
+
+
+    for feat_idx in range(r):
+        ranks = np.zeros(c)
+        feats = dataset[feat_idx, :]
+        for idx in range(c):
+            value = feats[idx]
+            ranks[idx] = ((feats < value).sum() + 1) / (c+2)
+            ranks[idx] = ppf(ranks[idx])
+        gdataset[feat_idx] = ranks
+
+    if other is not None:
+       otherr, otherc = other.shape
+       out = np.empty((otherr, otherc))
+       for feat_idx in range(r):
+           dfeats = dataset[feat_idx]
+           ofeats = other[feat_idx]
+           ranks = np.zeros(otherc)
+           for idx in range(otherc):
+               value = ofeats[idx]
+               ranks[idx] = ((dfeats < value).sum() + 1) / (c+2)
+               ranks[idx] = ppf(ranks[idx])
+           out[feat_idx] = ranks
+       return gdataset, out
+
+    return gdataset
