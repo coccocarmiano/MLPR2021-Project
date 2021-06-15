@@ -6,35 +6,38 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b as minimize
 from typing import Tuple
 
-def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
+def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple[np.ndarray, float]:
     '''
     Computes the w vector and b value for the logistic regression
     '''
     data, labels = dataset[:-1], dataset[-1]
-
+    zi = 2*labels - 1
     def logreg_obj(v):
         w, b = v[:-1], v[-1]
-        w = mcol(w)
-        # computes objective function
-        tmp = np.dot(w.T, data) + b
-        #first = np.exp(-tmp)
-        #second = np.exp(tmp)
-        partial = (labels*np.logaddexp(0, -tmp) + (1 - labels)*np.logaddexp(0, tmp)).sum(axis=1) /data.shape[1] + l/2*np.dot(w.T, w).flatten()
-
+        w = w[:, None]
+        #tmp = np.dot(w.T, data) + b
+        #partial = (labels*np.logaddexp(0, -tmp) + (1 - labels)*np.logaddexp(0, tmp)).sum(axis=1) / data.shape[1] + l/2*np.dot(w.T, w).flatten()
+        tmp = -zi*(np.dot(w.T, data) + b)
+        partial = np.logaddexp(0, tmp).sum(axis=1) / data.shape[1] + l/2*np.dot(w.T, w).flatten()
         return partial
-
+    
+    max = 15000
+    max_factr = 10e6
+    if precision:
+        max = 10e5
+        max_factr = 1.0
     v0 = np.zeros(data.shape[0] + 1)
-    v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=1.0)
+    v, _, d = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, maxfun=max, factr=max_factr)
     return v[:-1], v[-1]
 
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
+def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float, t: float=0) -> tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
     '''
     data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
-    predictions = (scores > 0).astype(int)
+    predictions = (scores > t).astype(int)
     accuracy = (predictions == labels).sum() / len(predictions)
     return (scores, predictions, accuracy)
 

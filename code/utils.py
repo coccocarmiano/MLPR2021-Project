@@ -85,6 +85,9 @@ def reduce_dataset(dataset, n=None):
     r, c = samples.shape
     if n == None:
         n = r
+    elif n == r:
+        return dataset
+    
     _, v = PCA(samples, feat_label=False)
     vt = v[:, :n]
     reduced_samples = vt.T @ samples
@@ -196,12 +199,14 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
 def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
     DCFmin = np.Inf
+    best_threshold = 0
     for t in np.sort(scores):
         predictions = scores > t
         dcf, _ = DCF(predictions, labels, prior_t, costs)
         if(dcf < DCFmin):
             DCFmin = dcf
-    return DCFmin
+            best_threshold = t
+    return DCFmin, best_threshold
 
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
