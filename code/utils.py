@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.patches as ptc
 from typing import List, Tuple
+from scipy import stats
+
+ppf = stats.norm.ppf
 
 train_data_file = '../data/Train.txt'
 test_data_file = '../data/Test.txt'
@@ -38,9 +41,9 @@ def load_test_data():
     '''
     Returns the data from `Test.txt` organized as column samples. Last field is label.
     '''
-    train_file = open(test_data_file, 'r')
-    lines = [line.strip() for line in train_file]
-    train_file.close()
+    test_fil = open(test_data_file, 'r')
+    lines = [line.strip() for line in test_fil]
+    test_fil.close()
 
     splits = []
     for line in lines:
@@ -71,11 +74,8 @@ def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.nd
     else:
         feats = dataset
 
-    _, c = dataset.shape
-    mean = fc_mean(feats)
-    cent = feats - mean
-    mult = (cent @ cent.T) / c
-    w, v = np.linalg.eigh(mult)
+    cov = fc_cov(feats)
+    w, v = np.linalg.eigh(cov)
     w, v = w[::-1], v[:, ::-1]
 
     return w, v
@@ -181,19 +181,24 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
     '''
     Returns the normalized and unnormalized DCF values
 
-    `predictions` are the assigned labels after classificaton
+    `predictions` are the predicted samples
 
-    `labels` are the real labels
+    `labels` are the actual samples labels
 
-    `prior_t` is the prior probability of class T
+    `prior_t` is P(C = 1) (default: 0.5)
 
-    `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
+    `costs` is a tuple containing (P(C = 0), P(C = 1)) (default: (1, 1))
     '''
-    FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
-    FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
+    FP = ((predictions == 1) == (labels == 0)).sum()
+    FN = ((predictions == 0) == (labels == 1)).sum()
+    TP = ((predictions == 1) == (labels == 1)).sum()
+    TN = ((predictions == 0) == (labels == 0)).sum()
+
+    FPR = FP / (FP + TN)
+    FNR = FN / (FN + TP)
+
     unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
-    factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
-    norm_dcf = unnorm_dcf / factr
+    norm_dcf = unnorm_dcf / min(prior_t * costs[0], (1-prior_t) * costs[1])
 
     return (norm_dcf, unnorm_dcf)
 
@@ -208,6 +213,40 @@ def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs:
             best_threshold = t
     return DCFmin, best_threshold
 
+def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    DCFmin = np.Inf
+    for t in np.sort(scores):
+        predictions = scores > t
+        dcf, _ = DCF(predictions, labels, prior_t, costs)
+        if(dcf < DCFmin):
+            DCFmin = dcf
+    return DCFmin
+
+def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresholds : np.ndarray = None) -> Tuple[float, float, np.ndarray]:
+    '''
+    Computes minDCF and optimal threshold for the given prior
+
+    If `thresholds` is None defaults to 1000 default thresholds
+    '''
+
+    mindcf = np.Inf
+    best_threshold = .0
+
+    if thresholds is None:
+        thresholds = np.linspace(.01, .99, 1000)
+        thresholds = np.log(1-thresholds) - np.log(thresholds)
+
+    for threshold in thresholds:
+        pred = scores > threshold
+        dcf, _ = DCF(pred, labels, prior_t=prior_t)
+
+        if dcf < mindcf:
+            mindcf = dcf
+            best_threshold = threshold
+    
+    return mindcf, best_threshold
+
+
 def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
     Z-Normalize a (two) dataset(s).
@@ -215,7 +254,7 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -
     If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
     `dataset, other`, otherwise just normalized dataset.
 
-    If `has_labels` is `True`, discars label feature (assumed last one).
+    If `has_labels` is `True`, discards label feature (assumed last one).
     '''
     if has_labels:
         dataset = dataset[:-1, :]
@@ -233,3 +272,43 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -
         return (dataset, other)
 
     return dataset
+
+
+def gaussianize(dataset : np.ndarray , other : np.ndarray = None, feat_label : bool = False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+    '''
+    Write me
+    '''
+    shape = dataset.shape
+
+    if (len(shape) < 2):
+        r, c = 1, len(dataset)
+        dataset = dataset.reshape((r, c))
+    else:
+        r, c = dataset.shape
+    gdataset = np.zeros((r, c))
+
+
+    for feat_idx in range(r):
+        ranks = np.zeros(c)
+        feats = dataset[feat_idx, :]
+        for idx in range(c):
+            value = feats[idx]
+            ranks[idx] = ((feats < value).sum() + 1) / (c+2)
+            ranks[idx] = ppf(ranks[idx])
+        gdataset[feat_idx] = ranks
+
+    if other is not None:
+       otherr, otherc = other.shape
+       out = np.empty((otherr, otherc))
+       for feat_idx in range(r):
+           dfeats = dataset[feat_idx]
+           ofeats = other[feat_idx]
+           ranks = np.zeros(otherc)
+           for idx in range(otherc):
+               value = ofeats[idx]
+               ranks[idx] = ((dfeats < value).sum() + 1) / (c+2)
+               ranks[idx] = ppf(ranks[idx])
+           out[feat_idx] = ranks
+       return gdataset, out
+
+    return gdataset
