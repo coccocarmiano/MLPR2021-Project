@@ -1,0 +1,778 @@
+polysvm:
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 0.9818971880613404 | Const: 0 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 0.9818971880613404 | Const: 0 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 0.9818971880613404 | Const: 0 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 9.98189718806134 | Const: 0 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 9.98189718806134 | Const: 0 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 9.98189718806134 | Const: 0 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 99.98189718806134 | Const: 0 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 99.98189718806134 | Const: 0 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 99.98189718806134 | Const: 0 | Power: 2 | Bias: 100
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 0.9999995411322257 | Const: 0 | Power: 3 | Bias: 1
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 0.9999995411322257 | Const: 0 | Power: 3 | Bias: 1
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 0.9999995411322257 | Const: 0 | Power: 3 | Bias: 1
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 9.999999541132226 | Const: 0 | Power: 3 | Bias: 10
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 9.999999541132226 | Const: 0 | Power: 3 | Bias: 10
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 9.999999541132226 | Const: 0 | Power: 3 | Bias: 10
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 99.99999954113223 | Const: 0 | Power: 3 | Bias: 100
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 99.99999954113223 | Const: 0 | Power: 3 | Bias: 100
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 99.99999954113223 | Const: 0 | Power: 3 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0 | Const: 0 | Power: 4 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0 | Const: 0 | Power: 4 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0 | Const: 0 | Power: 4 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.0 | Const: 0 | Power: 4 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.0 | Const: 0 | Power: 4 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.0 | Const: 0 | Power: 4 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.0 | Const: 0 | Power: 4 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.0 | Const: 0 | Power: 4 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.0 | Const: 0 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 0.9655145647438106 | Const: 1 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 0.9655145647438106 | Const: 1 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 0.9655145647438106 | Const: 1 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 9.965514564743811 | Const: 1 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 9.965514564743811 | Const: 1 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 9.965514564743811 | Const: 1 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 99.96551456474381 | Const: 1 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 99.96551456474381 | Const: 1 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 99.96551456474381 | Const: 1 | Power: 2 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0000000073933109 | Const: 1 | Power: 3 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0000000073933109 | Const: 1 | Power: 3 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0000000073933109 | Const: 1 | Power: 3 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.00000000739331 | Const: 1 | Power: 3 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.00000000739331 | Const: 1 | Power: 3 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.00000000739331 | Const: 1 | Power: 3 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.00000000739331 | Const: 1 | Power: 3 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.00000000739331 | Const: 1 | Power: 3 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.00000000739331 | Const: 1 | Power: 3 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0 | Const: 1 | Power: 4 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0 | Const: 1 | Power: 4 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0 | Const: 1 | Power: 4 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.0 | Const: 1 | Power: 4 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.0 | Const: 1 | Power: 4 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.0 | Const: 1 | Power: 4 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.0 | Const: 1 | Power: 4 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.0 | Const: 1 | Power: 4 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.0 | Const: 1 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 0.981021287868933 | Const: 3 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 0.981021287868933 | Const: 3 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 0.981021287868933 | Const: 3 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 9.981021287868932 | Const: 3 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 9.981021287868932 | Const: 3 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 9.981021287868932 | Const: 3 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 99.98102128786893 | Const: 3 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 99.98102128786893 | Const: 3 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 99.98102128786893 | Const: 3 | Power: 2 | Bias: 100
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 0.9999995516952395 | Const: 3 | Power: 3 | Bias: 1
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 0.9999995516952395 | Const: 3 | Power: 3 | Bias: 1
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 0.9999995516952395 | Const: 3 | Power: 3 | Bias: 1
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 9.99999955169524 | Const: 3 | Power: 3 | Bias: 10
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 9.99999955169524 | Const: 3 | Power: 3 | Bias: 10
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 9.99999955169524 | Const: 3 | Power: 3 | Bias: 10
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 99.99999955169524 | Const: 3 | Power: 3 | Bias: 100
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 99.99999955169524 | Const: 3 | Power: 3 | Bias: 100
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 99.99999955169524 | Const: 3 | Power: 3 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0 | Const: 3 | Power: 4 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0 | Const: 3 | Power: 4 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0 | Const: 3 | Power: 4 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.0 | Const: 3 | Power: 4 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.0 | Const: 3 | Power: 4 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.0 | Const: 3 | Power: 4 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.0 | Const: 3 | Power: 4 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.0 | Const: 3 | Power: 4 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.0 | Const: 3 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 0.9905742506179028 | Const: 5 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 0.9905742506179028 | Const: 5 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 0.9905742506179028 | Const: 5 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 9.990574250617902 | Const: 5 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 9.990574250617902 | Const: 5 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 9.990574250617902 | Const: 5 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 99.9905742506179 | Const: 5 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 99.9905742506179 | Const: 5 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 99.9905742506179 | Const: 5 | Power: 2 | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: 0.9999994157876675 | Const: 5 | Power: 3 | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: 0.9999994157876675 | Const: 5 | Power: 3 | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: 0.9999994157876675 | Const: 5 | Power: 3 | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: 9.999999415787668 | Const: 5 | Power: 3 | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: 9.999999415787668 | Const: 5 | Power: 3 | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: 9.999999415787668 | Const: 5 | Power: 3 | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: 99.99999941578767 | Const: 5 | Power: 3 | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: 99.99999941578767 | Const: 5 | Power: 3 | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: 99.99999941578767 | Const: 5 | Power: 3 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0 | Const: 5 | Power: 4 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0 | Const: 5 | Power: 4 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0 | Const: 5 | Power: 4 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.0 | Const: 5 | Power: 4 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.0 | Const: 5 | Power: 4 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.0 | Const: 5 | Power: 4 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.0 | Const: 5 | Power: 4 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.0 | Const: 5 | Power: 4 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.0 | Const: 5 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 0.9814037309352697 | Const: 10 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 0.9814037309352697 | Const: 10 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 0.9814037309352697 | Const: 10 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 9.98140373093527 | Const: 10 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 9.98140373093527 | Const: 10 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 9.98140373093527 | Const: 10 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 99.98140373093527 | Const: 10 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 99.98140373093527 | Const: 10 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 99.98140373093527 | Const: 10 | Power: 2 | Bias: 100
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 0.9999996432711419 | Const: 10 | Power: 3 | Bias: 1
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 0.9999996432711419 | Const: 10 | Power: 3 | Bias: 1
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 0.9999996432711419 | Const: 10 | Power: 3 | Bias: 1
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 9.999999643271142 | Const: 10 | Power: 3 | Bias: 10
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 9.999999643271142 | Const: 10 | Power: 3 | Bias: 10
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 9.999999643271142 | Const: 10 | Power: 3 | Bias: 10
+3.3061446438281674 | Effective Prior: 0.1 | Optimal Threshold: 99.99999964327114 | Const: 10 | Power: 3 | Bias: 100
+0.6612289287656336 | Effective Prior: 0.5 | Optimal Threshold: 99.99999964327114 | Const: 10 | Power: 3 | Bias: 100
+3.3061446438281683 | Effective Prior: 0.9 | Optimal Threshold: 99.99999964327114 | Const: 10 | Power: 3 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0 | Const: 10 | Power: 4 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0 | Const: 10 | Power: 4 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0 | Const: 10 | Power: 4 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.0 | Const: 10 | Power: 4 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.0 | Const: 10 | Power: 4 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.0 | Const: 10 | Power: 4 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.0 | Const: 10 | Power: 4 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.0 | Const: 10 | Power: 4 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.0 | Const: 10 | Power: 4 | Bias: 100
+kernelsvm:
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -122124.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -122124.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -122124.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -122115.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -122115.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -122115.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -122025.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -122025.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -122025.71819886402 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -137536.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -137536.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -137536.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -137527.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -137527.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -137527.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -137437.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -137437.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -137437.34523994045 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -142247.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -142247.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -142247.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -142238.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -142238.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -142238.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -142148.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -142148.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -142148.40026591741 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -144308.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -144308.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -144308.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -144299.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -144299.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -144299.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -144209.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -144209.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -144209.47497169863 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -119754.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -119754.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -119754.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -119745.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -119745.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -119745.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -119655.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -119655.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -119655.00710772892 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -117116.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -117116.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -117116.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -117107.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -117107.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -117107.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -117017.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -117017.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -117017.53466434832 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -114638.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -114638.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -114638.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -114629.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -114629.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -114629.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -114539.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -114539.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -114539.68365041401 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -40616.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -40616.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -40616.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -40607.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -40607.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -40607.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+3.3224578575312673 | Effective Prior: 0.1 | Optimal Threshold: -40517.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+0.6644915715062534 | Effective Prior: 0.5 | Optimal Threshold: -40517.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+3.3224578575312678 | Effective Prior: 0.9 | Optimal Threshold: -40517.85254898874 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -49878.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -49878.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -49878.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -49869.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -49869.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -49869.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -49779.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -49779.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -49779.923452696974 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50724.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50724.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50724.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50715.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50715.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50715.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50625.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50625.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50625.06802437766 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50705.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50705.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50705.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50696.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50696.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50696.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -50606.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -50606.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -50606.06265065035 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -49674.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -49674.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -49674.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -49665.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -49665.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -49665.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -49575.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -49575.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -49575.998149084015 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -48900.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -48900.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -48900.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -48891.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -48891.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -48891.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -48801.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -48801.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -48801.69894260503 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39422.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39422.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39422.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39413.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39413.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39413.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39323.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39323.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39323.32970243454 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -25483.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -25483.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -25483.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -25474.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -25474.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -25474.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -25384.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -25384.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -25384.657865658333 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39290.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39290.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39290.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39281.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39281.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39281.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39191.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39191.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39191.78291265993 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41695.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41695.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41695.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41686.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41686.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41686.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41596.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41596.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41596.135427146444 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41668.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41668.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41668.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41659.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41659.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41659.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -41569.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -41569.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -41569.61429794527 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40608.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40608.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40608.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40599.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40599.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40599.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40509.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40509.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40509.0039584768 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39486.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39486.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39486.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39477.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39477.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39477.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -39387.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -39387.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -39387.75799888591 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -31251.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -31251.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -31251.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -31242.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -31242.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -31242.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -31152.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -31152.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -31152.372803191312 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -24355.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -24355.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -24355.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -24346.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -24346.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -24346.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -24256.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -24256.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -24256.642245148236 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -38129.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -38129.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -38129.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -38120.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -38120.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -38120.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -38030.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -38030.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -38030.81230541432 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40547.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40547.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40547.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40538.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40538.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40538.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40448.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40448.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40448.648791873486 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40524.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40524.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40524.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40515.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40515.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40515.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -40425.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -40425.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -40425.286112126654 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39461.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39461.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39461.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39452.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39452.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39452.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+3.3115823817292003 | Effective Prior: 0.1 | Optimal Threshold: -39362.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+0.6623164763458401 | Effective Prior: 0.5 | Optimal Threshold: -39362.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+3.311582381729201 | Effective Prior: 0.9 | Optimal Threshold: -39362.023331769604 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -32018.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -32018.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -32018.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -32009.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -32009.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -32009.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -31919.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -31919.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -31919.69286472695 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -30218.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 1
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -30218.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 1
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -30218.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 1
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -30209.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 10
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -30209.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 10
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -30209.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 10
+3.317020119630234 | Effective Prior: 0.1 | Optimal Threshold: -30119.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 100
+0.6634040239260468 | Effective Prior: 0.5 | Optimal Threshold: -30119.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 100
+3.317020119630235 | Effective Prior: 0.9 | Optimal Threshold: -30119.077178911928 | Gamma: 1 | RegBias: 1 : | Bias: 100
+polysvm (G):
+3.2517672648178357 | Effective Prior: 0.1 | Optimal Threshold: 35.061180799960894 | Const: 0 | Power: 2 | Bias: 1
+0.6503534529635672 | Effective Prior: 0.5 | Optimal Threshold: 35.061180799960894 | Const: 0 | Power: 2 | Bias: 1
+3.2517672648178366 | Effective Prior: 0.9 | Optimal Threshold: 35.061180799960894 | Const: 0 | Power: 2 | Bias: 1
+3.2517672648178357 | Effective Prior: 0.1 | Optimal Threshold: 44.061180799960894 | Const: 0 | Power: 2 | Bias: 10
+0.6503534529635672 | Effective Prior: 0.5 | Optimal Threshold: 44.061180799960894 | Const: 0 | Power: 2 | Bias: 10
+3.2517672648178366 | Effective Prior: 0.9 | Optimal Threshold: 44.061180799960894 | Const: 0 | Power: 2 | Bias: 10
+3.2517672648178357 | Effective Prior: 0.1 | Optimal Threshold: 134.06118079996088 | Const: 0 | Power: 2 | Bias: 100
+0.6503534529635672 | Effective Prior: 0.5 | Optimal Threshold: 134.06118079996088 | Const: 0 | Power: 2 | Bias: 100
+3.2517672648178366 | Effective Prior: 0.9 | Optimal Threshold: 134.06118079996088 | Const: 0 | Power: 2 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 16.960723225899155 | Const: 0 | Power: 3 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 16.960723225899155 | Const: 0 | Power: 3 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 16.960723225899155 | Const: 0 | Power: 3 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 25.960723225899155 | Const: 0 | Power: 3 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 25.960723225899155 | Const: 0 | Power: 3 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 25.960723225899155 | Const: 0 | Power: 3 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 115.96072322589916 | Const: 0 | Power: 3 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 115.96072322589916 | Const: 0 | Power: 3 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 115.96072322589916 | Const: 0 | Power: 3 | Bias: 100
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 3.9065478035071033 | Const: 0 | Power: 4 | Bias: 1
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 3.9065478035071033 | Const: 0 | Power: 4 | Bias: 1
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 3.9065478035071033 | Const: 0 | Power: 4 | Bias: 1
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 12.906547803507102 | Const: 0 | Power: 4 | Bias: 10
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 12.906547803507102 | Const: 0 | Power: 4 | Bias: 10
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 12.906547803507102 | Const: 0 | Power: 4 | Bias: 10
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 102.90654780350711 | Const: 0 | Power: 4 | Bias: 100
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 102.90654780350711 | Const: 0 | Power: 4 | Bias: 100
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 102.90654780350711 | Const: 0 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0000028507477356 | Const: 1 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0000028507477356 | Const: 1 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0000028507477356 | Const: 1 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.000002850747736 | Const: 1 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.000002850747736 | Const: 1 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.000002850747736 | Const: 1 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.00000285074773 | Const: 1 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.00000285074773 | Const: 1 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.00000285074773 | Const: 1 | Power: 2 | Bias: 100
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 1.2670380047305392 | Const: 1 | Power: 3 | Bias: 1
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 1.2670380047305392 | Const: 1 | Power: 3 | Bias: 1
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 1.2670380047305392 | Const: 1 | Power: 3 | Bias: 1
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 10.267038004730539 | Const: 1 | Power: 3 | Bias: 10
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 10.267038004730539 | Const: 1 | Power: 3 | Bias: 10
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 10.267038004730539 | Const: 1 | Power: 3 | Bias: 10
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 100.26703800473054 | Const: 1 | Power: 3 | Bias: 100
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 100.26703800473054 | Const: 1 | Power: 3 | Bias: 100
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 100.26703800473054 | Const: 1 | Power: 3 | Bias: 100
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 1.1983552497643235 | Const: 1 | Power: 4 | Bias: 1
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 1.1983552497643235 | Const: 1 | Power: 4 | Bias: 1
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 1.1983552497643235 | Const: 1 | Power: 4 | Bias: 1
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 10.198355249764324 | Const: 1 | Power: 4 | Bias: 10
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 10.198355249764324 | Const: 1 | Power: 4 | Bias: 10
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 10.198355249764324 | Const: 1 | Power: 4 | Bias: 10
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 100.19835524976432 | Const: 1 | Power: 4 | Bias: 100
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 100.19835524976432 | Const: 1 | Power: 4 | Bias: 100
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 100.19835524976432 | Const: 1 | Power: 4 | Bias: 100
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 1.0000005234160672 | Const: 3 | Power: 2 | Bias: 1
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 1.0000005234160672 | Const: 3 | Power: 2 | Bias: 1
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 1.0000005234160672 | Const: 3 | Power: 2 | Bias: 1
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 10.000000523416068 | Const: 3 | Power: 2 | Bias: 10
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 10.000000523416068 | Const: 3 | Power: 2 | Bias: 10
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 10.000000523416068 | Const: 3 | Power: 2 | Bias: 10
+3.3278955954323 | Effective Prior: 0.1 | Optimal Threshold: 100.00000052341606 | Const: 3 | Power: 2 | Bias: 100
+0.6655791190864601 | Effective Prior: 0.5 | Optimal Threshold: 100.00000052341606 | Const: 3 | Power: 2 | Bias: 100
+3.327895595432301 | Effective Prior: 0.9 | Optimal Threshold: 100.00000052341606 | Const: 3 | Power: 2 | Bias: 100
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 1.0061232464412353 | Const: 3 | Power: 3 | Bias: 1
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 1.0061232464412353 | Const: 3 | Power: 3 | Bias: 1
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 1.0061232464412353 | Const: 3 | Power: 3 | Bias: 1
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 10.006123246441236 | Const: 3 | Power: 3 | Bias: 10
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 10.006123246441236 | Const: 3 | Power: 3 | Bias: 10
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 10.006123246441236 | Const: 3 | Power: 3 | Bias: 10
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 100.00612324644123 | Const: 3 | Power: 3 | Bias: 100
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 100.00612324644123 | Const: 3 | Power: 3 | Bias: 100
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 100.00612324644123 | Const: 3 | Power: 3 | Bias: 100
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 1.0028632150938592 | Const: 3 | Power: 4 | Bias: 1
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 1.0028632150938592 | Const: 3 | Power: 4 | Bias: 1
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 1.0028632150938592 | Const: 3 | Power: 4 | Bias: 1
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 10.002863215093859 | Const: 3 | Power: 4 | Bias: 10
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 10.002863215093859 | Const: 3 | Power: 4 | Bias: 10
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 10.002863215093859 | Const: 3 | Power: 4 | Bias: 10
+3.257205002718869 | Effective Prior: 0.1 | Optimal Threshold: 100.00286321509385 | Const: 3 | Power: 4 | Bias: 100
+0.6514410005437737 | Effective Prior: 0.5 | Optimal Threshold: 100.00286321509385 | Const: 3 | Power: 4 | Bias: 100
+3.2572050027188695 | Effective Prior: 0.9 | Optimal Threshold: 100.00286321509385 | Const: 3 | Power: 4 | Bias: 100
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 1.0000005084108674 | Const: 5 | Power: 2 | Bias: 1
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 1.0000005084108674 | Const: 5 | Power: 2 | Bias: 1
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 1.0000005084108674 | Const: 5 | Power: 2 | Bias: 1
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 10.000000508410867 | Const: 5 | Power: 2 | Bias: 10
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 10.000000508410867 | Const: 5 | Power: 2 | Bias: 10
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 10.000000508410867 | Const: 5 | Power: 2 | Bias: 10
+3.333333333333333 | Effective Prior: 0.1 | Optimal Threshold: 100.00000050841086 | Const: 5 | Power: 2 | Bias: 100
+0.6666666666666666 | Effective Prior: 0.5 | Optimal Threshold: 100.00000050841086 | Const: 5 | Power: 2 | Bias: 100
+3.333333333333334 | Effective Prior: 0.9 | Optimal Threshold: 100.00000050841086 | Const: 5 | Power: 2 | Bias: 100
+3.0614464382816746 | Effective Prior: 0.1 | Optimal Threshold: 1.0009421208956129 | Const: 5 | Power: 3 | Bias: 1
+0.612289287656335 | Effective Prior: 0.5 | Optimal Threshold: 1.0009421208956129 | Const: 5 | Power: 3 | Bias: 1
+3.0614464382816755 | Effective Prior: 0.9 | Optimal Threshold: 1.0009421208956129 | Const: 5 | Power: 3 | Bias: 1
+3.0614464382816746 | Effective Prior: 0.1 | Optimal Threshold: 10.000942120895612 | Const: 5 | Power: 3 | Bias: 10
+0.612289287656335 | Effective Prior: 0.5 | Optimal Threshold: 10.000942120895612 | Const: 5 | Power: 3 | Bias: 10
+3.0614464382816755 | Effective Prior: 0.9 | Optimal Threshold: 10.000942120895612 | Const: 5 | Power: 3 | Bias: 10
+3.0614464382816746 | Effective Prior: 0.1 | Optimal Threshold: 100.00094212089562 | Const: 5 | Power: 3 | Bias: 100
+0.612289287656335 | Effective Prior: 0.5 | Optimal Threshold: 100.00094212089562 | Const: 5 | Power: 3 | Bias: 100
+3.0614464382816755 | Effective Prior: 0.9 | Optimal Threshold: 100.00094212089562 | Const: 5 | Power: 3 | Bias: 100
+3.099510603588907 | Effective Prior: 0.1 | Optimal Threshold: 1.000318889078745 | Const: 5 | Power: 4 | Bias: 1
+0.6199021207177814 | Effective Prior: 0.5 | Optimal Threshold: 1.000318889078745 | Const: 5 | Power: 4 | Bias: 1
+3.0995106035889077 | Effective Prior: 0.9 | Optimal Threshold: 1.000318889078745 | Const: 5 | Power: 4 | Bias: 1
+3.099510603588907 | Effective Prior: 0.1 | Optimal Threshold: 10.000318889078745 | Const: 5 | Power: 4 | Bias: 10
+0.6199021207177814 | Effective Prior: 0.5 | Optimal Threshold: 10.000318889078745 | Const: 5 | Power: 4 | Bias: 10
+3.0995106035889077 | Effective Prior: 0.9 | Optimal Threshold: 10.000318889078745 | Const: 5 | Power: 4 | Bias: 10
+3.099510603588907 | Effective Prior: 0.1 | Optimal Threshold: 100.00031888907874 | Const: 5 | Power: 4 | Bias: 100
+0.6199021207177814 | Effective Prior: 0.5 | Optimal Threshold: 100.00031888907874 | Const: 5 | Power: 4 | Bias: 100
+3.0995106035889077 | Effective Prior: 0.9 | Optimal Threshold: 100.00031888907874 | Const: 5 | Power: 4 | Bias: 100
+3.213703099510604 | Effective Prior: 0.1 | Optimal Threshold: 1.0000000848216941 | Const: 10 | Power: 2 | Bias: 1
+0.6427406199021207 | Effective Prior: 0.5 | Optimal Threshold: 1.0000000848216941 | Const: 10 | Power: 2 | Bias: 1
+3.2137030995106044 | Effective Prior: 0.9 | Optimal Threshold: 1.0000000848216941 | Const: 10 | Power: 2 | Bias: 1
+3.213703099510604 | Effective Prior: 0.1 | Optimal Threshold: 10.000000084821695 | Const: 10 | Power: 2 | Bias: 10
+0.6427406199021207 | Effective Prior: 0.5 | Optimal Threshold: 10.000000084821695 | Const: 10 | Power: 2 | Bias: 10
+3.2137030995106044 | Effective Prior: 0.9 | Optimal Threshold: 10.000000084821695 | Const: 10 | Power: 2 | Bias: 10
+3.213703099510604 | Effective Prior: 0.1 | Optimal Threshold: 100.00000008482169 | Const: 10 | Power: 2 | Bias: 100
+0.6427406199021207 | Effective Prior: 0.5 | Optimal Threshold: 100.00000008482169 | Const: 10 | Power: 2 | Bias: 100
+3.2137030995106044 | Effective Prior: 0.9 | Optimal Threshold: 100.00000008482169 | Const: 10 | Power: 2 | Bias: 100
+3.023382272974443 | Effective Prior: 0.1 | Optimal Threshold: 1.0000602606344344 | Const: 10 | Power: 3 | Bias: 1
+0.6046764545948885 | Effective Prior: 0.5 | Optimal Threshold: 1.0000602606344344 | Const: 10 | Power: 3 | Bias: 1
+3.0233822729744433 | Effective Prior: 0.9 | Optimal Threshold: 1.0000602606344344 | Const: 10 | Power: 3 | Bias: 1
+3.023382272974443 | Effective Prior: 0.1 | Optimal Threshold: 10.000060260634434 | Const: 10 | Power: 3 | Bias: 10
+0.6046764545948885 | Effective Prior: 0.5 | Optimal Threshold: 10.000060260634434 | Const: 10 | Power: 3 | Bias: 10
+3.0233822729744433 | Effective Prior: 0.9 | Optimal Threshold: 10.000060260634434 | Const: 10 | Power: 3 | Bias: 10
+3.023382272974443 | Effective Prior: 0.1 | Optimal Threshold: 100.00006026063443 | Const: 10 | Power: 3 | Bias: 100
+0.6046764545948885 | Effective Prior: 0.5 | Optimal Threshold: 100.00006026063443 | Const: 10 | Power: 3 | Bias: 100
+3.0233822729744433 | Effective Prior: 0.9 | Optimal Threshold: 100.00006026063443 | Const: 10 | Power: 3 | Bias: 100
+2.9200652528548123 | Effective Prior: 0.1 | Optimal Threshold: 1.000012049853324 | Const: 10 | Power: 4 | Bias: 1
+0.5840130505709625 | Effective Prior: 0.5 | Optimal Threshold: 1.000012049853324 | Const: 10 | Power: 4 | Bias: 1
+2.920065252854813 | Effective Prior: 0.9 | Optimal Threshold: 1.000012049853324 | Const: 10 | Power: 4 | Bias: 1
+2.9200652528548123 | Effective Prior: 0.1 | Optimal Threshold: 10.000012049853325 | Const: 10 | Power: 4 | Bias: 10
+0.5840130505709625 | Effective Prior: 0.5 | Optimal Threshold: 10.000012049853325 | Const: 10 | Power: 4 | Bias: 10
+2.920065252854813 | Effective Prior: 0.9 | Optimal Threshold: 10.000012049853325 | Const: 10 | Power: 4 | Bias: 10
+2.9200652528548123 | Effective Prior: 0.1 | Optimal Threshold: 100.00001204985332 | Const: 10 | Power: 4 | Bias: 100
+0.5840130505709625 | Effective Prior: 0.5 | Optimal Threshold: 100.00001204985332 | Const: 10 | Power: 4 | Bias: 100
+2.920065252854813 | Effective Prior: 0.9 | Optimal Threshold: 100.00001204985332 | Const: 10 | Power: 4 | Bias: 100
+kernelsvm (n):
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 16.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 16.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 16.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 1
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 25.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 25.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 25.30939230692058 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 10
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 115.30939230692059 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 115.30939230692059 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 115.30939230692059 | Gamma: 0.05 | RegBias: 0.01 : | Bias: 100
+1.859706362153344 | Effective Prior: 0.1 | Optimal Threshold: 23.929977469366786 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+0.3719412724306688 | Effective Prior: 0.5 | Optimal Threshold: 23.929977469366786 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+1.8597063621533445 | Effective Prior: 0.9 | Optimal Threshold: 23.929977469366786 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 1
+1.859706362153344 | Effective Prior: 0.1 | Optimal Threshold: 32.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+0.3719412724306688 | Effective Prior: 0.5 | Optimal Threshold: 32.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+1.8597063621533445 | Effective Prior: 0.9 | Optimal Threshold: 32.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 10
+1.859706362153344 | Effective Prior: 0.1 | Optimal Threshold: 122.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+0.3719412724306688 | Effective Prior: 0.5 | Optimal Threshold: 122.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+1.8597063621533445 | Effective Prior: 0.9 | Optimal Threshold: 122.92997746936679 | Gamma: 0.1 | RegBias: 0.01 : | Bias: 100
+1.8216421968461118 | Effective Prior: 0.1 | Optimal Threshold: 32.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+0.3643284393692224 | Effective Prior: 0.5 | Optimal Threshold: 32.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+1.821642196846112 | Effective Prior: 0.9 | Optimal Threshold: 32.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 1
+1.8216421968461118 | Effective Prior: 0.1 | Optimal Threshold: 41.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+0.3643284393692224 | Effective Prior: 0.5 | Optimal Threshold: 41.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+1.821642196846112 | Effective Prior: 0.9 | Optimal Threshold: 41.03488479849063 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 10
+1.8216421968461118 | Effective Prior: 0.1 | Optimal Threshold: 131.03488479849062 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+0.3643284393692224 | Effective Prior: 0.5 | Optimal Threshold: 131.03488479849062 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+1.821642196846112 | Effective Prior: 0.9 | Optimal Threshold: 131.03488479849062 | Gamma: 0.15 | RegBias: 0.01 : | Bias: 100
+1.88689505165851 | Effective Prior: 0.1 | Optimal Threshold: 100.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+0.377379010331702 | Effective Prior: 0.5 | Optimal Threshold: 100.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+1.8868950516585106 | Effective Prior: 0.9 | Optimal Threshold: 100.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 1
+1.88689505165851 | Effective Prior: 0.1 | Optimal Threshold: 109.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+0.377379010331702 | Effective Prior: 0.5 | Optimal Threshold: 109.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+1.8868950516585106 | Effective Prior: 0.9 | Optimal Threshold: 109.43890441708 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 10
+1.88689505165851 | Effective Prior: 0.1 | Optimal Threshold: 199.43890441707998 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+0.377379010331702 | Effective Prior: 0.5 | Optimal Threshold: 199.43890441707998 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+1.8868950516585106 | Effective Prior: 0.9 | Optimal Threshold: 199.43890441707998 | Gamma: 0.3 | RegBias: 0.01 : | Bias: 100
+1.8814573137574768 | Effective Prior: 0.1 | Optimal Threshold: 209.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+0.3762914627514954 | Effective Prior: 0.5 | Optimal Threshold: 209.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+1.8814573137574773 | Effective Prior: 0.9 | Optimal Threshold: 209.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 1
+1.8814573137574768 | Effective Prior: 0.1 | Optimal Threshold: 218.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+0.3762914627514954 | Effective Prior: 0.5 | Optimal Threshold: 218.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+1.8814573137574773 | Effective Prior: 0.9 | Optimal Threshold: 218.10113839621036 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 10
+1.8814573137574768 | Effective Prior: 0.1 | Optimal Threshold: 308.10113839621033 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+0.3762914627514954 | Effective Prior: 0.5 | Optimal Threshold: 308.10113839621033 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+1.8814573137574773 | Effective Prior: 0.9 | Optimal Threshold: 308.10113839621033 | Gamma: 0.5 | RegBias: 0.01 : | Bias: 100
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 303.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 303.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 303.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 1
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 312.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 312.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 312.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 10
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 402.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 402.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 402.75395396565256 | Gamma: 0.7 | RegBias: 0.01 : | Bias: 100
+1.919521479064709 | Effective Prior: 0.1 | Optimal Threshold: 364.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+0.38390429581294183 | Effective Prior: 0.5 | Optimal Threshold: 364.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+1.9195214790647095 | Effective Prior: 0.9 | Optimal Threshold: 364.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 1
+1.919521479064709 | Effective Prior: 0.1 | Optimal Threshold: 373.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+0.38390429581294183 | Effective Prior: 0.5 | Optimal Threshold: 373.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+1.9195214790647095 | Effective Prior: 0.9 | Optimal Threshold: 373.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 10
+1.919521479064709 | Effective Prior: 0.1 | Optimal Threshold: 463.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+0.38390429581294183 | Effective Prior: 0.5 | Optimal Threshold: 463.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+1.9195214790647095 | Effective Prior: 0.9 | Optimal Threshold: 463.2937087484027 | Gamma: 1 | RegBias: 0.01 : | Bias: 100
+2.0010875475802066 | Effective Prior: 0.1 | Optimal Threshold: 15.154411614488565 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+0.40021750951604135 | Effective Prior: 0.5 | Optimal Threshold: 15.154411614488565 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+2.001087547580207 | Effective Prior: 0.9 | Optimal Threshold: 15.154411614488565 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 1
+2.0010875475802066 | Effective Prior: 0.1 | Optimal Threshold: 24.154411614488566 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+0.40021750951604135 | Effective Prior: 0.5 | Optimal Threshold: 24.154411614488566 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+2.001087547580207 | Effective Prior: 0.9 | Optimal Threshold: 24.154411614488566 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 10
+2.0010875475802066 | Effective Prior: 0.1 | Optimal Threshold: 114.15441161448857 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+0.40021750951604135 | Effective Prior: 0.5 | Optimal Threshold: 114.15441161448857 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+2.001087547580207 | Effective Prior: 0.9 | Optimal Threshold: 114.15441161448857 | Gamma: 0.05 | RegBias: 0.1 : | Bias: 100
+1.9630233822729743 | Effective Prior: 0.1 | Optimal Threshold: 19.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+0.3926046764545949 | Effective Prior: 0.5 | Optimal Threshold: 19.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+1.963023382272975 | Effective Prior: 0.9 | Optimal Threshold: 19.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 1
+1.9630233822729743 | Effective Prior: 0.1 | Optimal Threshold: 28.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+0.3926046764545949 | Effective Prior: 0.5 | Optimal Threshold: 28.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+1.963023382272975 | Effective Prior: 0.9 | Optimal Threshold: 28.251150442849795 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 10
+1.9630233822729743 | Effective Prior: 0.1 | Optimal Threshold: 118.25115044284979 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+0.3926046764545949 | Effective Prior: 0.5 | Optimal Threshold: 118.25115044284979 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+1.963023382272975 | Effective Prior: 0.9 | Optimal Threshold: 118.25115044284979 | Gamma: 0.1 | RegBias: 0.1 : | Bias: 100
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 35.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 35.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 35.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 1
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 44.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 44.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 44.21667653360682 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 10
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 134.21667653360683 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 134.21667653360683 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 134.21667653360683 | Gamma: 0.15 | RegBias: 0.1 : | Bias: 100
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 105.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 105.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 105.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 1
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 114.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 114.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 114.79083996245784 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 10
+1.9412724306688416 | Effective Prior: 0.1 | Optimal Threshold: 204.79083996245782 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+0.38825448613376834 | Effective Prior: 0.5 | Optimal Threshold: 204.79083996245782 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+1.941272430668842 | Effective Prior: 0.9 | Optimal Threshold: 204.79083996245782 | Gamma: 0.3 | RegBias: 0.1 : | Bias: 100
+1.9032082653616094 | Effective Prior: 0.1 | Optimal Threshold: 204.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+0.3806416530723219 | Effective Prior: 0.5 | Optimal Threshold: 204.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+1.9032082653616098 | Effective Prior: 0.9 | Optimal Threshold: 204.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 1
+1.9032082653616094 | Effective Prior: 0.1 | Optimal Threshold: 213.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+0.3806416530723219 | Effective Prior: 0.5 | Optimal Threshold: 213.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+1.9032082653616098 | Effective Prior: 0.9 | Optimal Threshold: 213.06457064453664 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 10
+1.9032082653616094 | Effective Prior: 0.1 | Optimal Threshold: 303.0645706445366 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+0.3806416530723219 | Effective Prior: 0.5 | Optimal Threshold: 303.0645706445366 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+1.9032082653616098 | Effective Prior: 0.9 | Optimal Threshold: 303.0645706445366 | Gamma: 0.5 | RegBias: 0.1 : | Bias: 100
+1.9249592169657426 | Effective Prior: 0.1 | Optimal Threshold: 274.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+0.38499184339314846 | Effective Prior: 0.5 | Optimal Threshold: 274.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+1.9249592169657428 | Effective Prior: 0.9 | Optimal Threshold: 274.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 1
+1.9249592169657426 | Effective Prior: 0.1 | Optimal Threshold: 283.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+0.38499184339314846 | Effective Prior: 0.5 | Optimal Threshold: 283.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+1.9249592169657428 | Effective Prior: 0.9 | Optimal Threshold: 283.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 10
+1.9249592169657426 | Effective Prior: 0.1 | Optimal Threshold: 373.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+0.38499184339314846 | Effective Prior: 0.5 | Optimal Threshold: 373.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+1.9249592169657428 | Effective Prior: 0.9 | Optimal Threshold: 373.4491152224548 | Gamma: 0.7 | RegBias: 0.1 : | Bias: 100
+1.952147906470908 | Effective Prior: 0.1 | Optimal Threshold: 351.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+0.3904295812941816 | Effective Prior: 0.5 | Optimal Threshold: 351.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+1.9521479064709084 | Effective Prior: 0.9 | Optimal Threshold: 351.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 1
+1.952147906470908 | Effective Prior: 0.1 | Optimal Threshold: 360.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+0.3904295812941816 | Effective Prior: 0.5 | Optimal Threshold: 360.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+1.9521479064709084 | Effective Prior: 0.9 | Optimal Threshold: 360.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 10
+1.952147906470908 | Effective Prior: 0.1 | Optimal Threshold: 450.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+0.3904295812941816 | Effective Prior: 0.5 | Optimal Threshold: 450.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+1.9521479064709084 | Effective Prior: 0.9 | Optimal Threshold: 450.1223217238434 | Gamma: 1 | RegBias: 0.1 : | Bias: 100
+2.0717781402936377 | Effective Prior: 0.1 | Optimal Threshold: 15.120054492911445 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+0.41435562805872755 | Effective Prior: 0.5 | Optimal Threshold: 15.120054492911445 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+2.071778140293638 | Effective Prior: 0.9 | Optimal Threshold: 15.120054492911445 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 1
+2.0717781402936377 | Effective Prior: 0.1 | Optimal Threshold: 24.120054492911443 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+0.41435562805872755 | Effective Prior: 0.5 | Optimal Threshold: 24.120054492911443 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+2.071778140293638 | Effective Prior: 0.9 | Optimal Threshold: 24.120054492911443 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 10
+2.0717781402936377 | Effective Prior: 0.1 | Optimal Threshold: 114.12005449291145 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+0.41435562805872755 | Effective Prior: 0.5 | Optimal Threshold: 114.12005449291145 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+2.071778140293638 | Effective Prior: 0.9 | Optimal Threshold: 114.12005449291145 | Gamma: 0.05 | RegBias: 0.5 : | Bias: 100
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 18.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 18.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 18.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 1
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 27.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 27.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 27.373365169444792 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 10
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 117.3733651694448 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 117.3733651694448 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 117.3733651694448 | Gamma: 0.1 | RegBias: 0.5 : | Bias: 100
+1.9902120717781404 | Effective Prior: 0.1 | Optimal Threshold: 34.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+0.39804241435562804 | Effective Prior: 0.5 | Optimal Threshold: 34.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+1.9902120717781406 | Effective Prior: 0.9 | Optimal Threshold: 34.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 1
+1.9902120717781404 | Effective Prior: 0.1 | Optimal Threshold: 43.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+0.39804241435562804 | Effective Prior: 0.5 | Optimal Threshold: 43.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+1.9902120717781406 | Effective Prior: 0.9 | Optimal Threshold: 43.80488900523867 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 10
+1.9902120717781404 | Effective Prior: 0.1 | Optimal Threshold: 133.80488900523866 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+0.39804241435562804 | Effective Prior: 0.5 | Optimal Threshold: 133.80488900523866 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+1.9902120717781406 | Effective Prior: 0.9 | Optimal Threshold: 133.80488900523866 | Gamma: 0.15 | RegBias: 0.5 : | Bias: 100
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 105.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 105.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 105.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 1
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 114.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 114.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 114.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 10
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 204.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 204.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 204.2079726594425 | Gamma: 0.3 | RegBias: 0.5 : | Bias: 100
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 204.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 204.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 204.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 1
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 213.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 213.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 213.23586394233726 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 10
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 303.23586394233723 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 303.23586394233723 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 303.23586394233723 | Gamma: 0.5 | RegBias: 0.5 : | Bias: 100
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 266.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 266.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 266.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 1
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 275.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 275.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 275.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 10
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 365.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 365.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 365.03415714649816 | Gamma: 0.7 | RegBias: 0.5 : | Bias: 100
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 348.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 348.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 348.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 1
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 357.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 357.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 357.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 10
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 447.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 447.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 447.8660919899277 | Gamma: 1 | RegBias: 0.5 : | Bias: 100
+2.088091353996737 | Effective Prior: 0.1 | Optimal Threshold: 11.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+0.4176182707993475 | Effective Prior: 0.5 | Optimal Threshold: 11.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+2.088091353996738 | Effective Prior: 0.9 | Optimal Threshold: 11.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 1
+2.088091353996737 | Effective Prior: 0.1 | Optimal Threshold: 20.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+0.4176182707993475 | Effective Prior: 0.5 | Optimal Threshold: 20.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+2.088091353996738 | Effective Prior: 0.9 | Optimal Threshold: 20.119106548243703 | Gamma: 0.05 | RegBias: 1 : | Bias: 10
+2.088091353996737 | Effective Prior: 0.1 | Optimal Threshold: 110.1191065482437 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+0.4176182707993475 | Effective Prior: 0.5 | Optimal Threshold: 110.1191065482437 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+2.088091353996738 | Effective Prior: 0.9 | Optimal Threshold: 110.1191065482437 | Gamma: 0.05 | RegBias: 1 : | Bias: 100
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 18.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 18.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 18.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 1
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 27.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 27.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 27.25190226774894 | Gamma: 0.1 | RegBias: 1 : | Bias: 10
+2.0119630233822727 | Effective Prior: 0.1 | Optimal Threshold: 117.25190226774893 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+0.4023926046764546 | Effective Prior: 0.5 | Optimal Threshold: 117.25190226774893 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+2.011963023382273 | Effective Prior: 0.9 | Optimal Threshold: 117.25190226774893 | Gamma: 0.1 | RegBias: 1 : | Bias: 100
+1.9956498096791733 | Effective Prior: 0.1 | Optimal Threshold: 48.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+0.39912996193583467 | Effective Prior: 0.5 | Optimal Threshold: 48.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+1.9956498096791737 | Effective Prior: 0.9 | Optimal Threshold: 48.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 1
+1.9956498096791733 | Effective Prior: 0.1 | Optimal Threshold: 57.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+0.39912996193583467 | Effective Prior: 0.5 | Optimal Threshold: 57.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+1.9956498096791737 | Effective Prior: 0.9 | Optimal Threshold: 57.06614908279217 | Gamma: 0.15 | RegBias: 1 : | Bias: 10
+1.9956498096791733 | Effective Prior: 0.1 | Optimal Threshold: 147.06614908279218 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+0.39912996193583467 | Effective Prior: 0.5 | Optimal Threshold: 147.06614908279218 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+1.9956498096791737 | Effective Prior: 0.9 | Optimal Threshold: 147.06614908279218 | Gamma: 0.15 | RegBias: 1 : | Bias: 100
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 103.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 103.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 103.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 1
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 112.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 112.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 112.25947986489054 | Gamma: 0.3 | RegBias: 1 : | Bias: 10
+1.946710168569875 | Effective Prior: 0.1 | Optimal Threshold: 202.25947986489052 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+0.38934203371397497 | Effective Prior: 0.5 | Optimal Threshold: 202.25947986489052 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+1.9467101685698753 | Effective Prior: 0.9 | Optimal Threshold: 202.25947986489052 | Gamma: 0.3 | RegBias: 1 : | Bias: 100
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 204.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 204.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 204.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 1
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 213.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 213.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 213.27246241783251 | Gamma: 0.5 | RegBias: 1 : | Bias: 10
+1.9140837411636762 | Effective Prior: 0.1 | Optimal Threshold: 303.2724624178325 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+0.3828167482327352 | Effective Prior: 0.5 | Optimal Threshold: 303.2724624178325 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+1.9140837411636764 | Effective Prior: 0.9 | Optimal Threshold: 303.2724624178325 | Gamma: 0.5 | RegBias: 1 : | Bias: 100
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 265.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 265.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 265.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 1
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 274.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 274.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 274.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 10
+1.9303969548667754 | Effective Prior: 0.1 | Optimal Threshold: 364.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+0.3860793909733551 | Effective Prior: 0.5 | Optimal Threshold: 364.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+1.9303969548667759 | Effective Prior: 0.9 | Optimal Threshold: 364.6112320905457 | Gamma: 0.7 | RegBias: 1 : | Bias: 100
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 348.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 1
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 348.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 1
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 348.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 1
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 357.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 10
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 357.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 10
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 357.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 10
+1.9575856443719415 | Effective Prior: 0.1 | Optimal Threshold: 447.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 100
+0.3915171288743883 | Effective Prior: 0.5 | Optimal Threshold: 447.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 100
+1.9575856443719417 | Effective Prior: 0.9 | Optimal Threshold: 447.77594202017497 | Gamma: 1 | RegBias: 1 : | Bias: 100

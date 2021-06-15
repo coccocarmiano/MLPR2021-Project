@@ -35,7 +35,7 @@ def polysvm(folds, biases, consts, degrees):
 
                 for prior in priors:
                     mindcf, t = utils.minDCF(scores, labels, prior_t=prior, thresholds=scores)
-                    print(f"{mindcf} | Effective Prior: {prior} | Optimal Threshold: {t} | Power: {degree} | Bias: {bias}")
+                    print(f"{mindcf} | Effective Prior: {prior} | Optimal Threshold: {t} | Const: {c} | Power: {degree} | Bias: {bias}")
 
 
 def kernelsvm(folds, gammas, regbiases, biases):
