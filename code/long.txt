@@ -1,0 +1,4 @@
+polysvm:
+PolyAcc: 66.667
+kernelsvm:
+Kernel: 66.558

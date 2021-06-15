@@ -69,7 +69,7 @@ def DualSVM_Train(dataset: np.ndarray, function=None, factr : float = 1.0, bound
     zero = np.zeros(c)
     minimize_me = minimize(Hij)
     boundaries = [(0, bound) for i in range(c)]
-    alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, bounds=boundaries)
+    alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, maxfun=1000000, bounds=boundaries)
     return alphas
 
 def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndarray, function=None, bias : float=.0):

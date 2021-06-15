@@ -1,8 +1,10 @@
 import numpy as np
 import utils
 from classifiers import DualSVM_Score, DualSVM_Train
+import json
 
-
+f = None
+obj = {}
 
 def polysvm(folds, biases, degrees):
 
@@ -13,7 +15,7 @@ def polysvm(folds, biases, degrees):
 
         return f
 
-    priors = np.linspace(0.1, 0.9, 3)
+    priors = [.1, .5, .9]
 
     for degree in degrees:
         function = get_polyfunction(1, degree)
@@ -21,20 +23,23 @@ def polysvm(folds, biases, degrees):
             fscores, flabels = [], []
             for fold in folds:
                 tel = fold[1][-1, :]
-
-                alphas = DualSVM_Train(fold[0], function=function)
+                alphas = DualSVM_Train(fold[0], function=function, factr=1., bound=1.)
                 scores = DualSVM_Score(fold[0], alphas, fold[1], bias=bias)
+
                 fscores.append(scores)
                 flabels.append(tel)
             
-            fscores = np.concatenate(fscores)
-            flabels = np.concatenate(flabels)
+            scores = np.concatenate(fscores)
+            labels = np.concatenate(flabels)
             
-            mindcf, _, __ = utils.minDCF_SVM(fscores, flabels, priors)
-            print(mindcf)
+            for prior in priors:
+                mindcf, t = utils.minDCF(scores, labels, prior_t=prior, thresholds=scores)
+                print(f"{mindcf} | Effective Prior: {prior} | Optimal Threshold: {t} | Power: {degree} | Bias: {bias}")
 
 
 def kernelsvm(folds, gammas, biases):
+
+    priors = [.1, .5, .9]
 
     def kernel(gamma):
 
@@ -55,24 +60,39 @@ def kernelsvm(folds, gammas, biases):
             for fold in folds:
                 tel = fold[1][-1, :]
 
-                alphas = DualSVM_Train(fold[0], function=function)
+                alphas = DualSVM_Train(fold[0], function=function, factr=1)
                 scores = DualSVM_Score(fold[0], alphas, fold[1], bias=bias)
                 fscores.append(scores)
                 flabels.append(tel)
             
-            fscores = np.concatenate(fscores)
-            flabels = np.concatenate(flabels)
+            scores = np.concatenate(fscores)
+            labels = np.concatenate(flabels)
             
-            mindcf, _, __ = utils.minDCF_SVM(fscores, flabels, priors)
-            print(mindcf)
+            for prior in priors:
+                mindcf, t = utils.minDCF(scores, labels, prior_t=prior, thresholds=scores)
+                print(f"{mindcf} | Effective Prior: {prior} | Optimal Threshold: {t} | Gamma: {gamma} | Bias: {bias}")
 
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, 3)
+    _, folds = utils.kfold(dataset, 4)
+    
 
-    degrees = [4, 3, 2]
+    degrees = [2, 3, 4]
     biases = [1, 10, 100]
-    gammas = [.1, .5, 1]
+    gammas = [.1, .3, .5, .7, 1]
+
+    print("polysvm:")
     polysvm(folds, biases, degrees)
+    print("kernelsvm:")
     kernelsvm(folds, gammas, biases)
+
+    feats, labels = dataset[:-1, :], dataset[-1, :]
+    feats = utils.normalize(feats)
+    dataset = np.vstack((feats, labels))
+    _, folds = utils.kfold(dataset, 4)
+
+    #print("polysvm (n):")
+    #polysvm(folds, biases, degrees)
+    #print("kernelsvm (n):")
+    #kernelsvm(folds, gammas, biases)

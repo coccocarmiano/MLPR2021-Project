@@ -94,6 +94,9 @@ if __name__ == '__main__':
     toprint = []  # ignore this var
     to_plot = []
     trdataset = utils.load_train_data()
+    trd, trl = trdataset[:-1, :], trdataset[-1, :]
+    trd = utils.gaussianize(trdataset)
+    trdataset = np.vstack((trd, trl))
     nfolds = 20
 
     _, v = utils.PCA(trdataset)
@@ -102,9 +105,9 @@ if __name__ == '__main__':
     priors = [.1, .5, .9]
     npca = np.arange(11)+1
 
-    #fullcov(folds, priors, npca, v)
+    fullcov(folds, priors, npca, v)
     #naive(folds, priors, npca, v)
-    tied(folds, priors, npca, v)
+    #tied(folds, priors, npca, v)
 
     feats, labels = trdataset[:-1, :], trdataset[-1, :]
     feats = utils.normalize(feats)
