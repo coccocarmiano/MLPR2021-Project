@@ -49,7 +49,7 @@ def kernelsvm(trd, ted):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    tedataset = utils.load_train_data()
+    tedataset = utils.load_test_data()
 
     print("polysvm:")
     polysvm(dataset, tedataset)

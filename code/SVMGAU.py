@@ -3,8 +3,6 @@ import utils
 from classifiers import DualSVM_Score, DualSVM_Train
 import json
 
-f = None
-obj = {}
 
 def polysvm(folds, biases, consts, degrees):
 
@@ -77,13 +75,13 @@ def kernelsvm(folds, gammas, regbiases, biases):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, 5)
+    _, folds = utils.kfold(dataset, 20)
     
 
     degrees = [2, 3, 4]
-    biases = [1, 10, 100]
-    regbiases = [.01, .1, .5, 1]
-    gammas = [.05, .1, .15, .3, .5, .7, 1]
+    biases = [1, 5, 10, 20]
+    regbiases = [.01, .05, .1, .15, .20]
+    gammas = [.05, .1, .15, .2, .3, .5, .7, .9, 1]
     consts = [0, 1, 3, 5, 10]
 
     print("polysvm:")
@@ -98,5 +96,5 @@ if __name__ == '__main__':
 
     print("polysvm (G):")
     polysvm(folds, biases, consts, degrees)
-    print("kernelsvm (n):")
+    print("kernelsvm (G):")
     kernelsvm(folds, gammas, regbiases, biases)
