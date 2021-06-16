@@ -129,7 +129,6 @@ def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple
     splits = [split for split in splits]
     return splits, folds
 
-
 def mcol(v):
     '''
     Reshape a 1D array to a column vector with same dimension
