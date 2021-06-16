@@ -226,10 +226,10 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tu
     If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
     `dataset, other`, otherwise just normalized dataset.
     '''
-    if has_labels:
-        dataset, dataset_labels = dataset[:-1, :], dataset[-1, :]
-        if other is not None:
-            other, other_labels = other[:-1, :], other[-1, :]
+    
+    dataset, dataset_labels = dataset[:-1, :], dataset[-1, :]
+    if other is not None:
+        other, other_labels = other[:-1, :], other[-1, :]
 
     r, _ = dataset.shape
     mean = fc_mean(dataset)
@@ -313,4 +313,4 @@ def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
         other = np.vstack((os, ol))
         return dataset, other
 
-    return other
+    return dataset
