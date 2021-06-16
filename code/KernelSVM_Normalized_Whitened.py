@@ -2,7 +2,7 @@ import utils
 import classifiers
 import numpy as np
 
-filename = 'KernelSVM.txt'
+filename = 'KernelSVM_Normalized_Whiten.txt'
 
 def get_kernel_function(gamma, regbias):
     def kernel_function(x1, x2):
@@ -18,6 +18,8 @@ def get_kernel_function(gamma, regbias):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
+    dataset = utils.normalize(dataset)
+    dataset = utils.whiten(dataset)
     _, folds = utils.kfold(dataset, n=10)
     outfile = open(filename, 'w')
     regbiases = [.01, .05, .1, .15, .25, .5]

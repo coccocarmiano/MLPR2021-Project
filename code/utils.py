@@ -1,6 +1,10 @@
 import numpy as np
+import scipy as sp
 import matplotlib.patches as ptc
 from typing import List, Tuple
+from scipy import stats
+
+ppf = stats.norm.ppf
 
 train_data_file = '../data/Train.txt'
 test_data_file = '../data/Test.txt'
@@ -38,9 +42,9 @@ def load_test_data():
     '''
     Returns the data from `Test.txt` organized as column samples. Last field is label.
     '''
-    train_file = open(test_data_file, 'r')
-    lines = [line.strip() for line in train_file]
-    train_file.close()
+    test_fil = open(test_data_file, 'r')
+    lines = [line.strip() for line in test_fil]
+    test_fil.close()
 
     splits = []
     for line in lines:
@@ -51,7 +55,7 @@ def load_test_data():
     return matrix
 
 
-def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tuple[np.ndarray, np.ndarray]:
+def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Execute eigenvalue decompsition on `dataset`.
 
@@ -60,8 +64,6 @@ def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tu
     `dataset`: numpy matrix of column samples. Assumes last feat to label.
 
     `feat_label`: if false assumes no label feature
-
-    `stats` (opt): Print some stats like information retention and (soon) correlation matrix.
 
     Returns:
 
@@ -73,19 +75,10 @@ def PCA(dataset: np.ndarray, feat_label: bool = True, stats: bool = False) -> Tu
     else:
         feats = dataset
 
-    r, c = dataset.shape
-    f_means = fc_mean(feats)
-    cent = feats - f_means
-    mult = (cent @ cent.T) / c
-    w, v = np.linalg.eigh(mult)
+    cov = fc_cov(feats)
+    w, v = np.linalg.eigh(cov)
     w, v = w[::-1], v[:, ::-1]
-    if stats:
-        wsum = sum(w)
-        for i in range(nfeats):
-            print(f"{i+1} Features: {sum(w[:i+1])/wsum*100:.4f}%")
-        print("Eigenvalues: ", w)
 
-        # Todo: Covariance to Correlation
     return w, v
 
 
@@ -100,12 +93,12 @@ def get_patches() -> List[ptc.Patch]:
 
 def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple[np.ndarray, np.ndarray]]]:
     '''
-    Splits `dataset` in `n` folds. Returns a tuple.
+    Splits a dataset. Returns a tuple.
 
-    First list contains `n` evenly divided subsets of `dataset`.
+    First element is `n` evenly split subsets of `dataset`.
 
-    Second list contains `n` tuples. Each tuple has `n-1` folds
-    of samples from `dataset` and the the remaining `1`.
+    Second element are `n` tuples. Each tuple contains in the first element a subset of
+    `N-1` parts of `dataset` and in the second the remaining one.
     '''
     if (len(dataset.shape) > 2):
         print("Error: Wrong Dataset Shape")
@@ -130,8 +123,8 @@ def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple
     sel = np.arange(n)
     for i in range(n):
         train, test = splits[sel != i], splits[sel == i]
-        train = np.concatenate(train[:], axis=1)
-        test = np.concatenate(test[:], axis=1)
+        train = np.concatenate(train, axis=1)
+        test = np.concatenate(test, axis=1)
         folds.append((train, test))
     splits = [split for split in splits]
     return splits, folds
@@ -161,55 +154,170 @@ def fc_cov(dataset: np.ndarray) -> np.ndarray:
     Assumes no label feat.
     '''
     _, c = dataset.shape
-    dmean = fc_mean(dataset)
-    centered = dataset - dmean
-    cov = centered.dot(centered.T) / c
+    mean = fc_mean(dataset)
+    cent = dataset - mean
+    cov = cent @ cent.T / c
     return cov
 
+def fc_std(dataset: np.ndarray) -> np.ndarray:
+    '''
+    '''
+    r, _ = dataset.shape
+    std = dataset.std(axis=1).reshape((r, 1))
+    return std
 
 def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
     '''
     Returns the normalized and unnormalized DCF values
 
-    `predictions` are the assigned labels after classificaton
+    `predictions` are the predicted samples
 
-    `labels` are the real labels
+    `labels` are the actual samples labels
 
-    `prior_t` is the prior probability of class T
+    `prior_t` is P(C = 1) (default: 0.5)
 
-    `costs` is a tuple containing FIRST the cost for misclassifying as F an elem of class T, then the other
+    `costs` is a tuple containing (P(C = 0), P(C = 1)) (default: (1, 1))
     '''
-    FPR = ((predictions == 1) == (labels == 0)).sum() / len(predictions)
-    FNR = ((predictions == 0) == (labels == 1)).sum() / len(predictions)
+    FP = ((predictions == 1) == (labels == 0)).sum()
+    FN = ((predictions == 0) == (labels == 1)).sum()
+    TP = ((predictions == 1) == (labels == 1)).sum()
+    TN = ((predictions == 0) == (labels == 0)).sum()
+
+    FPR = FP / (FP + TN)
+    FNR = FN / (FN + TP)
+
     unnorm_dcf = FNR*costs[0]*prior_t + FPR * costs[1] * (1-prior_t)
-    factr = min(prior_t * costs[0], (1-prior_t) * costs[1])
-    norm_dcf = unnorm_dcf / factr
+    norm_dcf = unnorm_dcf / min(prior_t * costs[0], (1-prior_t) * costs[1])
 
     return (norm_dcf, unnorm_dcf)
 
 
-def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    DCFmin = np.Inf
+    for t in np.sort(scores):
+        predictions = scores > t
+        dcf, _ = DCF(predictions, labels, prior_t, costs)
+        if(dcf < DCFmin):
+            DCFmin = dcf
+    return DCFmin
+
+def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresholds : np.ndarray = None) -> Tuple[float, float, np.ndarray]:
     '''
-    Z-Normalize a (two) dataset(s).
+    Computes minDCF and optimal threshold for the given prior
+
+    If `thresholds` is None defaults to 1000 default thresholds
+    '''
+
+    mindcf = np.Inf
+    best_threshold = .0
+
+    if thresholds is None:
+        thresholds = np.linspace(.01, .99, 1000)
+        thresholds = np.log(1-thresholds) - np.log(thresholds)
+
+    for threshold in thresholds:
+        pred = scores > threshold
+        dcf, _ = DCF(pred, labels, prior_t=prior_t)
+
+        if dcf < mindcf:
+            mindcf = dcf
+            best_threshold = threshold
+    
+    return mindcf, best_threshold
+
+
+def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+    '''
+    Z-Normalize a (two) LABELED dataset(s).
 
     If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
     `dataset, other`, otherwise just normalized dataset.
-
-    If `has_labels` is `True`, discars label feature (assumed last one).
     '''
-    if has_labels:
-        dataset = dataset[:-1, :]
-        if other is not None:
-            other = other[:-1, :]
+    
+    dataset, dataset_labels = dataset[:-1, :], dataset[-1, :]
+    if other is not None:
+        other, other_labels = other[:-1, :], other[-1, :]
 
     r, _ = dataset.shape
     mean = fc_mean(dataset)
     std = dataset.std(axis=1).reshape((r, 1))
     dataset -= mean
     dataset /= std
+    dataset = np.vstack((dataset, dataset_labels))
 
     if other is not None:
         other = (other - mean) / std
+        other = np.vstack((other, other_labels))
         return (dataset, other)
+
+    return dataset
+
+
+def gaussianize(dataset : np.ndarray , other : np.ndarray = None, feat_label : bool = False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+    '''
+    Write me
+    '''
+    shape = dataset.shape
+
+    if (len(shape) < 2):
+        r, c = 1, len(dataset)
+        dataset = dataset.reshape((r, c))
+    else:
+        r, c = dataset.shape
+    gdataset = np.zeros((r, c))
+
+
+    for feat_idx in range(r):
+        ranks = np.zeros(c)
+        feats = dataset[feat_idx, :]
+        for idx in range(c):
+            value = feats[idx]
+            ranks[idx] = ((feats < value).sum() + 1) / (c+2)
+            ranks[idx] = ppf(ranks[idx])
+        gdataset[feat_idx] = ranks
+
+    if other is not None:
+       otherr, otherc = other.shape
+       out = np.empty((otherr, otherc))
+       for feat_idx in range(r):
+           dfeats = dataset[feat_idx]
+           ofeats = other[feat_idx]
+           ranks = np.zeros(otherc)
+           for idx in range(otherc):
+               value = ofeats[idx]
+               ranks[idx] = ((dfeats < value).sum() + 1) / (c+2)
+               ranks[idx] = ppf(ranks[idx])
+           out[feat_idx] = ranks
+       return gdataset, out
+
+    return gdataset
+
+def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = 1e-6) -> Tuple[np.ndarray, np.array]:
+    '''
+    Extracts only support vectors from a trained dual SVM model
+    '''
+    selector = alphas > zero
+    alphas = alphas[selector]
+    dataset = dataset[:, selector]
+    return dataset, alphas
+
+def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
+    '''
+    Whiten a LABELED dataset via the fisher method
+
+    If `other` is not none, whiten it too and return a Tuple
+    '''
+    ds, dl = dataset[:-1, :], dataset[-1, :]
+    
+    W = fc_cov(dataset)
+    W = sp.linalg.fractional_matrix_power(W, .5)
+    dataset = W @ dataset
+    dataset = np.vstack((ds, dl))
+
+    if other is not None:
+        os, ol = other[:-1, :], other[-1, :]
+        os = W @ ow
+        other = np.vstack((os, ol))
+        return dataset, other
 
     return dataset
