@@ -6,7 +6,7 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
-def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
+def logreg(dataset: np.ndarray, l: float=10e-3) -> Tuple[np.ndarray, float]:
     '''
     Computes the w vector and b value for the logistic regression
     '''
@@ -27,7 +27,7 @@ def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
     v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=0)
     return v[:-1], v[-1]
 
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray]:
+def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
