@@ -73,7 +73,7 @@ def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : fl
     alphas, _, __ = fmin_l_bfgs_b(minimize_me, zero, factr=factr, maxfun=1e6, bounds=boundaries)
     return alphas
 
-def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndarray, function, bias : float=.0):
+def DualSVM_Score(trdataset: np.ndarray, function, alphas : np.ndarray, tedataset: np.ndarray, bias : float=.0):
     '''
     Computes scores based on  `trdataset` support vectors and corresponding `alpha` values
 
@@ -91,8 +91,8 @@ def DualSVM_Score(trdataset: np.ndarray, alphas : np.ndarray, tedataset: np.ndar
     _, trc = trs.shape
     _, tec = tes.shape
 
-    trl = (2*trl-1).reshape((trc, 1))
-    tel = (2*tel-1).reshape((tec, 1))
+    trl = 2*trl-1
+    tel = 2*tel-1
 
     scores = np.zeros(tec)
 

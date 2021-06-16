@@ -219,28 +219,28 @@ def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresho
     return mindcf, best_threshold
 
 
-def normalize(dataset: np.ndarray, other: np.ndarray = None, has_labels=False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
+def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
     '''
-    Z-Normalize a (two) dataset(s).
+    Z-Normalize a (two) LABELED dataset(s).
 
     If `other` is provided, normalizes it with the data from `dataset` and returns a tuple with normalized
     `dataset, other`, otherwise just normalized dataset.
-
-    If `has_labels` is `True`, discards label feature (assumed last one).
     '''
     if has_labels:
-        dataset = dataset[:-1, :]
+        dataset, dataset_labels = dataset[:-1, :], dataset[-1, :]
         if other is not None:
-            other = other[:-1, :]
+            other, other_labels = other[:-1, :], other[-1, :]
 
     r, _ = dataset.shape
     mean = fc_mean(dataset)
     std = dataset.std(axis=1).reshape((r, 1))
     dataset -= mean
     dataset /= std
+    dataset = np.vstack((dataset, dataset_labels))
 
     if other is not None:
         other = (other - mean) / std
+        other = np.vstack((other, other_labels))
         return (dataset, other)
 
     return dataset
@@ -293,7 +293,6 @@ def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = 1e-6
     alphas = alphas[selector]
     dataset = dataset[:, selector]
     return dataset, alphas
-    
 
 def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
     '''
