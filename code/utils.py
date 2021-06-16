@@ -308,14 +308,14 @@ def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
     '''
     ds, dl = dataset[:-1, :], dataset[-1, :]
     
-    W = fc_cov(dataset)
+    W = fc_cov(ds)
     W = sp.linalg.fractional_matrix_power(W, .5)
-    dataset = W @ dataset
+    ds = W @ ds
     dataset = np.vstack((ds, dl))
 
     if other is not None:
         os, ol = other[:-1, :], other[-1, :]
-        os = W @ ow
+        os = W @ os
         other = np.vstack((os, ol))
         return dataset, other
 
