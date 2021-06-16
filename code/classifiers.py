@@ -6,7 +6,6 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
-<<<<<<< HEAD
 def logreg(dataset: np.ndarray, l: float=10**-3) -> tuple[np.ndarray, float]:
     '''
     Computes the w vector and b value for the logistic regression
@@ -73,8 +72,6 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
     scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)
     return (scores, predictions)
-=======
->>>>>>> cocco
 
 def gaussian_classifier(test_dataset: np.ndarray, means : np.ndarray, covs : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     '''
