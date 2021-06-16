@@ -1,4 +1,5 @@
 import numpy as np
+import scipy as sp
 import matplotlib.patches as ptc
 from typing import List, Tuple
 from scipy import stats
@@ -283,3 +284,34 @@ def gaussianize(dataset : np.ndarray , other : np.ndarray = None, feat_label : b
        return gdataset, out
 
     return gdataset
+
+def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = 1e-6) -> Tuple[np.ndarray, np.array]:
+    '''
+    Extracts only support vectors from a trained dual SVM model
+    '''
+    selector = alphas > zero
+    alphas = alphas[selector]
+    dataset = dataset[:, selector]
+    return dataset, alphas
+    
+
+def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
+    '''
+    Whiten a LABELED dataset via the fisher method
+
+    If `other` is not none, whiten it too and return a Tuple
+    '''
+    ds, dl = dataset[:-1, :], dataset[-1, :]
+    
+    W = fc_cov(dataset)
+    W = sp.linalg.fractional_matrix_power(W, .5)
+    dataset = W @ dataset
+    dataset = np.vstack((ds, dl))
+
+    if other is not None:
+        os, ol = other[:-1, :], other[-1, :]
+        os = W @ ow
+        other = np.vstack((os, ol))
+        return dataset, other
+
+    return other
