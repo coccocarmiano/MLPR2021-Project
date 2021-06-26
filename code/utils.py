@@ -302,21 +302,15 @@ def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = 1e-6
 
 def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
     '''
-    Whiten a LABELED dataset via the fisher method
-
-    If `other` is not none, whiten it too and return a Tuple
+    Returns the eigenvalues `w` and eigenvectors `v` used to whiten a dataset
     '''
-    ds, dl = dataset[:-1, :], dataset[-1, :]
-    
-    W = fc_cov(ds)
-    W = sp.linalg.fractional_matrix_power(W, .5)
-    ds = W @ ds
-    dataset = np.vstack((ds, dl))
 
-    if other is not None:
-        os, ol = other[:-1, :], other[-1, :]
-        os = W @ os
-        other = np.vstack((os, ol))
-        return dataset, other
-
-    return dataset
+    dataset = normalize(dataset, other)
+    feats, labels = dataset[:-1, :], dataset[-1, :]
+    cov = fc_cov(feats)
+    w, v = PCA(feats, feat_label=False)
+    w = np.diag(w)
+    fracinv = sp.linalg.fractional_matrix_power(w, -0.5)
+    pcov = fracinv @ cov @ fracinv
+    w, v = PCA(pcov, feat_label=False)
+    return w, v
