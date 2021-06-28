@@ -2,7 +2,7 @@ import utils
 import classifiers
 import numpy as np
 
-filename = 'PolySVM_Normalized_Whitened.txt'
+filename = 'PolySVM_Whitened.txt'
 
 def get_poly_function(c, d):
     def poly_function(x1, x2):
@@ -14,8 +14,6 @@ def get_poly_function(c, d):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    dataset = utils.normalize(dataset)
-    dataset = utils.whiten(dataset)
     _, folds = utils.kfold(dataset, n=10)
     outfile = open(filename, 'w')
     constants = [0, .5, 1, 3, 5, 10]
@@ -29,11 +27,23 @@ if __name__ == '__main__':
                 scores, labels = [], []
                 for fold in folds:
                     train, test = fold[0], fold[1]
+                    _, v = utils.whiten(train)
+                    train, test = utils.normalize(train, other=test)
                     fold_labels = test[-1, :]
                     labels.append(fold_labels)
 
+                    feats, temp = train[:-1, :], train[-1, :]
+                    feats = v.T @ feats
+                    train = np.vstack((feats, temp))
+
                     alphas = classifiers.DualSVM_Train(train, poly_function, bound=bound)
                     train, alphas = utils.support_vectors(train, alphas)
+
+                    feats, temp = test[:-1, :], test[-1, :]
+                    feats = v.T @ feats
+                    test = np.vstack((feats, temp))
+
+                    
                     fold_scores = classifiers.DualSVM_Score(train, poly_function, alphas, test)
                     scores.append(fold_scores)
                 
