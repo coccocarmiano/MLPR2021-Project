@@ -18,7 +18,7 @@ def get_kernel_function(gamma, regbias):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, n=10)
+    _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
     regbiases = [.01, .05, .1, .15, .25, .5]
     gammas = [.1, .15, .3, .5, .7, 1., 1.5, 3, 5, 10]

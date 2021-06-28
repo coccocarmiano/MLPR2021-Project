@@ -14,10 +14,10 @@ def get_poly_function(c, d):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, n=10)
+    _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
-    constants = [0, .5, 1, 3, 5, 10]
-    powers = [1, 2, 3, 4, 5]
+    constants = [0, .5, 1.5, 2.5, 5, 7.5, 10]
+    powers = [1, 1.5, 2, 2.5, 3]
     bounds = [.1, .3, .5, .7, 1]
 
     for power in powers:
