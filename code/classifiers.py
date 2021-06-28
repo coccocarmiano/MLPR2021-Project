@@ -77,7 +77,6 @@ def gaussian_classifier(test_dataset: np.ndarray, means : np.ndarray, covs : np.
     '''
     Computes LLRs for a binary gaussian classifier, proived the means and covariances matrices for class F and class T (in this order)
     '''
-    t = np.log(1-prior_t) - np.log(prior_t)
     r, c = test_dataset.shape
     scores = np.zeros((2, c))
     cterm = r * log(2*pi)
