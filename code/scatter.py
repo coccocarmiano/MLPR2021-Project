@@ -13,11 +13,13 @@ if __name__ == '__main__':
     w, v = utils.PCA(feats, feat_label=False)
     vt = v[:, :2]
     good, bad = feats[:, labels > 0], feats[:, labels < 1]
-    plt.scatter(good[0], good[1], color=utils.green)
-    plt.scatter(bad[0], bad[1], color=utils.red)   
+    plt.title("Raw Features, PCA 2")
+    plt.scatter(good[0], good[1], marker='x', color=utils.green)
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)   
 
 
     plt.figure()
+    plt.title("Normalized Features, PCA 2")
     data = utils.normalize(data)
     feats, labels = data[:-1, :], data[-1, :]
     mean = utils.fc_mean(feats)
@@ -25,18 +27,33 @@ if __name__ == '__main__':
     vt = v[:, :2]
     pfeats = vt.T @ feats
     good, bad = pfeats[:, labels > 0], pfeats[:, labels < 1]
-    plt.scatter(good[0], good[1], color=utils.green)
-    plt.scatter(bad[0], bad[1], color=utils.red)   
+    plt.scatter(good[0], good[1], marker='x', color=utils.green)
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)   
 
 
     plt.figure()
+    plt.title("Whitened Features, PCA 2")
     data = utils.load_train_data()
+    data = utils.normalize(data)
+    w, v = utils.PCA(data)
+    feats, labels = data[:-1, :], data[-1, :]
+    vt, wt = v[:, :2], w[:2]
+    S = np.diag(wt ** -0.5)
+    pfeats = vt.T @ feats
+    pfeats = S @ pfeats
+    good, bad = pfeats[:, labels > 0], pfeats[:, labels < 1]
+    plt.scatter(good[0], good[1], marker='x', color=utils.green)
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)    
+
+    plt.figure()
+    plt.title("Whitened Features (Custom Lib)")
+    data = utils.load_train_data()
+    data = utils.normalize(data)
     w, v = utils.whiten(data)
     feats, labels = data[:-1, :], data[-1, :]
-    feats = feats - utils.fc_mean(feats)
-    vt = v[:, :2]
+    vt, wt = v[:, :2], w[:2]
     pfeats = vt.T @ feats
     good, bad = pfeats[:, labels > 0], pfeats[:, labels < 1]
-    plt.scatter(good[0], good[1], color=utils.green)
-    plt.scatter(bad[0], bad[1], color=utils.red)    
+    plt.scatter(good[0], good[1], marker='x', color=utils.green)
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)    
     plt.show()
