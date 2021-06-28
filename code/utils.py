@@ -300,17 +300,18 @@ def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = 1e-6
     dataset = dataset[:, selector]
     return dataset, alphas
 
-def whiten(dataset : np.ndarray, other : np.ndarray = None) -> np.ndarray:
+def whiten(dataset : np.ndarray) -> np.ndarray:
     '''
     Returns the eigenvalues `w` and eigenvectors `v` used to whiten a dataset
     '''
 
-    dataset = normalize(dataset, other)
+    dataset = normalize(dataset)
     feats, labels = dataset[:-1, :], dataset[-1, :]
     cov = fc_cov(feats)
-    w, v = PCA(feats, feat_label=False)
+    w, v = PCA(cov, feat_label=False)
+    w[w < 1e-10] = 1e-10
     w = np.diag(w)
-    fracinv = sp.linalg.fractional_matrix_power(w, -0.5)
-    pcov = fracinv @ cov @ fracinv
+    w = sp.linalg.fractional_matrix_power(w, -0.5)
+    pcov = w @ cov @ w
     w, v = PCA(pcov, feat_label=False)
     return w, v
