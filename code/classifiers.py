@@ -6,36 +6,40 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
-def logreg(dataset: np.ndarray, l: float=10e-3) -> Tuple[np.ndarray, float]:
+def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple[np.ndarray, float]:
     '''
     Computes the w vector and b value for the logistic regression
     '''
     data, labels = dataset[:-1], dataset[-1]
-
+    zi = 2*labels - 1
     def logreg_obj(v):
         w, b = v[:-1], v[-1]
-        w = mcol(w)
-        # computes objective function
-        partial = 0
-        for i in range(data.shape[1]):
-            partial = partial + labels[i]*np.log1p(np.exp(- np.dot(w.T, data[:, i]) - b)) + (1 - labels[i])*np.log1p(np.exp(np.dot(w.T, data[:, i]) + b))
-        partial =  partial/data.shape[1] + l/2*np.dot(w.T, w).flatten()
-
+        w = w[:, None]
+        #tmp = np.dot(w.T, data) + b
+        #partial = (labels*np.logaddexp(0, -tmp) + (1 - labels)*np.logaddexp(0, tmp)).sum(axis=1) / data.shape[1] + l/2*np.dot(w.T, w).flatten()
+        tmp = -zi*(np.dot(w.T, data) + b)
+        partial = np.logaddexp(0, tmp).sum(axis=1) / data.shape[1] + l/2*np.dot(w.T, w).flatten()
         return partial
-
+    
+    max = 15000
+    max_factr = 10e6
+    if precision:
+        max = 10e5
+        max_factr = 1.0
     v0 = np.zeros(data.shape[0] + 1)
-    v, _, _ = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, factr=0)
+    v, _, d = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, maxfun=max, factr=max_factr)
     return v[:-1], v[-1]
 
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray]:
+def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float, t: float=0) -> tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
     '''
-    data = evaluation_dataset[:-1]
+    data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
-    predictions = (scores > 0).astype(int)  
-    return (scores, predictions)
+    predictions = (scores > t).astype(int)
+    accuracy = (predictions == labels).sum() / len(predictions)
+    return (scores, predictions, accuracy)
 
 def SVM_lin(dataset: np.ndarray, K: float, C: float) -> Tuple[np.ndarray, float]:
     '''
@@ -63,17 +67,18 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> Tuple[np.ndarray, float]
     w = (best_alphas*z*hat_data).sum(axis=1)
     return w[:-1], K*w[-1]
 
-def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray]:
+def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
     '''
-    data = evaluation_dataset[:-1]
+    data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)
-    return (scores, predictions)
+    accuracy = (predictions == labels).sum() / len(predictions)
+    return (scores, predictions, accuracy)
 
-def gaussian_classifier(test_dataset: np.ndarray, means : np.ndarray, covs : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Computes LLRs for a binary gaussian classifier, proived the means and covariances matrices for class F and class T (in this order)
     '''

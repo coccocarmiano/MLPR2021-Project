@@ -14,3 +14,5 @@ main-blx.bib
 *.log
 *.gz
 *.bib
+*.fdb_latexmk
+*.fls

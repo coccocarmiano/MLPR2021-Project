@@ -81,6 +81,19 @@ def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.nd
 
     return w, v
 
+def reduce_dataset(dataset, n=None):
+    samples, labels = dataset[:-1], dataset[-1]
+    r, c = samples.shape
+    if n == None:
+        n = r
+    elif n == r:
+        return dataset
+    
+    _, v = PCA(samples, feat_label=False)
+    vt = v[:, :n]
+    reduced_samples = vt.T @ samples
+    reduced_dataset = np.vstack([reduced_samples, labels])
+    return reduced_dataset
 
 def get_patches() -> List[ptc.Patch]:
     '''
@@ -190,6 +203,16 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
+def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
+    DCFmin = np.Inf
+    best_threshold = 0
+    for t in np.sort(scores):
+        predictions = scores > t
+        dcf, _ = DCF(predictions, labels, prior_t, costs)
+        if(dcf < DCFmin):
+            DCFmin = dcf
+            best_threshold = t
+    return DCFmin, best_threshold
 
 def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
     DCFmin = np.Inf
