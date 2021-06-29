@@ -5,28 +5,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
 from classifiers import logreg, logreg_scores
 
-def latex(toprint):
-    outfiletex = '../data/logreg_acc.tex'
-    f = open(outfiletex, "w")
-    print(r"\caption{Logistic Regression}\label{tab:logreg}", file=f)
-    print(r"\begin{center}", file=f)
-    print(r"\begin{tabular}{|c|c||c|c|}", file=f)
-    print(r"\hline", file=f)
-    print(r"\ & PCA & Error Rate & $DCF$\\", file=f)
-    print(r"\hline", file=f)
-    
-    toprint.sort(key=lambda x: min(x[0]))
-    toprint = toprint[:3]
-    for tup in toprint:
-        for i in range(len(tup[0])):
-            print(f"$\\pi_T = {tup[3][i]:.2f}$ & {tup[1]} & {tup[2][i]*100:.2f} & {tup[0][i]:.3f} \\\\", file=f)
-        print(r"\hline", file=f)
-
-    print(r"\end{tabular}", file=f)
-    print(r"\end{center}", file=f)
-
-    f.close()
-
 def plot_PCA_lambda_minDCF(values):
     nPCA = list(values.keys())
     priors = values[nPCA[0]]
@@ -81,30 +59,6 @@ def compute_PCA_lambda_minDCF(dataset):
                 values_to_plot[n][p] = (lambdas, loaded_data[0], loaded_data[1])
 
     if data_computed is False:
-        #values_to_plot = {}
-        #for n in nPCA:
-        #    reduced_dataset = utils.reduce_dataset(dataset, n=n)
-        #    _, folds = utils.kfold(reduced_dataset, n=5)
-        #    values_to_plot[n] = {}
-        #    for i, p in enumerate(priors):
-        #        for j, l in enumerate(lambdas):
-        #            print(f"Computing for n = {n}, p = {p}, l = {l}")
-        #            tot_scores = []
-        #            tot_label = []
-        #            for fold in folds:
-        #                trdata = fold[0]
-        #                tedata = fold[1]
-        #                w, b = logreg(trdata, l)
-        #                scores, _, _ = logreg_scores(tedata, w, b)
-        #                tot_scores.append(scores)
-        #                tot_label.append(tedata[-1])
-        #            tot_scores = np.concatenate(tot_scores)
-        #            tot_label = np.concatenate(tot_label)
-        #            dcfs[j], thresholds[j] = utils.min_DCF(tot_scores, tot_label, p)
-        #        with open(f"../trained/logreg_dcfs_{n}_{i}.npy", 'wb') as fname:
-        #            np.save(fname, np.vstack([dcfs, thresholds]))
-        #    
-        #    values_to_plot[n][p] = (lambdas, dcfs, thresholds)
         values_to_plot = {}
         
         for n in nPCA:
