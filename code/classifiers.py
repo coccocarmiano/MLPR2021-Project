@@ -6,11 +6,7 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
-<<<<<<< HEAD
-def logreg(dataset: np.ndarray, l: float=10e-3) -> Tuple[np.ndarray, float]:
-=======
 def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple[np.ndarray, float]:
->>>>>>> ruggero
     '''
     Computes the w vector and b value for the logistic regression
     '''
@@ -34,11 +30,7 @@ def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple
     v, _, d = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, maxfun=max, factr=max_factr)
     return v[:-1], v[-1]
 
-<<<<<<< HEAD
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray]:
-=======
 def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float, t: float=0) -> tuple[np.ndarray, np.ndarray, float]:
->>>>>>> ruggero
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
@@ -75,11 +67,7 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> Tuple[np.ndarray, float]
     w = (best_alphas*z*hat_data).sum(axis=1)
     return w[:-1], K*w[-1]
 
-<<<<<<< HEAD
-def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray]:
-=======
 def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
->>>>>>> ruggero
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
     Returns a tuple with the scores and the predictions
@@ -87,16 +75,10 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
     data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
     predictions = (scores > 0).astype(int)
-<<<<<<< HEAD
-    return (scores, predictions)
-
-def gaussian_classifier(test_dataset: np.ndarray, means : np.ndarray, covs : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-=======
     accuracy = (predictions == labels).sum() / len(predictions)
     return (scores, predictions, accuracy)
 
 def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
->>>>>>> ruggero
     '''
     Computes LLRs for a binary gaussian classifier, proived the means and covariances matrices for class F and class T (in this order)
     '''
