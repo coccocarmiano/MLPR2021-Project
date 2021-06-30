@@ -182,3 +182,58 @@ def DualSVM_Score(trdataset: np.ndarray, function, alphas : np.ndarray, tedatase
         scores += bias
     
     return scores
+
+
+def GMM_Train(dataset, n):
+    # Initialization part
+    # Dummy Inizialization
+    nfeatures, nsamples = dataset.shape
+    dmean = dataset.mean(axis=1)
+    eps = np.ones(nfeatures) * 1e-3
+    means = [dmean - eps/2 + (i+1)/n * eps for i in range(n)]
+    covs = [np.eye(nfeatures) for i in range(n)]
+    weights = [ 1/n for i in range(n)]
+        
+    loglikelihoods = np.zeros((n, nsamples))
+
+    for c in range(n):
+        loglikelihoods[c] = gaussian_ll(dataset, means[c], covs[c]) + np.log(weights[c])
+    lse = scipy.special.logsumexp(loglikelihoods, axis=0)
+
+
+    ## Iteration part
+    ll_sum_before = lse.sum()
+    delta = 1
+    while delta > 1e-10:
+        responsabilities = np.exp(loglikelihoods-lse)
+        for c in range(n):
+            newmean = (responsabilities[c] * dataset).sum(axis=1) / responsabilities[c].sum()
+            centered = dataset-newmean.reshape((nfeatures, 1))
+            S = (responsabilities[c] * dataset) @ dataset.T / responsabilities[c].sum()
+            newcov = S - newmean.reshape((nfeatures, 1)) @ newmean.reshape((nfeatures,1)).T
+            newweigth = responsabilities[c].sum() / responsabilities.sum()
+
+            means[c] = newmean
+            covs[c] = newcov
+            weights[c] = newweigth
+
+        for c in range(n):
+            loglikelihoods[c] = gaussian_ll(dataset, means[c], covs[c])
+        lse = scipy.special.logsumexp(loglikelihoods, axis=0)
+
+        ll_sum_after = lse.sum()
+        delta = ll_sum_after-ll_sum_before
+        ll_sum_before = ll_sum_after
+
+    return weights, means, covs
+
+def GMM_Score(dataset, weights, means, covs):
+    n = len(weights)
+    r, c = dataset.shape
+    scores = np.zeros((n, c))
+
+    for c in range(n):
+        scores[c] = gaussian_ll(dataset, means[c], covs[c]) + np.log(weights[c])
+    
+    return scipy.special.logsumexp(scores, axis=0)
+    
