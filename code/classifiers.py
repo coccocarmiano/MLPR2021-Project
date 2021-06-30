@@ -78,23 +78,29 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
     accuracy = (predictions == labels).sum() / len(predictions)
     return (scores, predictions, accuracy)
 
-def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
+def gaussian_ll(test_dataset: np.ndarray, mean, cov) -> np.ndarray:
+    '''
+    Somputes loglikelihood on a dataset given mean and covariance
+    '''
+    r, c = test_dataset.shape
+    cterm = r * log(2*pi)
+
+    
+    _, det = np.linalg.slogdet(cov)
+    invcov = np.linalg.inv(cov)
+    centered = test_dataset - mean.reshape((r, 1))
+    contributes = np.diag(centered.T @ invcov @ centered)
+    scores = -0.5 * (cterm +  det + contributes)
+
+    return scores
+
+
+def gaussian_classifier(test_dataset: np.ndarray, means, covs,) -> Tuple[np.ndarray, np.ndarray]:
+
     '''
     Computes LLRs for a binary gaussian classifier, proived the means and covariances matrices for class F and class T (in this order)
     '''
-    r, c = test_dataset.shape
-    scores = np.zeros((2, c))
-    cterm = r * log(2*pi)
-
-    for i in range(2):
-        _, det = np.linalg.slogdet(covs[i])
-        invcov = np.linalg.inv(covs[i])
-        centered = test_dataset - means[i]
-        contributes = np.diag(centered.T @ invcov @ centered)
-        scores[i] += -0.5 * (cterm +  det + contributes)
-
-    llr = scores[1]-scores[0]
-    return llr
+    return gaussian_ll(test_dataset, means[1], covs[1]) - gaussian_ll(test_dataset, means[0], covs[0])
 
 
 def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : float=.5):
