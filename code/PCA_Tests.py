@@ -484,4 +484,98 @@ if __name__ == '__main__':
         print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
         np.save(f'../data/MVGNaiveWhitenedScoresPCA{n}.npy', scores)
     file.close()
-    
+
+    # GMM
+    train = utils.load_train_data()
+    w, v = utils.PCA(train)
+    _, folds = utils.kfold(train, n=3)
+    file = open('../data/GMMPCA.txt', 'w')
+    for n in narray:
+        scores, labels = [], []
+        vt = v[:, :n]
+        for fold in folds:
+            trfold, tefold = fold
+            trsamples, trlabels = vt.T @ trfold[:-1, :], trfold[-1, :]
+            tesamples, telabels = vt.T @ tefold[:-1, :], tefold[-1, :]
+
+            good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
+            gweights, gmeans, gcovs = classifiers.GMM_Train(good, 4) 
+            bweights, bmeans, bcovs = classifiers.GMM_Train(bad, 4) 
+            
+            good_scores = classifiers.GMM_Score(tesamples, gweights, gmeans, gcovs)
+            bad_scores = classifiers.GMM_Score(tesamples, bweights, bmeans, bcovs)
+            fold_scores = good_scores - bad_scores
+            scores.append(fold_scores)
+            labels.append(telabels)
+        
+        scores, labels = np.concatenate(scores), np.concatenate(labels)
+        dcf, _ = utils.DCF(scores > 0, labels)
+        mindcf, _ = utils.minDCF(scores, labels)
+        print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
+        np.save(f'../data/GMMPCA{n}.npy', scores)
+    file.close()
+
+
+    # GMM + Norm
+    train = utils.load_train_data()
+    train = utils.normalize(train)
+    w, v = utils.PCA(train)
+    _, folds = utils.kfold(train, n=3)
+    file = open('../data/GMMNormalizedPCA.txt', 'w')
+    for n in narray:
+        scores, labels = [], []
+        vt = v[:, :n]
+        for fold in folds:
+            trfold, tefold = fold
+            trsamples, trlabels = vt.T @ trfold[:-1, :], trfold[-1, :]
+            tesamples, telabels = vt.T @ tefold[:-1, :], tefold[-1, :]
+
+            good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
+            gweights, gmeans, gcovs = classifiers.GMM_Train(good, 4) 
+            bweights, bmeans, bcovs = classifiers.GMM_Train(bad, 4) 
+            
+            good_scores = classifiers.GMM_Score(tesamples, gweights, gmeans, gcovs)
+            bad_scores = classifiers.GMM_Score(tesamples, bweights, bmeans, bcovs)
+            fold_scores = good_scores - bad_scores
+            scores.append(fold_scores)
+            labels.append(telabels)
+        
+        scores, labels = np.concatenate(scores), np.concatenate(labels)
+        dcf, _ = utils.DCF(scores > 0, labels)
+        mindcf, _ = utils.minDCF(scores, labels)
+        print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
+        np.save(f'../data/GMMNormalizedPCA{n}.npy', scores)
+    file.close()
+
+
+    # GMM + Whitening
+    train = utils.load_train_data()
+    train = utils.normalize(train)
+    w, v = utils.whiten(train)
+    _, folds = utils.kfold(train, n=3)
+    file = open('../data/GMMWhitenedPCA.txt', 'w')
+    for n in narray:
+        scores, labels = [], []
+        vt = v[:, :n]
+        for fold in folds:
+            trfold, tefold = fold
+            trsamples, trlabels = vt.T @ trfold[:-1, :], trfold[-1, :]
+            tesamples, telabels = vt.T @ tefold[:-1, :], tefold[-1, :]
+
+            good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
+            gweights, gmeans, gcovs = classifiers.GMM_Train(good, 4) 
+            bweights, bmeans, bcovs = classifiers.GMM_Train(bad, 4) 
+            
+            good_scores = classifiers.GMM_Score(tesamples, gweights, gmeans, gcovs)
+            bad_scores = classifiers.GMM_Score(tesamples, bweights, bmeans, bcovs)
+            fold_scores = good_scores - bad_scores
+            scores.append(fold_scores)
+            labels.append(telabels)
+        
+        scores, labels = np.concatenate(scores), np.concatenate(labels)
+        dcf, _ = utils.DCF(scores > 0, labels)
+        mindcf, _ = utils.minDCF(scores, labels)
+        print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
+        np.save(f'../data/GMMWhitenedPCA{n}.npy', scores)
+    file.close()
+        
