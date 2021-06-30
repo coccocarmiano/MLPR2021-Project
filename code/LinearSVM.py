@@ -1,70 +1,43 @@
 import numpy as np
 import utils
-import os
-import matplotlib.pyplot as plt
-import matplotlib.patches as ptc
+from os import listdir
+from os.path import isfile, join
 from classifiers import SVM_lin, SVM_lin_scores
 
-def plot_PCA_lambda_minDCF(values):
-    nPCA = list(values.keys())
-    priors = values[nPCA[0]]
-
-    brg = ['b', 'r', 'g']
-    patches = [ptc.Patch(color=c, label=f"π = {p}") for p, c in zip(priors, brg)]
-
-    fig, axs = plt.subplots(2, 2)
-    fig.legend(handles=patches, handlelength=1, loc='center right', ncol=1, borderaxespad=0.1)
-
-    for ax in axs.flat:
-        ax.set(xlabel='λ', ylabel='minDCF', xscale='log')
-
+def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 9, 7, 5]):
+    if tag != '':
+        tag = tag + '_'
     
-    axs[0, 0].set_xlabel(None)
-    axs[0, 1].set_xlabel(None)
-    axs[0, 1].set_ylabel(None)
-    axs[1, 1].set_ylabel(None)
+    nPCA = sorted(nPCA, reverse=True)
+    if nPCA[0] > dataset.shape[0]-1:
+        raise Exception('Invalid dimension in PCA')
 
-    for n, ax in zip(nPCA, axs.flat):
-        ax.set_title(f"PCA (n = {n})" if n < nPCA[0] else "No PCA")
-        for i, p in enumerate(priors):
-            lambdas, dcfs, _ = values[n][p]
-            ax.minorticks_on()
-            ax.plot(lambdas, dcfs, color=brg[i])
+    biases = [0, 0.1, 1, 10, 100]
+    boundaries = [.1, 1, 10]
+    result = {}
 
-
-    fig.tight_layout()
-    plt.subplots_adjust(right=0.825)
-    fig.savefig('../img/' + 'logregquad_lambda_minDCF.jpg', format='jpg')
-
-def compute_PCA_lambda_minDCF(dataset):
-    priors = [.1, .5, .9]
-    values_to_plot = {}
-    biases = [0, 0.1, 5, 10]
-    boundaries = [.1, 1]
 
     #Check if data has been already computed and try to load them
-    data_computed = True
-    values_to_plot = {}
+    files = [f for f in listdir('../trained') if (isfile(join('../trained', f)) and "linsvm_" + tag + f"scores_" in f)]
+    PCAcomputed = []
+    
+    for f in files:
+        n = int(f.split('_')[-1].split('D')[0])
+        PCAcomputed.append(n)
+        result[n] = np.load(join('../trained', f))
 
-    for i, p in enumerate(priors):
-        if os.path.exists(f"../trained/linsvm_{i}.npy") is False:
-            data_computed = False
-            break
-        else:
-            loaded_data = np.load(f"../trained/linsvm_{i}.npy")
-            nSplit = int(loaded_data.shape[0]/2)
-            values_to_plot[p] = (biases, boundaries, loaded_data[0:nSplit], loaded_data[nSplit:])
+    PCAtoCompute = sorted([n for n in nPCA if n not in PCAcomputed], reverse=True)
 
-    if data_computed is False:
-        values_to_plot = {}
-        _, folds = utils.kfold(dataset, n=5)
-        tot_scores = np.empty((len(biases), len(boundaries), dataset.shape[1]))
-        tot_label = np.empty((len(biases), len(boundaries), dataset.shape[1]))
+    for n in PCAtoCompute:
+        reduced_dataset = utils.reduce_dataset(dataset, n=n)
+        _, folds = utils.kfold(reduced_dataset, n=kfold)
+        # lambda, scores, labels
+        result[n] = np.empty((len(biases), len(boundaries), 2, reduced_dataset.shape[1]))
         for i, k in enumerate(biases):
             for j, c in enumerate(boundaries):
-                print(f"Computing for K = {k}, C = {c}")
-                tmp_scores = []
-                tmp_labels = []
+                print(f"[{tag.split('_')[0]}] Computing for n={n}, K = {k}, C = {c}")
+                folds_scores = []
+                folds_labels = []
 
                 for fold in folds:
                     train_dataset = fold[0]
@@ -72,49 +45,35 @@ def compute_PCA_lambda_minDCF(dataset):
 
                     w, b = SVM_lin(train_dataset, k, c)
                     scores, _, _ = SVM_lin_scores(test_dataset, w, b)
-                    tmp_scores.append(scores)
-                    tmp_labels.append(test_dataset[-1])
+                    folds_scores.append(scores)
+                    folds_labels.append(test_dataset[-1])
 
-                tot_scores[i, j, :] = np.concatenate(tmp_scores)
-                tot_label[i, j, :] = np.concatenate(tmp_labels)
-                acc = ((tot_scores[i, j] > 0).astype(int) == tot_label[i, j]).sum() / len(tot_scores[i, j])
+                result[n][i, j, 0, :] = np.concatenate(folds_scores)
+                result[n][i, j, 1, :] = np.concatenate(folds_labels)
+                acc = ((result[n][i, j, 0, :] > 0).astype(int) ==  result[n][i, j, 1, :]).sum() / len(result[n][i, j, 0, :])
                 print(acc)
 
-        for i, p in enumerate(priors):
-            dcfs = np.empty((len(biases), len(boundaries)))
-            thresholds = np.empty((len(biases), len(boundaries)))
-            for j, _ in enumerate(biases):
-                for k, _ in enumerate(boundaries):
-                    dcfs[j, k], thresholds[j, k] = utils.min_DCF(tot_scores[j, k], tot_label[j, k], p)
-
-            values_to_plot[p] = (biases, boundaries, dcfs, thresholds)
-            with open(f"../trained/linsvm_{i}.npy", 'wb') as fname:
-                np.save(fname, np.vstack([dcfs, thresholds]))
-    
-    return values_to_plot
+        with open("../trained/linsvm_" + tag + f"scores_{kfold}K_{n}D.npy", 'wb') as fname:
+            np.save(fname, result[n])
+            
+    return result, biases, boundaries
 
 if __name__ == '__main__':
 
     dataset = utils.load_train_data()
-    values_to_plot = compute_PCA_lambda_minDCF(dataset)
-    #plot_PCA_lambda_minDCF(values_to_plot)
+    result = compute_scores(dataset)
+    
+    norm_dataset = utils.normalize(dataset)
+    result_norm = compute_scores(dataset, tag='norm')
 
-    best_dcf = values_to_plot[0.5][2][0, 0]
-    best_i = 0
-    best_j = 0
-    for i in range(len(values_to_plot[0.5][0])):
-        for j in range(len(values_to_plot[0.5][1])):
-            dcf = values_to_plot[0.5][2][i, j]
-            if(dcf < best_dcf):
-                best_i = i
-                best_j = j
-                best_dcf = dcf
+    trd, trl = dataset[:-1, :], dataset[-1, :]
+    trd = utils.gaussianize(trd)
+    gau_dataset = np.vstack((trd, trl))
+    result_gau = compute_scores(dataset, tag='gau')
 
-    K = values_to_plot[0.5][0][best_i]
-    C = values_to_plot[0.5][1][best_j]
-    print(f"Best K, C: {K}, {C}")
+    _, v = utils.whiten(norm_dataset)
+    feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
+    feats = v.T @ feats
+    whiten_dataset = np.vstack((feats, labels))
 
-    eval_dataset = utils.load_test_data()
-    w, b = SVM_lin(dataset, K, C)
-    scores, _, acc = SVM_lin_scores(eval_dataset, w, b)
-    print(acc)
+    result_whiten = compute_scores(whiten_dataset, tag='whiten')
