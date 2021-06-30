@@ -41,6 +41,13 @@ def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 9, 7, 5]):
                 train_dataset = fold[0]
                 test_dataset = fold[1]
 
+                if tag == 'whiten_':
+                    train_dataset, test_dataset = utils.normalize(train_dataset, other=test_dataset)
+                    _, v = utils.whiten(train_dataset)
+                    feats = train_dataset[:-1]
+                    feats = v.T @ feats
+                    train_dataset = np.vstack((feats, train_dataset[-1]))
+
                 w, b = logreg(train_dataset, l)
                 scores, _, _ = logreg_scores(test_dataset, w, b)
                 folds_scores.append(scores)
@@ -68,3 +75,10 @@ if __name__ == '__main__':
     trd = utils.gaussianize(trd)
     gau_dataset = np.vstack((trd, trl))
     result_gau = compute_scores(dataset, tag='gau')
+
+    _, v = utils.whiten(norm_dataset)
+    feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
+    feats = v.T @ feats
+    whiten_dataset = np.vstack((feats, labels))
+
+    result_whiten = compute_scores(whiten_dataset, tag='whiten')

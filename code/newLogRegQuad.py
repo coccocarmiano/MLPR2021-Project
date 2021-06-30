@@ -77,3 +77,10 @@ if __name__ == '__main__':
     trd = utils.gaussianize(trd)
     gau_dataset = np.vstack((trd, trl))
     result_gau = compute_scores(dataset, tag='gau')
+
+    _, v = utils.whiten(norm_dataset)
+    feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
+    feats = v.T @ feats
+    whiten_dataset = np.vstack((feats, labels))
+
+    result_whiten = compute_scores(whiten_dataset, tag='whiten')
