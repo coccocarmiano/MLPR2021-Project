@@ -5,7 +5,7 @@ import utils
 if __name__ == '__main__':
     narray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     ## Raw Poly
-    """ train = utils.load_train_data()
+    train = utils.load_train_data()
     w, v = utils.PCA(train)
     _, folds = utils.kfold(train, n=3)
 
@@ -212,7 +212,7 @@ if __name__ == '__main__':
         mindcf, _ = utils.minDCF(scores, labels)
         print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
         np.save(f'../data/PCARBFSVMWhitenedScoresPCA{n}.npy', scores)
-    file.close() """
+    file.close()
 
 
     ## MVG
@@ -319,7 +319,7 @@ if __name__ == '__main__':
 
             good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
             gmean, bmean = utils.fc_mean(good), utils.fc_mean(bad)
-            cov = utils.fc_cov(trsamples[:-1, :])
+            cov = utils.fc_cov(trsamples)
             gcov, bcov = cov, cov
             fold_scores = classifiers.gaussian_classifier(tesamples, [bmean, gmean], [bcov, gcov])
             scores.append(fold_scores)
@@ -350,7 +350,7 @@ if __name__ == '__main__':
 
             good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
             gmean, bmean = utils.fc_mean(good), utils.fc_mean(bad)
-            cov = utils.fc_cov(trsamples[:-1, :])
+            cov = utils.fc_cov(trsamples)
             gcov, bcov = cov, cov
             fold_scores = classifiers.gaussian_classifier(tesamples, [bmean, gmean], [bcov, gcov])
             scores.append(fold_scores)
@@ -380,7 +380,7 @@ if __name__ == '__main__':
 
             good, bad = trsamples[:, trlabels > 0], trsamples[:, trlabels < 1]
             gmean, bmean = utils.fc_mean(good), utils.fc_mean(bad)
-            cov = utils.fc_cov(trsamples[:-1, :])
+            cov = utils.fc_cov(trsamples)
             gcov, bcov = cov, cov
             fold_scores = classifiers.gaussian_classifier(tesamples, [bmean, gmean], [bcov, gcov])
             scores.append(fold_scores)
