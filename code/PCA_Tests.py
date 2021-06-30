@@ -4,7 +4,7 @@ import utils
 
 if __name__ == '__main__':
     narray = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    ## Raw Poly
+    """ ## Raw Poly
     train = utils.load_train_data()
     w, v = utils.PCA(train)
     _, folds = utils.kfold(train, n=3)
@@ -513,7 +513,7 @@ if __name__ == '__main__':
         mindcf, _ = utils.minDCF(scores, labels)
         print(f"{dcf} || DCF: {dcf} -- minDCF {mindcf} -- PCA: {n}", file=file)
         np.save(f'../data/GMMPCA{n}.npy', scores)
-    file.close()
+    file.close() """
 
 
     # GMM + Norm
@@ -555,6 +555,10 @@ if __name__ == '__main__':
     _, folds = utils.kfold(train, n=3)
     file = open('../data/GMMWhitenedPCA.txt', 'w')
     for n in narray:
+
+        if n == 7:
+            continue ## Change me
+
         scores, labels = [], []
         vt = v[:, :n]
         for fold in folds:
