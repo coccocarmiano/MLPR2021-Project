@@ -63,22 +63,22 @@ def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 9, 7, 5]):
             
     return result, lambdas
 
-if __name__ == '__main__':
 
-    dataset = utils.load_train_data()
-    result = compute_scores(dataset)
 
-    norm_dataset = utils.normalize(dataset)
-    result_norm = compute_scores(dataset, tag='norm')
+dataset = utils.load_train_data()
+result = compute_scores(dataset)
 
-    trd, trl = dataset[:-1, :], dataset[-1, :]
-    trd = utils.gaussianize(trd)
-    gau_dataset = np.vstack((trd, trl))
-    result_gau = compute_scores(dataset, tag='gau')
+norm_dataset = utils.normalize(dataset)
+result_norm = compute_scores(dataset, tag='norm')
 
-    _, v = utils.whiten(norm_dataset)
-    feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
-    feats = v.T @ feats
-    whiten_dataset = np.vstack((feats, labels))
+trd, trl = dataset[:-1, :], dataset[-1, :]
+trd = utils.gaussianize(trd)
+gau_dataset = np.vstack((trd, trl))
+result_gau = compute_scores(dataset, tag='gau')
 
-    result_whiten = compute_scores(whiten_dataset, tag='whiten')
+_, v = utils.whiten(norm_dataset)
+feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
+feats = v.T @ feats
+whiten_dataset = np.vstack((feats, labels))
+
+result_whiten = compute_scores(whiten_dataset, tag='whiten')
