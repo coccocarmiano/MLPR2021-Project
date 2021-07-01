@@ -32,7 +32,7 @@ def visualize(data):
                   handlelength=1, loc='upper right')
     plt.tight_layout()
     plt.savefig(fout, format='jpg')
-    #plt.show()
+    plt.show()
 
 
 def main():

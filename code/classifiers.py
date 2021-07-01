@@ -78,23 +78,29 @@ def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> t
     accuracy = (predictions == labels).sum() / len(predictions)
     return (scores, predictions, accuracy)
 
-def gaussian_classifier(test_dataset: np.ndarray, means, covs, prior_t: float = 0.5) -> Tuple[np.ndarray, np.ndarray]:
+def gaussian_ll(test_dataset: np.ndarray, mean, cov) -> np.ndarray:
+    '''
+    Somputes loglikelihood on a dataset given mean and covariance
+    '''
+    r, c = test_dataset.shape
+    cterm = r * log(2*pi)
+
+    
+    _, det = np.linalg.slogdet(cov)
+    invcov = np.linalg.inv(cov)
+    centered = test_dataset - mean.reshape((r, 1))
+    contributes = np.diag(centered.T @ invcov @ centered)
+    scores = -0.5 * (cterm +  det + contributes)
+
+    return scores
+
+
+def gaussian_classifier(test_dataset: np.ndarray, means, covs,) -> Tuple[np.ndarray, np.ndarray]:
+
     '''
     Computes LLRs for a binary gaussian classifier, proived the means and covariances matrices for class F and class T (in this order)
     '''
-    r, c = test_dataset.shape
-    scores = np.zeros((2, c))
-    cterm = r * log(2*pi)
-
-    for i in range(2):
-        _, det = np.linalg.slogdet(covs[i])
-        invcov = np.linalg.inv(covs[i])
-        centered = test_dataset - means[i]
-        contributes = np.diag(centered.T @ invcov @ centered)
-        scores[i] += -0.5 * (cterm +  det + contributes)
-
-    llr = scores[1]-scores[0]
-    return llr
+    return gaussian_ll(test_dataset, means[1], covs[1]) - gaussian_ll(test_dataset, means[0], covs[0])
 
 
 def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : float=.5):
@@ -176,3 +182,58 @@ def DualSVM_Score(trdataset: np.ndarray, function, alphas : np.ndarray, tedatase
         scores += bias
     
     return scores
+
+
+def GMM_Train(dataset, n):
+    # Initialization part
+    # Dummy Inizialization
+    nfeatures, nsamples = dataset.shape
+    dmean = dataset.mean(axis=1)
+    eps = np.ones(nfeatures) * 1e-3
+    means = [dmean - eps/2 + (i+1)/n * eps for i in range(n)]
+    covs = [np.eye(nfeatures) for i in range(n)]
+    weights = [ 1/n for i in range(n)]
+        
+    loglikelihoods = np.zeros((n, nsamples))
+
+    for c in range(n):
+        loglikelihoods[c] = gaussian_ll(dataset, means[c], covs[c]) + np.log(weights[c])
+    lse = scipy.special.logsumexp(loglikelihoods, axis=0)
+
+
+    ## Iteration part
+    ll_sum_before = lse.sum()
+    delta = 1
+    while delta > 1e-10:
+        responsabilities = np.exp(loglikelihoods-lse)
+        for c in range(n):
+            newmean = (responsabilities[c] * dataset).sum(axis=1) / responsabilities[c].sum()
+            centered = dataset-newmean.reshape((nfeatures, 1))
+            S = (responsabilities[c] * dataset) @ dataset.T / responsabilities[c].sum()
+            newcov = S - newmean.reshape((nfeatures, 1)) @ newmean.reshape((nfeatures,1)).T
+            newweigth = responsabilities[c].sum() / responsabilities.sum()
+
+            means[c] = newmean
+            covs[c] = newcov
+            weights[c] = newweigth
+
+        for c in range(n):
+            loglikelihoods[c] = gaussian_ll(dataset, means[c], covs[c])
+        lse = scipy.special.logsumexp(loglikelihoods, axis=0)
+
+        ll_sum_after = lse.sum()
+        delta = ll_sum_after-ll_sum_before
+        ll_sum_before = ll_sum_after
+
+    return weights, means, covs
+
+def GMM_Score(dataset, weights, means, covs):
+    n = len(weights)
+    r, c = dataset.shape
+    scores = np.zeros((n, c))
+
+    for c in range(n):
+        scores[c] = gaussian_ll(dataset, means[c], covs[c]) + np.log(weights[c])
+    
+    return scipy.special.logsumexp(scores, axis=0)
+    
