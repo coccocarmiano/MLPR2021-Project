@@ -116,11 +116,6 @@ def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : fl
     feats, labels = dataset[:-1, :], dataset[-1, :]
     _, c = feats.shape
 
-    def linear(x1, x2):
-        return x1.T @ x2
-
-    if function is None:
-        function = linear
 
     def minimize(H):
         def f(alpha):
@@ -131,7 +126,7 @@ def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : fl
 
 
     # Prepare the Z_ij matrix
-    z_i = (2*labels-1)
+    z_i = np.array(2*labels-1, dtype=int)
 
     # Prepare the H_ij matrix
     # Exploit trace property to save time
@@ -140,7 +135,7 @@ def DualSVM_Train(dataset: np.ndarray, function, factr : float = 1.0, bound : fl
 
     for i in range(c):
         for j in range(i+1):
-            Hij[i, j] = function(dataset[:, i], dataset[:, j]) * z_i[i] * z_i[j]
+            Hij[i, j] = function(feats[:, i], feats[:, j]) * z_i[i] * z_i[j]
 
     Hij = Hij -np.diag(np.diag(Hij)) + Hij.T
 
@@ -157,11 +152,6 @@ def DualSVM_Score(trdataset: np.ndarray, function, alphas : np.ndarray, tedatase
 
     `function` can be None, in this case a linear approach is used
     '''
-    def linear(x1, x2):
-        return x1.T @ x2
-
-    if function is None:
-        function = linear
 
     trs, trl = trdataset[:-1, :], trdataset[-1, :]
     tes, tel = tedataset[:-1, :], tedataset[-1, :]
