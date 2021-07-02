@@ -69,7 +69,7 @@ Lastly we take a look at normalized and whitened data.
 
 Here the results are a bit more interesting: points do get separeted just like after normalization, but same class points stay close to each other while different class get more apart. In this scenario, it looks like even linear model might have a chance to achieve a decent performance.
 
-\newpage
+
 \section{Pre-Processing Analysis}
 \subsection{Pre-Processing for Gaussian Models}
 
@@ -168,7 +168,7 @@ Given the non-probabilistic nature of the scores, using a threshold of $0$ is so
 
 \subsection{Pre-Processing for Polynomial Kernel SVMs}
 
-As usual we start by looking at the effect of PCA on a dummy Polynomial Kernel. The dummy kernel used is the following:
+As usual we start by looking at the effect of PCA on a dummy Polynomial Kernel. The polynomial kernel used is the following:
 
 $$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
 $$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
@@ -184,9 +184,7 @@ With $\phi(\cdot)$ being:
                       \end{bmatrix}
     \end{align}
 \end{center}
-\footnote{Above we freely set $c$ as it is the final derivation of this mapping, but the original kernel as desccribed here would require it to be 1}
-
-Generally speaking, results look far from good ( the DCFs are much higher than Gaussian Models ) and PCA seems to have no effect whatsoever.
+\footnote{Above we freely set $c$ as it is the final derivation of this mapping, but the original kernel as described here would require it to be 1}
 
 \begin{table}[H]
     \centering
@@ -195,18 +193,16 @@ Generally speaking, results look far from good ( the DCFs are much higher than G
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
-            Raw & 11 & 0.648 &  0.642 \\
-            Normalized & 10 & 0.666 &  0.653 \\
-            Whitened & 11 & 0.666 &  0.659 \\
+            Raw & 7 & 0.554 &  0.545  \\
+            Normalized & 6 & {\bf 0.393} &  {\bf 0.381}  \\
+            Whitened & 11 & 0.399 &  0.393  \\
             \hline
     \end{tabular}
     \caption{Polynomail Kernel SVM - Best Results}
 \end{table}
 
-Here normalization and whiteining seem to have little to no effect: our DCFs are the same, even thought our scores vary significantly.
-
-Moreover, since we are enforcing $\pi_T = 0.5$, this means that we are achieving $ \approx 33\% $ error rate, which is the same we would get by guessing always Bad (on our Training/Validation set, that is).
-This may hint that polynomial kernel SVMs are just bad suited for this task.
+The results are promising: data whitening actually harms performance compared to just normalization, while normalization gives us good results, on par with other models.
+Many features look like they can be safely removed, sometimes even giving a gain in performance.
 
 \subsection{Pre-Processing for RBF Kernel SVMs}
 
@@ -215,7 +211,7 @@ The dummy kernel function used is:
 
 $$\displaystyle k({\bf x_1}, {\bf x_2}) = e^{-\gamma||{\bf x}_1 - {\bf x}_2||^2} + b = e^{-0.05||{\bf x}_1 - {\bf x}_2||^2} + 0.05 $$
 
-Small values of $\gamma$ and $b$ were picked to avoid numerical issues.
+Small values of $\gamma$ and $b$ were picked to avoid numerical issues when using non-normalized models.
 
 The RBF seems to be robust while working with all features or almost, and start behaving worse when the number of dimensions gets much lower.
 
@@ -228,18 +224,20 @@ Given the non-optimed hyperparameters, trying various combination of hyperparame
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
-                Raw & 10 & 0.585 &  0.579 \\ 
-                Normalized & No &  {\bf 0.469}  &  {\bf 0.431} \\
-                Whitened & No &  {\bf 0.469}  &  {\bf 0.431} \\
+                Raw & 10 & 0.588 & 0.579 \\ 
+                Normalized & 11 & {\bf 0.356} & {\bf 0.352} \\ 
+                Whitened & 11 & {\bf 0.356} & {\bf 0.352} \\ 
             \hline
     \end{tabular}
     \caption{RBF Kernel SVM - Best Results}
 \end{table}
 
-For once normalization seems to help: the DCFs get significantly lower. 
-Whitened features perform on par with normalized features, but given that before whiteining features are also normalized, we can say that also in this case whiteining has no effect whatsoever.
+Just like polynomial kernel SVMs, here normalization has no effect whatsoever whilte normalization greatly improves our performance.
+The RBF Kernel works significantly better when working with all or most components. 
 
-\newpage
+We are not yet discussing perfomance in detail but so far, this is our most promising model.
+
+
 \section{Optimizing Models}
 \subsection{Optimizing MVG Classifiers}
 
