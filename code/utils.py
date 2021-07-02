@@ -203,25 +203,6 @@ def DCF(predictions: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs
 
     return (norm_dcf, unnorm_dcf)
 
-def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
-    DCFmin = np.Inf
-    best_threshold = 0
-    for t in np.sort(scores):
-        predictions = scores > t
-        dcf, _ = DCF(predictions, labels, prior_t, costs)
-        if(dcf < DCFmin):
-            DCFmin = dcf
-            best_threshold = t
-    return DCFmin, best_threshold
-
-def min_DCF(scores: np.ndarray, labels: np.ndarray, prior_t: float = 0.5, costs: Tuple[float, float] = (1., 1.)) -> float:
-    DCFmin = np.Inf
-    for t in np.sort(scores):
-        predictions = scores > t
-        dcf, _ = DCF(predictions, labels, prior_t, costs)
-        if(dcf < DCFmin):
-            DCFmin = dcf
-    return DCFmin
 
 def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresholds : np.ndarray = None) -> Tuple[float, float, np.ndarray]:
     '''
@@ -234,8 +215,7 @@ def minDCF(scores : np.ndarray, labels : np.ndarray, prior_t : float=.5, thresho
     best_threshold = .0
 
     if thresholds is None:
-        thresholds = np.linspace(.01, .99, 1000)
-        thresholds = np.log(1-thresholds) - np.log(thresholds)
+        thresholds = np.sort(scores)
 
     for threshold in thresholds:
         pred = scores > threshold
