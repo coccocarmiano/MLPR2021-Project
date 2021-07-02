@@ -18,7 +18,7 @@ def visualize(data):
                  color=green, alpha=.7, bins=nbins)
         plt.hist(np.sort(data[i, selectorF]), density=True,
                  color=red, alpha=.7, bins=nbins)
-        plt.xticks([], [])
+        #plt.xticks([], [])
         #plt.yticks([], [])
         plt.title(f"Feature {i+1}")
     plt.subplot(4, 3, 12)
@@ -32,7 +32,7 @@ def visualize(data):
                   handlelength=1, loc='upper right')
     plt.tight_layout()
     plt.savefig(fout, format='jpg')
-    plt.show()
+    #plt.show()
 
 
 def main():

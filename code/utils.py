@@ -349,7 +349,6 @@ def BEP(scores, labels, N=100):
         t = np.log( pi/(1-pi) )
         mindcf, _ = DCF(scores > opt, labels, prior_t=pi)
         dcf, _ = DCF(scores > -t, labels, prior_t=pi)
-        acc = ((scores > -t) == labels).sum() / len(labels)*100
 
         mindcf_points.append(mindcf)
         actdcf_points.append(dcf)

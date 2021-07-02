@@ -1,9 +1,11 @@
-\documentclass[twocolumn]{article}
+\documentclass[12pt, twocolumn]{article}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{hyperref}
 \usepackage{amsmath, amssymb}
+\usepackage{cuted}
+\usepackage[margin=0.7in]{geometry}
 \usepackage[style=numeric-comp,useprefix,hyperref,backend=bibtex]{biblatex}
 \graphicspath{{../img/}}
 \usepackage{endnotes}
@@ -16,6 +18,9 @@
 \begin{document}
 
 \maketitle
+\begin{strip}
+    \lipsum[1]
+\end{strip}
 \tableofcontents
 
 
@@ -73,62 +78,6 @@ We will shortly decide, by running some non-optimized models, which pre-processi
 We will be reporting the best results for each classifiers, extracted from a 3 or 5 Fold Validation approach. The decision rule, since this is a binary problem, will be set to $\displaystyle t = \log(\frac{\pi_T}{1-\pi_T}) \lessgtr 0 $, where $\pi_T$ is assumed $ = 0.5$ and it is the prior probability of class Good.
 
 Let's start with Gaussian Classifiers: Full-Covariance, Tied-Covariance, and Naive-Bayes.
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-            9 & 0.401 & 0.362 \\
-            8 & 0.403 & 0.373 \\
-            7 & 0.426 & 0.406 \\
-            5 & 0.427 & 0.413 \\
-            \hline
-            No  & 0.465 & 0.389 \\
-            \hline
-    \end{tabular}
-    \caption{Full-Covariance MVG - PCA}
-\end{table}
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-            7 & 0.375 & 0.366 \\
-            8 & 0.384 & 0.366 \\
-            9 & 0.387 & 0.377 \\
-            10 & 0.388 & 0.377 \\
-            \hline
-            No  & 0.402 & 0.401 \\
-            \hline
-    \end{tabular}
-    \caption{Tied-Covariance MVG - PCA}
-\end{table}
-
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-            7 & 0.383 & 0.366 \\
-            8 & 0.393 & 0.387 \\
-            6 & 0.401 & 0.393 \\
-            9 & 0.412 & 0.391 \\
-            \hline
-            No  & 0.442 & 0.404 \\
-            \hline
-    \end{tabular}
-    \caption{Naive-Bayes MVG - PCA}
-\end{table}
-
 We find out that a small number of features can be removed, with modest gains.
 
 Let's combine these results with normalization and whitening.
@@ -192,24 +141,6 @@ Now we can finally say something on MVG Classifiers:
 Staying of the subject of Gaussian Classifiers, we make similar operations for GMMs. 
 This is a dummy 4-Component model.
 
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-             No & 0.410  & 0.394 \\ 
-             10 & 0.418  & 0.410 \\ 
-             9 & 0.431  & 0.425 \\ 
-             7 & 0.436  & 0.420 \\ 
-            \hline
-             No & 0.410  & 0.394 \\ 
-            \hline
-    \end{tabular}
-    \caption{GMM - PCA}
-\end{table}
-
 Results seem on par, not significantly lower than MVG Classifiers, but GMM actually performs best when keeping as much dimensions as possible.
 
 \begin{table}[H]
@@ -239,7 +170,8 @@ Given the non-probabilistic nature of the scores, using a threshold of $0$ is so
 
 As usual we start by looking at the effect of PCA on a dummy Polynomial Kernel. The dummy kernel used is the following:
 
-$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
+$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
+$$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
 
 With $\phi(\cdot)$ being:
 
@@ -253,26 +185,6 @@ With $\phi(\cdot)$ being:
     \end{align}
 \end{center}
 \footnote{Above we freely set $c$ as it is the final derivation of this mapping, but the original kernel as desccribed here would require it to be 1}
-
-Here are the results:
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-                No & 0.648 & 0.642 \\ 
-                10 & 0.666 & 0.663 \\ 
-                2  & 0.666 & 0.664 \\ 
-                6  & 0.666 & 0.666 \\ 
-            \hline
-            No & 0.648 & 0.642 \\ 
-            \hline
-    \end{tabular}
-    \caption{Polynomial Kernel SVM - PCA}
-\end{table}
 
 Generally speaking, results look far from good ( the DCFs are much higher than Gaussian Models ) and PCA seems to have no effect whatsoever.
 
@@ -305,27 +217,6 @@ $$\displaystyle k({\bf x_1}, {\bf x_2}) = e^{-\gamma||{\bf x}_1 - {\bf x}_2||^2}
 
 Small values of $\gamma$ and $b$ were picked to avoid numerical issues.
 
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            PCA & DCF & minDCF \\
-            \hline
-            \hline
-            10 & 0.585 &  0.579 \\ 
-            No & 0.585 &  0.579 \\ 
-            5 & 0.585 &  0.579 \\ 
-            \hline
-            \hline
-            4 & 0.613 &  0.606 \\ 
-            3 & 0.655 &  0.647 \\ 
-            2 & 0.682 &  0.651 \\ 
-            \hline
-    \end{tabular}
-    \caption{RBF Kernel SVM - PCA}
-\end{table}
-
 The RBF seems to be robust while working with all features or almost, and start behaving worse when the number of dimensions gets much lower.
 
 Given the non-optimed hyperparameters, trying various combination of hyperparameters with high dimensionalities is needed to draw any conclusions.
@@ -348,20 +239,8 @@ Given the non-optimed hyperparameters, trying various combination of hyperparame
 For once normalization seems to help: the DCFs get significantly lower. 
 Whitened features perform on par with normalized features, but given that before whiteining features are also normalized, we can say that also in this case whiteining has no effect whatsoever.
 
-
-% Logistic Regression results
 \newpage
-\begin{table}
-\input{../data/logreg_acc.tex}
-\input{../data/logreg_pca_acc.tex}
-\input{../data/logreg_pcan_acc.tex}
-\end{table}
+\section{Optimizing Models}
+\subsection{Optimizing MVG Classifiers}
 
-% Linear SVM results
-\newpage
-\begin{table}
-\input{../data/svm_linear_acc.tex}
-\input{../data/svm_linpca_acc.tex}
-\input{../data/svm_linpcan_acc.tex}
-\end{table}
 \end{document}

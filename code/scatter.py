@@ -15,7 +15,8 @@ if __name__ == '__main__':
     good, bad = feats[:, labels > 0], feats[:, labels < 1]
     plt.title("Raw Features, PCA 2")
     plt.scatter(good[0], good[1], marker='x', color=utils.green)
-    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)   
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)
+    plt.savefig('../img/2DRAW')
 
 
     plt.figure()
@@ -28,7 +29,8 @@ if __name__ == '__main__':
     pfeats = vt.T @ feats
     good, bad = pfeats[:, labels > 0], pfeats[:, labels < 1]
     plt.scatter(good[0], good[1], marker='x', color=utils.green)
-    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)   
+    plt.scatter(bad[0], bad[1], marker='x', color=utils.red)
+    plt.savefig('../img/2DNorm')   
 
 
     plt.figure()
@@ -56,4 +58,4 @@ if __name__ == '__main__':
     good, bad = pfeats[:, labels > 0], pfeats[:, labels < 1]
     plt.scatter(good[0], good[1], marker='x', color=utils.green)
     plt.scatter(bad[0], bad[1], marker='x', color=utils.red)    
-    plt.show()
+    plt.savefig('../img/2DWhitened')
