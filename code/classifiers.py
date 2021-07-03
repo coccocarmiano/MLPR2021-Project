@@ -6,7 +6,7 @@ from scipy.special import logsumexp
 from scipy.optimize import fmin_l_bfgs_b
 from typing import Tuple
 
-def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple[np.ndarray, float]:
+def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> Tuple[np.ndarray, float]:
     '''
     Computes the w vector and b value for the logistic regression
     '''
@@ -30,10 +30,10 @@ def logreg(dataset: np.ndarray, l: float=10**-3, precision: bool=False) -> tuple
     v, _, d = scipy.optimize.fmin_l_bfgs_b(logreg_obj, v0, approx_grad=True, maxfun=max, factr=max_factr)
     return v[:-1], v[-1]
 
-def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float, t: float=0) -> tuple[np.ndarray, np.ndarray, float]:
+def logreg_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float, t: float=0) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
-    Returns a tuple with the scores and the predictions
+    Returns a Tuple with the scores and the predictions
     '''
     data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
@@ -67,10 +67,10 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> Tuple[np.ndarray, float]
     w = (best_alphas*z*hat_data).sum(axis=1)
     return w[:-1], K*w[-1]
 
-def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> tuple[np.ndarray, np.ndarray, float]:
+def SVM_lin_scores(evaluation_dataset: np.ndarray, w: np.ndarray, b: float) -> Tuple[np.ndarray, np.ndarray, float]:
     '''
     Computes the scores for an evaluation dataset, given the model parameters.
-    Returns a tuple with the scores and the predictions
+    Returns a Tuple with the scores and the predictions
     '''
     data, labels = evaluation_dataset[:-1], evaluation_dataset[-1]
     scores = np.dot(w.T, data) + b
