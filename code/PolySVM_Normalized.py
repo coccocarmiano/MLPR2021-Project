@@ -17,29 +17,33 @@ if __name__ == '__main__':
     dataset = utils.normalize(dataset)
     _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
-    constants = [0, .5, 1.5, 2.5, 5, 7.5, 10]
-    powers = [1, 1.5, 2, 2.5, 3]
-    bounds = [.1, .3, .5, .7, 1]
+    constants = [1, 5, 10]
+    powers = [2, 3, 4]
+    bounds = [.1,.5, 1]
+    npca = [11, 10, 9]
 
     for power in powers:
         for constant in constants:
             for bound in bounds:
-                poly_function = get_poly_function(power, constant)
-                scores, labels = [], []
-                for fold in folds:
-                    train, test = fold[0], fold[1]
-                    fold_labels = test[-1, :]
-                    labels.append(fold_labels)
+                for n in npca:
+                    vt = v[:, :n]
+                    poly_function = get_poly_function(power, constant)
+                    scores, labels = [], []
+                    for fold in folds:
+                        train, test = fold[0], fold[1]
+                        train, test = np.vstack((vt.T @ train[:-1, :], train[-1])), np.vstack((vt.T @ test[:-1, :], test[-1]))
+                        fold_labels = test[-1, :]
+                        labels.append(fold_labels)
 
-                    alphas = classifiers.DualSVM_Train(train, poly_function, bound=bound)
-                    train, alphas = utils.support_vectors(train, alphas)
-                    fold_scores = classifiers.DualSVM_Score(train, poly_function, alphas, test)
-                    scores.append(fold_scores)
-                
-                scores = np.concatenate(scores)
-                labels = np.concatenate(labels)
-                mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
-                # Ignore the first field, is just handy for sorting
-                print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  Reg. Bias: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
+                        alphas = classifiers.DualSVM_Train(train, poly_function, bound=bound)
+                        train, alphas = utils.support_vectors(train, alphas)
+                        fold_scores = classifiers.DualSVM_Score(train, poly_function, alphas, test)
+                        scores.append(fold_scores)
+
+                    scores = np.concatenate(scores)
+                    labels = np.concatenate(labels)
+                    mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
+                    # Ignore the first field, is just handy for sorting
+                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  Reg. Bias: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
 
     outfile.close()
