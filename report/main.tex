@@ -19,7 +19,12 @@
 
 \maketitle
 \begin{strip}
-    \lipsum[1]
+    {\bf Abstract}
+    This paper is an analysis of the effectiveness of the various models studied during the course applied to a binary classification model.
+    The dataset is a transformed version of the one provided in {\it Modeling wine preferences by data mining from physicochemical properties}
+    from {\it Decision Support Systems, Elsevier} (P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.), where grades span from 0 to 10. 
+    Grade 6 has been removed, grades above 6 have been mapped to class 1 and grades below 6 to class 0.
+    Due to limited time and computanional power, results may be just close-to or far-from optimal, depending on the time required to train a model.
 \end{strip}
 \tableofcontents
 
@@ -27,21 +32,36 @@
 \section{Preliminary Data Analysis}
 \subsection{Feature Distribution}
 
-Before discussing the varius models and techniques that can give us robust result, we shortly discuss how the feature of our dataset are distributed.
+Before discussing the model, their implementation and their effectiveness we briefly take a look at how the features are distributed.
+For convenience we shall now report the legend just one, but keep in mind that in all pictures red color is associated to class 0 (which we will be referring to as class {\it Bad}) and green color is associated to class 1 (which will be class {\it Good}).
 
 \begin{figure}[H]
     \caption{Histogram of Class' Features}
     {\includegraphics[width=\linewidth]{dist.jpg}}
-    \label{featureshist}
+    \label{fig:disthist}
 \end{figure}
 
-We start by noticing that the order of magnitude of some features can differ much from one another: for example, if we look at feature 5, it seems to span from 0.0 to as much as 0.6, but feature 7 instead spans two whole orders, occasionally being over 200, and with some outliers even double as much. An interesting observation is that some features do look gaussian distributed or regular enough to be described by a combination of gaussian distributions.
+First of all, our training dataset is unbalanced. 
+In the next pages we will be classifying samples obtained from a K-Fold\footnotemark Validation approach, using a theoretical threshold given by:
 
-This may hint that some dimensionality reduction will be strongly biased towards features like 7, and that normalization can be taken as a valid pre-processing technique.
+$$ t = -\log{\frac{\pi}{1-\pi}} $$
 
-We also notice that our dataset is unbalanced: the quantity of bad wine is roughly twice the quantity of good one. This has to be taken into account when developing models, but we will be trating them as if the dataset is balanced, that is considering and equal probability of good wine and bad wine, occasionally rebalancing scores.
+For the threshold to be optimal, we should use the empirical prior $\pi \approx .33$ based on a frequentist approach;
+Instead we will be using a non-optimal prior $\tilde{\pi} = .5$ as it is the application we are going to be targeting
+.
+\footnotetext{K varies through models. For fast ones, 5 or 10 is used. For slower ones, 3 is used.}
 
-Let's apply a 2D projection of our data to further discuss it.
+Coming back to features distributions, some things are to be noticed.
+While some features are similar between class Good and class Bad (see feature {\it 1}) others differ substantially and can be very helpful in discriminating samples (see feature {\it 8}).
+
+Moreover, the features are distributed in various ways: while some do look pretty Gaussian (see feature {\it 9}) and others are instead fairly regular (see feature {\it 5}) and could thus be well estimated by Gaussian models\footnotemark , other act in a more irregular way.
+
+\footnotetext{Meaning both Gaussian Classifiers and Gaussian Mixture Models}.
+
+To take a closer look we now project the data on the two dimensional plane. 
+We will be using 3 methods to do so: PCA\footnotemark , Normalization + PCA, Normalization + Whitening.
+
+\footnotetext{Without data centering to appreciate the correlation}
 
 \begin{figure}[H]
     \caption{2D-PCA Projection}
@@ -49,7 +69,8 @@ Let's apply a 2D projection of our data to further discuss it.
     \label{2DRAW}
 \end{figure}
 
-The features look highly correlated and fairly regularly distributed: this may be a hint that some gassuain models may perform well enough, like Full-Covariang MVG Classifiers or Tied-Covariance ones, but some other with linear decision boundaries, like linear SVMs, may perform poorly.
+The points are very close one another, we thus expect linear models to be not so effective compared to others.
+The data is pretty {\it circularly} distributed, so correlation may not play an important role in discriminating samples.
 
 \begin{figure}[H]
     \caption{2D-PCA Projection, Normalized Data}
@@ -57,7 +78,11 @@ The features look highly correlated and fairly regularly distributed: this may b
     \label{2DNORM}
 \end{figure}
 
-After normalization (Z-Normalization, mean $\mu = 0$ and St.D. $\sigma = 1$ ) our points do get apart but not significantly: we could expect linear models to still perform poorly and gaussian classifiers to get slightly worse. On the other hand, Gaussian Mixture Models look like a more interesting choice.
+The normalized projection seems to split data in two clusters, each containing some samples of either class, but some points of different class seem to get far apart from the other.
+So normalization is a technique worth trying.
+
+Note that for Normalization we refer to {\it Z-Normalization}. 
+From some early tests we found that {\it Min-Max} normalization was not very effective, and with {\it Gaussianization} centering and scaling data in the same way as Z while being slower, we decided to use this method.
 
 Lastly we take a look at normalized and whitened data.
 
@@ -67,20 +92,19 @@ Lastly we take a look at normalized and whitened data.
     \label{2DWHI}
 \end{figure}
 
-Here the results are a bit more interesting: points do get separeted just like after normalization, but same class points stay close to each other while different class get more apart. In this scenario, it looks like even linear model might have a chance to achieve a decent performance.
+Results do look interesting: points to get much apart, even if we can spot many outliers.
+With the distribution being this way, we could expect even linear models to achieve decent results.
 
 
 \section{Pre-Processing Analysis}
-\subsection{Pre-Processing for Gaussian Models}
 
-We will shortly decide, by running some non-optimized models, which pre-processing techniques are useful and which are not. 
+In this section we will run some dummy\footnotemark models to infer wheter pre-processing, by the means of PCA, normalization, etc. can be useful or worth trying.
 
-We will be reporting the best results for each classifiers, extracted from a 3 or 5 Fold Validation approach. The decision rule, since this is a binary problem, will be set to $\displaystyle t = \log(\frac{\pi_T}{1-\pi_T}) \lessgtr 0 $, where $\pi_T$ is assumed $ = 0.5$ and it is the prior probability of class Good.
+\footnotetext{Referring to models requiring parameter tuning or score recalibration}
 
-Let's start with Gaussian Classifiers: Full-Covariance, Tied-Covariance, and Naive-Bayes.
-We find out that a small number of features can be removed, with modest gains.
+For now we will run all possible combinations of preprocessing (Raw, Normalized, Whitened) with PCA reductions (2-PCA, 3-PCA, ...).
 
-Let's combine these results with normalization and whitening.
+\subsection{Pre-Processing MVG Classifiers}
 
 \begin{table}[H]
     \centering
@@ -95,6 +119,7 @@ Let's combine these results with normalization and whitening.
             \hline
     \end{tabular}
     \caption{Full-Covariance MVG - Best Results}
+    \label{fullcovtab}
 \end{table}
 
 \begin{table}[H]
@@ -110,6 +135,7 @@ Let's combine these results with normalization and whitening.
             \hline
     \end{tabular}
     \caption{Tied-Covariance MVG - Best Results}
+    \label{tiedcovtab}
 \end{table}
 
 \begin{table}[H]
@@ -125,23 +151,25 @@ Let's combine these results with normalization and whitening.
             \hline
     \end{tabular}
     \caption{Naive-Bayes MVG - Best Results}
+    \label{naivetab}
 \end{table}
 
-Now we can finally say something on MVG Classifiers:
+The result validate some of our assumptions and invalidate others.
+By looking at the DCF\footnotemark values, our best model seems to be the Tied-Covariance ones.
+\footnotetext{By DCF we actually mean the {\it normalized} DCF, considering a prior $\pi = .5$ and equal costs}
+We are not very surprised to se that the Naive Bayes does sometimes outperform the Full-Covariance model as we noticed in Figure \ref{2DRAW} that some features are not very correlated.
+The same can said about the the Tied covariance by looking at the same projection or feature {\it 8} of Figure \ref{fig:disthist}.
 
-\begin{itemize}
-    \item As expected, the Tied Covariance model works fairly well
-    \item Unexpectedly, the Naive-Bayes model outperforms the Full-Covariance one, even without whitening
-    \item Normalization and whitening seem to hurt performance
-    \item PCA can be used, but gains are not particularly high
-\end{itemize}
+Normalization and Whitening do not help, they harm, sometimes even significantly the classification, while it looks like PCA can be of modest help.
 
-\subsection{Pre-Processing for GM Models}
+An interesting fact that is that while the Full-Covariance model looks like the worse perfoming one, it is the model with the lowest minDCF values.
+While it is not an important difference compared with other models, it is the one with the biggest difference between the DCF and minDCF values, hinting that score calibration could be required.
 
-Staying of the subject of Gaussian Classifiers, we make similar operations for GMMs. 
-This is a dummy 4-Component model.
+\subsection{Pre-Processing for GMMs}
 
-Results seem on par, not significantly lower than MVG Classifiers, but GMM actually performs best when keeping as much dimensions as possible.
+For GMMs we decide the number of components (for this dummy execution 4 was picked arbitrairly).
+We start with identity covariance matrices and by placing the means near the dataset mean.\footnotemark
+\footnotetext{The starting points are used in the same way also in the optimization part.}
 
 \begin{table}[H]
     \centering
@@ -158,22 +186,14 @@ Results seem on par, not significantly lower than MVG Classifiers, but GMM actua
     \caption{GMM - Best Results}
 \end{table}
 
-Also here, normalization and whitening seem to do more bad than good. Results do not get much worse, sometimes even get better but not significantly.
+As we would expect after the results of the Gaussian Classifiers, also here whitening does not look like a good choice and normalization looks ineffective.
+High dimensionality still looks preferred.
 
-Our best option is to work with raw features on GMMs. Weirdly enough, Whitened GMM can discard many components and still perform fairly well compared to the raw counterpart.
-
-
-In the next two subsections we will discuss pre-processing on two types of kernel SVMs: Polynomial and RBF ones. 
-Given the non-probabilistic nature of the scores, using a threshold of $0$ is somewhat an arbitrary choice: to account for that, we will be giving a greater importance to minimum DCFs rather than plain DCFs.
+The DCF values are close to the minDCF values, score calibration may be not necessary.
 
 \subsection{Pre-Processing for Polynomial Kernel SVMs}
 
-As usual we start by looking at the effect of PCA on a dummy Polynomial Kernel. The polynomial kernel used is the following:
-
-$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
-$$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
-
-With $\phi(\cdot)$ being:
+The polynomial kernel mapping $\phi(\cdot)$ we will use is so defined:
 
 \begin{center}
     \begin{align}
@@ -183,8 +203,17 @@ With $\phi(\cdot)$ being:
                             1 \\
                       \end{bmatrix}
     \end{align}
+    \label{phi}
 \end{center}
-\footnote{Above we freely set $c$ as it is the final derivation of this mapping, but the original kernel as described here would require it to be 1}
+
+And we will be using the kernel function so described:
+
+$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
+$$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
+
+The formulation of \ref{phi} would require us to strictly use $ c = 1 $, as we do in our dummy model, but later on this will be an hyperparameter to be optimized.
+
+The results are interesting:
 
 \begin{table}[H]
     \centering
@@ -201,21 +230,20 @@ With $\phi(\cdot)$ being:
     \caption{Polynomail Kernel SVM - Best Results}
 \end{table}
 
-The results are promising: data whitening actually harms performance compared to just normalization, while normalization gives us good results, on par with other models.
-Many features look like they can be safely removed, sometimes even giving a gain in performance.
+While competitiveness with other models has to be made later, when each one will be fully used, here we see an interesting change:
+normalization greatly improves our classification.
+While a lower PCA has obtained the lowest DCF, it is not significantly lower than the one obtained with higher dimensionality, so we can say that here it's normalization helping us out.
+Whitening, again, does not make any difference, as the results are same or close to the ones obtained with normalization only.
+
+Notice also how scores seems well calibration with our theoretical threshold even if they do not have a probabilistic interpretation.
 
 \subsection{Pre-Processing for RBF Kernel SVMs}
 
-Just like we did for the polynomial one, here we try again a dummy kernel to see how we should pre-process our data.
-The dummy kernel function used is: 
+The dummy RBF function used here is the following:
 
 $$\displaystyle k({\bf x_1}, {\bf x_2}) = e^{-\gamma||{\bf x}_1 - {\bf x}_2||^2} + b = e^{-0.05||{\bf x}_1 - {\bf x}_2||^2} + 0.05 $$
 
 Small values of $\gamma$ and $b$ were picked to avoid numerical issues when using non-normalized models.
-
-The RBF seems to be robust while working with all features or almost, and start behaving worse when the number of dimensions gets much lower.
-
-Given the non-optimed hyperparameters, trying various combination of hyperparameters with high dimensionalities is needed to draw any conclusions.
 
 \begin{table}[H]
     \centering
@@ -232,20 +260,17 @@ Given the non-optimed hyperparameters, trying various combination of hyperparame
     \caption{RBF Kernel SVM - Best Results}
 \end{table}
 
+Just like polynomial kernel, RBF prefers high dimensionality , so further testing in this direction is required.
+Again, normalization plays an important role while whitening seems to have no effect whatsoever and scores look extremely well calibrated.
+
 Just like polynomial kernel SVMs, here normalization has no effect whatsoever whilte normalization greatly improves our performance.
 The RBF Kernel works significantly better when working with all or most components. 
-
-We are not yet discussing perfomance in detail but so far, this is our most promising model.
-
 
 \section{Optimizing Models}
 \subsection{Optimizing MVG Classifiers}
 
-For the nature of the Gaussian Classifiers, optimization is an over-statement: we have no parameters to tune. 
-But if we look at the pervious tables, we can spot a detail: some gaussian classifiers could outperform others with some tweaking.
-Taking into account the DCF only, the best performing model is the Tied Covariance one, but if we were to take a look at the minimum DCF the best one would be the Full-Covariance model.
-Moreover, the Full Covariance one is the model with the biggest differences between its DCF and minimum DCF.
-This could mean that that model in particular is producing bad scores and could use some calibration.
+Since MVG Classifiers do not have parameters to be tuned, we are going to discuss only the possibility of recalibrating scores.
+In particular we will not discuss the Tied Covariance model, as based on its DCF values, the scores look already well calibrated.
 
 
 
