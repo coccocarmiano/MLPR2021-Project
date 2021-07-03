@@ -14,12 +14,13 @@ def get_poly_function(c, d):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, n=5)
+    _, folds = utils.kfold(dataset, n=3)
     outfile = open(filename, 'w')
     constants = [1, 5, 10]
     powers = [2, 3, 4]
     bounds = [.1,.5, 1]
     npca = [11, 10, 9]
+    w, v = utils.PCA(dataset)
 
     for power in powers:
         for constant in constants:
@@ -44,5 +45,6 @@ if __name__ == '__main__':
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
                     print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  Reg. Bias: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
+                    np.save(f'../data/PolySVM-PCA{n}-C{constant}-POW{power}Scores.npy')
 
     outfile.close()

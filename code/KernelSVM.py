@@ -18,7 +18,7 @@ def get_kernel_function(gamma, regbias):
 
 if __name__ == '__main__':
     dataset = utils.load_train_data()
-    _, folds = utils.kfold(dataset, n=5)
+    _, folds = utils.kfold(dataset, n=3)
     outfile = open(filename, 'w')
     regbiases = [.1, .05, .001]
     gammas = [.1, .05, .001]
@@ -49,5 +49,6 @@ if __name__ == '__main__':
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
                     print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.2f}  -  Reg. Bias: {regbias:.2f}  -  C:   {bound:.2f}", file=outfile)
+                    np.save(f'../data/KernelSVM-PCA{n}-RegBias{regbias}-Gamma{gamma}-Scores.npy')
 
     outfile.close()
