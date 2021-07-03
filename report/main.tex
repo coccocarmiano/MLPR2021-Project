@@ -241,4 +241,12 @@ We are not yet discussing perfomance in detail but so far, this is our most prom
 \section{Optimizing Models}
 \subsection{Optimizing MVG Classifiers}
 
+For the nature of the Gaussian Classifiers, optimization is an over-statement: we have no parameters to tune. 
+But if we look at the pervious tables, we can spot a detail: some gaussian classifiers could outperform others with some tweaking.
+Taking into account the DCF only, the best performing model is the Tied Covariance one, but if we were to take a look at the minimum DCF the best one would be the Full-Covariance model.
+Moreover, the Full Covariance one is the model with the biggest differences between its DCF and minimum DCF.
+This could mean that that model in particular is producing bad scores and could use some calibration.
+
+
+
 \end{document}
