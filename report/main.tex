@@ -1,8 +1,8 @@
 \documentclass[12pt, twocolumn]{article}
-\usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{hyperref}
+\usepackage{xcolor}
 \usepackage{amsmath, amssymb}
 \usepackage{cuted}
 \usepackage[margin=0.7in]{geometry}
@@ -35,10 +35,10 @@
 Before discussing the model, their implementation and their effectiveness we briefly take a look at how the features are distributed.
 For convenience we shall now report the legend just one, but keep in mind that in all pictures red color is associated to class 0 (which we will be referring to as class {\it Bad}) and green color is associated to class 1 (which will be class {\it Good}).
 
-\begin{figure}[H]
+\begin{figure}[H] 
     \caption{Histogram of Class' Features}
-    {\includegraphics[width=\linewidth]{dist.jpg}}
     \label{fig:disthist}
+    {\includegraphics[width=\linewidth]{dist.jpg}}
 \end{figure}
 
 First of all, our training dataset is unbalanced. 
@@ -63,19 +63,19 @@ We will be using 3 methods to do so: PCA\footnotemark , Normalization + PCA, Nor
 
 \footnotetext{Without data centering to appreciate the correlation}
 
-\begin{figure}[H]
-    \caption{2D-PCA Projection}
+\begin{figure}[H]     
     {\includegraphics[width=\linewidth]{2DRAW.png}}
-    \label{2DRAW}
+    \caption{2D-PCA Projection}
+    \label{fig:2DRAW}
 \end{figure}
 
 The points are very close one another, we thus expect linear models to be not so effective compared to others.
 The data is pretty {\it circularly} distributed, so correlation may not play an important role in discriminating samples.
 
-\begin{figure}[H]
-    \caption{2D-PCA Projection, Normalized Data}
+\begin{figure}[H] 
     {\includegraphics[width=\linewidth]{2DNorm.png}}
-    \label{2DNORM}
+    \caption{2D-PCA Projection, Normalized Data}
+    \label{fig:2DNORM}
 \end{figure}
 
 The normalized projection seems to split data in two clusters, each containing some samples of either class, but some points of different class seem to get far apart from the other.
@@ -86,10 +86,10 @@ From some early tests we found that {\it Min-Max} normalization was not very eff
 
 Lastly we take a look at normalized and whitened data.
 
-\begin{figure}[H]
-    \caption{2D-PCA Projection, Whitened Data}
+\begin{figure}[H] 
     {\includegraphics[width=\linewidth]{2DWhitened.png}}
-    \label{2DWHI}
+    \label{fig:2DWHI}
+    \caption{2D-PCA Projection, Whitened Data}
 \end{figure}
 
 Results do look interesting: points to get much apart, even if we can spot many outliers.
@@ -106,33 +106,34 @@ For now we will run all possible combinations of preprocessing (Raw, Normalized,
 
 \subsection{Pre-Processing MVG Classifiers}
 
-\begin{table}[H]
+\begin{table}[H] 
     \centering
-        \begin{tabular}{||c|c|c|c||}
-            \hline
-            Type & PCA & DCF & minDCF \\
-            \hline
-            \hline
-            Raw & 9 & 0.401 & {\bf 0.362}  \\
-            Normalized &  7 & 0.464 & 0.420 \\
-            Whitened & 2 & 0.430 & 0.410 \\
-            \hline
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Type & PCA & DCF & minDCF \\
+        \hline
+        \hline
+        Raw & 9 & 0.401 & {\bf 0.362}  \\
+        Normalized &  7 & 0.464 & 0.420 \\
+        Whitened & 2 & 0.430 & 0.410 \\
+        \hline
     \end{tabular}
     \caption{Full-Covariance MVG - Best Results}
     \label{fullcovtab}
 \end{table}
 
-\begin{table}[H]
+    
+\begin{table}[H] 
     \centering
-        \begin{tabular}{||c|c|c|c||}
-            \hline
-            Type & PCA & DCF & minDCF \\
-            \hline
-            \hline
-            Raw & 7 & {\bf 0.375} & 0.366  \\
-            Normalized &  9 & {\bf 0.375} & 0.371 \\
-            Whitened & 11 & 0.402 & 0.401 \\
-            \hline
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Type & PCA & DCF & minDCF \\
+        \hline
+        \hline
+        Raw & 7 & {\bf 0.375} & 0.366  \\
+        Normalized &  9 & {\bf 0.375} & 0.371 \\
+        Whitened & 11 & 0.402 & 0.401 \\
+        \hline
     \end{tabular}
     \caption{Tied-Covariance MVG - Best Results}
     \label{tiedcovtab}
@@ -157,7 +158,7 @@ For now we will run all possible combinations of preprocessing (Raw, Normalized,
 The result validate some of our assumptions and invalidate others.
 By looking at the DCF\footnotemark values, our best model seems to be the Tied-Covariance ones.
 \footnotetext{By DCF we actually mean the {\it normalized} DCF, considering a prior $\pi = .5$ and equal costs}
-We are not very surprised to se that the Naive Bayes does sometimes outperform the Full-Covariance model as we noticed in Figure \ref{2DRAW} that some features are not very correlated.
+We are not very surprised to se that the Naive Bayes does sometimes outperform the Full-Covariance model as we noticed in Figure \ref{fig:2DRAW} that some features are not very correlated.
 The same can said about the the Tied covariance by looking at the same projection or feature {\it 8} of Figure \ref{fig:disthist}.
 
 Normalization and Whitening do not help, they harm, sometimes even significantly the classification, while it looks like PCA can be of modest help.
@@ -184,6 +185,7 @@ We start with identity covariance matrices and by placing the means near the dat
             \hline
     \end{tabular}
     \caption{GMM - Best Results}
+    \label{tab:gmmresults}
 \end{table}
 
 As we would expect after the results of the Gaussian Classifiers, also here whitening does not look like a good choice and normalization looks ineffective.
@@ -203,7 +205,6 @@ The polynomial kernel mapping $\phi(\cdot)$ we will use is so defined:
                             1 \\
                       \end{bmatrix}
     \end{align}
-    \label{phi}
 \end{center}
 
 And we will be using the kernel function so described:
@@ -211,7 +212,7 @@ And we will be using the kernel function so described:
 $$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
 $$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
 
-The formulation of \ref{phi} would require us to strictly use $ c = 1 $, as we do in our dummy model, but later on this will be an hyperparameter to be optimized.
+This formulation would require us to strictly use $ c = 1 $, as we do in our dummy model, but later on this will be an hyperparameter to be optimized.
 
 The results are interesting:
 
@@ -269,9 +270,82 @@ The RBF Kernel works significantly better when working with all or most componen
 \section{Optimizing Models}
 \subsection{Optimizing MVG Classifiers}
 
-Since MVG Classifiers do not have parameters to be tuned, we are going to discuss only the possibility of recalibrating scores.
-In particular we will not discuss the Tied Covariance model, as based on its DCF values, the scores look already well calibrated.
+Since the MVG Classifiers we will be only briefly discussing score calibration.
+In particular we will focus on Full-Covariance and Naive Bayes MVG Classifiers, as Tied Covariance already is very close to being optimal.
+
+The scores will be rebalanced using logistic regression as it follows:
 
 
+\begin{equation}
+    f(s) = \alpha s + \beta
+\end{equation}
+
+The scores are the ones that produced the best result for both models as in table \ref{fullcovtab} and \ref{naivetab}. 
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{||c|c|c||}
+            \hline
+            minDCF & $DCF_{Before}$ & $DCF_{After}$ \\
+            \hline
+            \hline
+            0.362 & 0.401 & \textcolor{green}{\bf0.390} \\ 
+            0.367 & {\bf 0.383} & \textcolor{red}{\bf 0.412} \\ 
+            \hline
+    \end{tabular}
+    \caption{MVG Recalibrated Scores DCFs}
+    \label{mvgcalibration}
+\end{table}
+
+Recalibration heavily damages our Naive Bayes classifiers so it's not a good choice.
+The Full Covariance one has a modest DCF decrement, but it's still worse than the plain Naive Bayes one.
+Lastly, by looking at table \ref{tiedcovtab}, we notice that both models perform worse than our Tied Covariance one, so we will be discarding them in our final evaluation.
+
+\subsection{Optimizing Gaussian Mixture Models}
+
+For GMMs we need to optimize the number of subcomponents each density has.
+We should also inspect normalization more and try recalibrating scores as we did for gaussian classifiers with Gaussian Classifiers.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        DCF & Type & \# Components & PCA \\
+        \hline
+        \hline
+        0.346 & Norm. & 3 & No \\ 
+        0.348 & Raw & 3 &  10 \\
+        0.359 & Raw & 2 &  No \\
+        0.360 & Raw & 3 &  No \\
+        0.365 & Raw & 2 &  9  \\
+        0.375 & Norm. & 3 & 8 \\ 
+        0.377 & Norm. & 5 & 9 \\ 
+        0.378 & Norm. & 3 & 10 \\ 
+        \hline
+    \end{tabular}
+    \caption{GMM Optimization Results}
+    \label{tab:gmmoptimization}
+\end{table}
+
+Our two top models are very similar in some ways, like using 3 components, high dimensionality and DCF-wise, but differ for Normalization.
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Type & minDCF & DCF$_{Before}$ & DCF$_{After}$ \\
+        \hline
+        \hline
+        Norm. & 0.316 & 0.346 & \textcolor{green}{\bf 0.324} \\
+        Raw & 0.328 & 0.348 & \textcolor{green}{\bf 0.334} \\
+        \hline
+    \end{tabular}
+    \caption{GMM Optimization Results}
+    \label{tab:gmmcalibration}
+\end{table}
+
+Contrary to what we have seen in table \ref{tab:gmmresults}, here the scores are fairly distant from the minimum possible DCF, and recalibrating the scores did indeed help.
+
+The normalized GMM is the best one, but data does not suggest that in general normalized GMMs are better, so both model will be used later on.
 
 \end{document}
