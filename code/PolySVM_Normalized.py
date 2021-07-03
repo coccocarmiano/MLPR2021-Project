@@ -46,6 +46,6 @@ if __name__ == '__main__':
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
                     print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  C: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
-                    np.save(f'../data/PolySVM-Normalized-PCA{n}-C{constant}-POW{power}Scores.npy')
+                    np.save(f'../data/PolySVM-Normalized-PCA{n}-C{constant}-POW{power}Scores.npy', scores)
 
     outfile.close()

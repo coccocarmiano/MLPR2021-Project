@@ -49,6 +49,6 @@ if __name__ == '__main__':
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
                     print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.2f}  -  Reg. Bias: {regbias:.2f}  -  C:   {bound:.2f}", file=outfile)
-                    np.save(f'../data/KernelSVM-PCA{n}-RegBias{regbias}-Gamma{gamma}-Scores.npy')
+                    np.save(f'../data/KernelSVM-PCA{n}-RegBias{regbias}-Gamma{gamma}-Scores.npy', scores)
 
     outfile.close()
