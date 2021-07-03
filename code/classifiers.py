@@ -87,7 +87,12 @@ def gaussian_ll(test_dataset: np.ndarray, mean, cov) -> np.ndarray:
 
     
     _, det = np.linalg.slogdet(cov)
-    invcov = np.linalg.inv(cov)
+    try:
+        invcov = np.linalg.inv(cov)
+    except:
+        cov = cov + 1e-10
+        invcov = np.linalg.inv(cov)
+    
     centered = test_dataset - mean.reshape((r, 1))
     contributes = np.diag(centered.T @ invcov @ centered)
     scores = -0.5 * (cterm +  det + contributes)
