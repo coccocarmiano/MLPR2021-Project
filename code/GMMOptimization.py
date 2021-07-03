@@ -15,8 +15,6 @@ if __name__ == '__main__':
 
     for nc in ncomponents:
         for p in npca:
-            """ if p == 11 and nc == 5:
-                continue """
             labels, scores = [], []
             vt = v[:, :p]
             for fold in folds:
