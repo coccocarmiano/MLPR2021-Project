@@ -2,7 +2,7 @@ import utils
 import classifiers
 import numpy as np
 
-filename = 'KernelSVM_Normalized.txt'
+filename = '../data/KernelSVM_Normalized.txt'
 
 def get_kernel_function(gamma, regbias):
     def kernel_function(x1, x2):
@@ -22,9 +22,9 @@ if __name__ == '__main__':
     _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
     regbiases = [.1, .05, .001]
-    gammas = [.1, .05, .001]
-    bounds = [.1, .5, 1]
-    npca = [11, 10, 9]
+    gammas = [.1, .05]
+    bounds = [1, 1.5]
+    npca = [11, 10]
     w, v = utils.PCA(dataset)
 
     for gamma in gammas:
@@ -49,7 +49,7 @@ if __name__ == '__main__':
                     labels = np.concatenate(labels)
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
-                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.2f}  -  Reg. Bias: {regbias:.2f}  -  C:   {bound:.2f}", file=outfile)
-                    np.save(f'../data/KernelSVMNormalized-PCA{n}-RegBias{regbias}-Gamma{gamma}-Scores.npy', scores)
+                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.4f}  -  Reg. Bias: {regbias:.4f}  -  C:   {bound:.4f}", file=outfile)
+                    np.save(f'../data/KernelSVMNormalized-PCA{n}-RegBias{regbias}-Gamma{gamma}-Bound{bound}Scores.npy', scores)
 
     outfile.close()

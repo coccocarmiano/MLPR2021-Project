@@ -2,7 +2,7 @@ import utils
 import classifiers
 import numpy as np
 
-filename = 'PolySVM_Normalized.txt'
+filename = '../data/PolySVM_Normalized.txt'
 
 def get_poly_function(c, d):
     def poly_function(x1, x2):
@@ -19,8 +19,8 @@ if __name__ == '__main__':
     outfile = open(filename, 'w')
     constants = [1, 5, 10]
     powers = [2, 3, 4]
-    bounds = [.1,.5, 1]
-    npca = [11, 10, 9]
+    bounds = [.1,.5]
+    npca = [11, 10]
     w, v = utils.PCA(dataset)
 
     for power in powers:
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                     labels = np.concatenate(labels)
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                     # Ignore the first field, is just handy for sorting
-                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  C: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
+                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.4f}  -  Constant: {constant:.4f}  -  C:   {bound:.4f}", file=outfile)
                     np.save(f'../data/PolySVM-Normalized-PCA{n}-C{constant}-POW{power}Scores.npy', scores)
 
     outfile.close()
