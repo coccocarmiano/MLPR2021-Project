@@ -25,15 +25,17 @@ def evaluate_model(data, classifier, tag='standard'):
                         scores = result[n][i, j, 0, :]
                         labels = result[n][i, j, 1, :]
                         mindcf, optimal_threshold = utils.minDCF(scores, labels, p)
+                        actdcf, _ = utils.DCF(scores > 0, labels)
                         best.append((mindcf, n, bias, bound, scores, labels))
-                        print(f"{mindcf} |.| [{classifier}|{tag}] MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Bias: {bias:.2f}  -  C: {bound:.2f}", file=outfile)
+                        print(f"{mindcf} |.| [{classifier}|{tag}] ActDCF: {actdcf:.4f} MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Bias: {bias:.2f}  -  C: {bound:.2f}", file=outfile)
             else:
                 for i, lam in enumerate(lambdas):
                     scores = result[n][i, 0, :]
                     labels = result[n][i, 1, :]
                     mindcf, optimal_threshold = utils.minDCF(scores, labels, p)
+                    actdcf, _ = utils.DCF(scores > 0, labels)
                     best.append((mindcf, n, lam, scores, labels))
-                    print(f"{mindcf} |.| [{classifier}|{tag}] MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Lambda: {lam}", file=outfile)
+                    print(f"{mindcf} |.| [{classifier}|{tag}] ActDCF: {actdcf:.4f} MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Lambda: {lam}", file=outfile)
 
     best = sorted(best, key=lambda x: x[0])[0]
     plt.figure()
