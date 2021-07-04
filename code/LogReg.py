@@ -4,7 +4,7 @@ from os import listdir
 from os.path import isfile, join
 from classifiers import logreg, logreg_scores
 
-def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 9, 7, 5]):
+def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 10, 9, 8, 7, 6, 5]):
     if tag != '':
         tag = tag + '_'
     

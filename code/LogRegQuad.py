@@ -13,7 +13,7 @@ def expand_feature_space(dataset):
     expanded = np.apply_along_axis(vecxxT, 0, data)
     return np.vstack([expanded, dataset])
 
-def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 9, 7, 5]):
+def compute_scores(dataset, tag='', kfold=5, nPCA = [11, 10, 9, 8, 7, 6, 5]):
     if tag != '':
         tag = tag + '_'
     
