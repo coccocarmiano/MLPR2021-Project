@@ -1,0 +1,2 @@
+minDCF : 0.362 -- DCF Before 0.401 -- DCF After 0.390 -- 
+minDCF : 0.367 -- DCF Before 0.384 -- DCF After 0.412 -- 

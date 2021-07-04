@@ -335,3 +335,9 @@ def BEP(scores, labels, N=100):
         xaxis.append(t)
 
     return (actdcf_points, xaxis), (mindcf_points, xaxis)
+
+def calibrate_scores(scores, labels, p):
+    from classifiers import logreg
+    data = np.vstack([scores, labels])
+    alpha, beta = logreg(data)
+    return alpha*scores + beta - np.log(p/(1-p))
