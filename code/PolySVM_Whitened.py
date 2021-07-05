@@ -20,7 +20,7 @@ if __name__ == '__main__':
     powers = [1, 2, 3]
     bounds = [.1, .5, 1]
     npca = [11, 10, 9, 8]
-    w, v = utils.whiten(datset)
+    w, v = utils.whiten(dataset)
     dataset = utils.normalize(dataset)
 
     for power in powers:
