@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
 
     # Tied Covariance Model
-    """  train, test = utils.load_train_data(), utils.load_test_data()
+    train, test = utils.load_train_data(), utils.load_test_data()
     train, test = utils.normalize(train, other=test)
     w, v = utils.PCA(train)
     vt = v[:, :5]
@@ -48,11 +48,11 @@ if __name__ == '__main__':
     plt.legend()
     plt.tight_layout()
     plt.savefig('../img/MVGTiedBEP.jpg')
-    exit() """
+    exit()
 
     # GMM 
 
-    """ train, test = utils.load_train_data(), utils.load_test_data()
+    train, test = utils.load_train_data(), utils.load_test_data()
     trs, trl = train[:-1, :], train[-1, :]
     tes, tel = test[:-1, :], test[-1, :]
 
@@ -87,12 +87,12 @@ if __name__ == '__main__':
     plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.legend() """
+    plt.legend()
 
 
     # GMM Raw
 
-    """ train, test = utils.load_train_data(), utils.load_test_data()
+    train, test = utils.load_train_data(), utils.load_test_data()
     w, v = utils.PCA(train)
     vt = v[:, :10]
     trs, trl = vt.T @ train[:-1, :], train[-1, :]
@@ -130,58 +130,9 @@ if __name__ == '__main__':
     plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('../img/GMMBEP.jpg') """
+    plt.savefig('../img/GMMBEP.jpg')
 
 
-    """ # Normalized Polynomial
-
-    def fpoly(x1, x2):
-        a = x1.T @ x2    
-        a = a + 1
-        a = a ** 2
-        return a
-
-    train, test = utils.load_train_data(), utils.load_test_data()
-    train, test = utils.normalize(train, other=test)
-    w, v = utils.PCA(train)
-    vt = v[:, :10]
-    train = np.vstack((vt.T @ train[:-1, :], train[-1, :]))
-    test = np.vstack((vt.T @ test[:-1, :], test[-1, :]))
-
-    alphas = classifiers.DualSVM_Train(train, fpoly, bound=.5)
-    train, alphas = utils.support_vectors(train, alphas)
-    scores = classifiers.DualSVM_Score(train, fpoly, alphas, test)
-    dcf, _ = utils.DCF(scores > 0, tel)
-    mindcf, _ = utils.minDCF(scores, tel)
-    temp = np.load('../data/PolySVM-Normalized-PCA10-C1-POW2Scores.npy')
-    _, t = utils.minDCF(temp, trl)
-    dcf2, _ = utils.DCF(scores > t, tel)
-    alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores + beta # -log(...)
-    dcf3, _ = utils.DCF(calibrated > 0, tel)
-    er = dcf * 50
-    print(f"PolySVM || Normalized Features PCA 9 c = 1 pow = 2 bound = 0.5 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}") """
-
-
-
-    """ plt.figure(figsize=(14, 8))
-    plt.title('Polynomial Kernel SVM Norm. Features Bayes Error Plot')
-    (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
-    plt.plot(x, dcfs, label="DCF")
-    plt.plot(x, mindcfs, linestyle='--', label="DCF min")
-    (dcfs, _), _ = utils.BEP(calibrated, tel)
-    plt.plot(x, dcfs, linestyle='--', label="DCF (Log.Reg. Cal.)")
-    a = np.linspace(.01, .99, 100)
-    tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
-    tups = [ a for a, _ in tups]
-    plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((0.2, 1.1))
-    plt.xlim((-2, 2))
-    plt.ylabel('DCF', size=16)
-    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('../img/PolySVMNormBEP.jpg') """
 
 
     # Normalized RBF

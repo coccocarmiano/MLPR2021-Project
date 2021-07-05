@@ -71,11 +71,6 @@ result = compute_scores(dataset)
 norm_dataset = utils.normalize(dataset)
 result_norm = compute_scores(norm_dataset, tag='norm')
 
-trd, trl = dataset[:-1, :], dataset[-1, :]
-trd = utils.gaussianize(trd)
-gau_dataset = np.vstack((trd, trl))
-result_gau = compute_scores(dataset, tag='gau')
-
 _, v = utils.whiten(norm_dataset)
 feats, labels = norm_dataset[:-1, :], norm_dataset[-1, :]
 feats = v.T @ feats
