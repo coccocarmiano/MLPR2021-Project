@@ -341,3 +341,9 @@ def calibrate_scores(scores, labels, p):
     data = np.vstack([scores, labels])
     alpha, beta = logreg(data)
     return alpha*scores + beta - np.log(p/(1-p))
+
+def calibrate_scores_params(scores, labels, p):
+    from classifiers import logreg
+    data = np.vstack([scores, labels])
+    alpha, beta = logreg(data)
+    return alpha, beta
