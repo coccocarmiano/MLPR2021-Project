@@ -26,34 +26,26 @@ if __name__ == '__main__':
     for power in powers:
         for constant in constants:
             for bound in bounds:
-                poly_function = get_poly_function(power, constant)
-                scores, labels = [], []
-                vt = v[:, :n]
-                for fold in folds:
-                    train, test = fold[0], fold[1]
-                    fold_labels = test[-1, :]
-                    labels.append(fold_labels)
+                for n in npca:
+                    vt = v[:, :n]
+                    poly_function = get_poly_function(power, constant)
+                    scores, labels = [], []
+                    for fold in folds:
+                        train, test = fold[0], fold[1]
+                        train, test = np.vstack((vt.T @ train[:-1, :], train[-1])), np.vstack((vt.T @ test[:-1, :], test[-1]))
+                        fold_labels = test[-1, :]
+                        labels.append(fold_labels)
 
-                    feats, temp = train[:-1, :], train[-1, :]
-                    feats = v.T @ feats
-                    train = np.vstack((feats, temp))
+                        alphas = classifiers.DualSVM_Train(train, poly_function, bound=bound)
+                        train, alphas = utils.support_vectors(train, alphas)
+                        fold_scores = classifiers.DualSVM_Score(train, poly_function, alphas, test)
+                        scores.append(fold_scores)
 
-                    alphas = classifiers.DualSVM_Train(train, poly_function, bound=bound)
-                    train, alphas = utils.support_vectors(train, alphas)
-
-                    feats, temp = test[:-1, :], test[-1, :]
-                    feats = v.T @ feats
-                    test = np.vstack((feats, temp))
-
-                    
-                    fold_scores = classifiers.DualSVM_Score(train, poly_function, alphas, test)
-                    scores.append(fold_scores)
-                
-                scores = np.concatenate(scores)
-                labels = np.concatenate(labels)
-                mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
-                # Ignore the first field, is just handy for sorting
-                print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  Reg. Bias: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
+                    scores = np.concatenate(scores)
+                    labels = np.concatenate(labels)
+                    mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
+                    # Ignore the first field, is just handy for sorting
+                    print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.4f}  -  Constant: {constant:.4f}  -  C:   {bound:.4f}", file=outfile)
                 np.save(f'../data/PolySVM-Whitened-PCA{n}-C{constant}-POW{power}Scores.npy', scores)
 
     outfile.close()
