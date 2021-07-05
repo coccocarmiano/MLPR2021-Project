@@ -12,7 +12,7 @@
 \usepackage{endnotes}
 \usepackage{float}
 \title{Wine Project Report}
-\author{Nocera Ruggero(S292442) \\ Quarta Matteo (S292477)}
+\author{Nocera Ruggero (S292442) \\ Quarta Matteo (S292477)}
 \date{}
 
 
@@ -452,6 +452,9 @@ given the non probabilistic nature of the scores generated.
 
 As opposed to table \ref{polypreprocessing}, we find out that the normalized version is actually better than the raw features one.
 
+However, our best performing polynomial model is of degree $ c = 1 $, in other words a linear model.
+This is not surpising given the effectiveness of the Linear Logist Regression model, but we won't further discuss it.
+
 \subsubsection{Optimizing RBF SVMs}
 
 \begin{table}[H] 
@@ -485,20 +488,37 @@ The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (li
         Model & Calibration & Features & PCA & Hyper-Parameters & DCF & DCF$_{min}$ \\
         \hline
         Linear LogReg & No & Normalized & 9 & $\lambda = 0.01$ & 0.303 & 0.299 \\
-        Quadratic LogReg & Yes & Normalized & 10 & $\lambda = 0.001$ & 0.285 & 0.274 \\
-        Linear SVM & Yes & Normalized & 9 & K = 10, C = 0.1 & 0.276 & 0.270 \\
+        Quadratic LogReg & Yes & Normalized & 10 & $\lambda = 0.001$ & {\bf 0.285} & 0.274 \\
+        Linear SVM & Yes & Normalized & 9 & K = 10, C = 0.1 & {\bf 0.276} & 0.270 \\
         MVG Tied Cov. & No & Normalized & 5 & - & 0.390 & 0.331 \\
         GMM & No & Raw & No & $N_{Comp} = 2 $ & 0.327 & 0.294 \\ 
+        RBF Kernel & No & Normalized & 10 & $\gamma = 0.05, C = 1.5, \xi = 0.1$  & {\bf 0.271} & 0.261 \\
         \hline
     \end{tabular}
 \end{table*}
 
 \newpage
 
-As mentioned earlier, up to now all models have been evaluated considering a balanced application ( $pi_T = 0.5$ ).
-We now want to discuss how or best models, based on the table above, perform in different conditions.
+As mentioned earlier, up to now all models have been evaluated considering a balanced application ( $\pi_T = 0.5$ ).
+We will now examine how these models perform under different applications, where the class distribution is unbalanced,
+and how they can be tweaked to perform better under these circumstances.
 
-....
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{logregquadBEP.jpg}}
+    \caption{Quadratic LR BEP}
+    \label{fig:disthist}
+\end{figure}
 
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{linsvmBEP.jpg}}
+    \caption{Linear SVM BEP}
+    \label{fig:disthist}
+\end{figure}
+
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{RBFNormalizedBEP.jpg}}
+    \caption{RBF Kernel BEP}
+    \label{fig:disthist}
+\end{figure}
 
 \end{document}
