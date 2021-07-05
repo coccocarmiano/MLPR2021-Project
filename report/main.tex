@@ -479,11 +479,13 @@ The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (li
 
 \begin{table*}[t] 
     \centering
-    \begin{tabular}{||c|c|c|c|c|c||}
+    \begin{tabular}{||c|c|c|c|c|c|c||}
         \hline 
-        Model & Features & PCA & Hyper-Parameters & DCF & DCF$_{min}$ \\
+        Model & Calibration & Features & PCA & Hyper-Parameters & DCF & DCF$_{min}$ \\
         \hline
-        - & - & - & - &  - & - \\
+        Linear LogReg & No & Normalized & 9 & $\lambda = 0.01$ & 0.303 & 0.299 \\
+        Quadratic LogReg & Yes & Normalized & 10 & $\lambda = 0.001$ & 0.285 & 0.274 \\
+        Linear SVM & Yes & Normalized & 9 & K = 10, C = 0.1 & 0.276 & 0.270 \\
         \hline
     \end{tabular}
 \end{table*}

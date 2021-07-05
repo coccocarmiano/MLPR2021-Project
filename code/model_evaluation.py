@@ -1,5 +1,5 @@
 import utils
-from classifiers import logreg, logreg_scores
+from classifiers import SVM_lin, SVM_lin_scores, logreg, logreg_scores
 from LogRegQuad import expand_feature_space
 import calibration
 import numpy as np
@@ -76,3 +76,23 @@ print(f"logregquad | whiten,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f
 # Linear SVM
 # Better results on validation set without calibration
 
+# Normalized & 10 & 0.1 & 9 & 0.350 &  {\bf 0.330}  \\
+K = 10
+C = 0.1
+dim = 9
+
+train, test = utils.load_train_data(), utils.load_test_data()
+trdataset, tedataset = utils.normalize(train, other=test)
+trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
+trdataset, tedataset = expand_feature_space(trdataset), expand_feature_space(tedataset)
+trlabels = trdataset[-1]
+telabels = tedataset[-1]
+
+w, b = SVM_lin(trdataset, K, C)
+trscores, _, _ = SVM_lin_scores(trdataset, w, b)
+tescores, _, _ = SVM_lin_scores(tedataset, w, b)
+
+tescores = calibration.calibrate_scores(trscores, trlabels, tescores, p)
+actdcf, _ = utils.DCF(tescores > 0, telabels)
+mindcf, _ = utils.minDCF(tescores, telabels)
+print(f"linsvm | norm,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
