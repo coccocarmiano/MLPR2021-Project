@@ -99,13 +99,17 @@ With the distribution being this way, we could expect even linear models to achi
 
 \section{Pre-Processing Analysis}
 
-In this section we will run some dummy\footnotemark models to infer wheter pre-processing, by the means of PCA, normalization, etc. can be useful or worth trying.
+In this section we will run some dummy\footnotemark models to learn how pre-processing affects the models for our task.
+\footnotetext{Simple model that run with arbitrary, non-optimized hyper-parameters}
 
-\footnotetext{Referring to models requiring parameter tuning or score recalibration}
-
-For now we will run all possible combinations of preprocessing (Raw, Normalized, Whitened) with PCA reductions (2-PCA, 3-PCA, ...).
+Note that we will be discarding combinations or entire models targeting our final application.
+A discussion about different applications will be made in the ending.
 
 \subsection{Pre-Processing MVG Classifiers}
+
+Since MVG classifiers are fairly similar, 
+we will now pick the most promising one and discarding the others, 
+while trying to infer its optimal working condition.
 
 \begin{table}[H] 
     \centering
@@ -114,9 +118,12 @@ For now we will run all possible combinations of preprocessing (Raw, Normalized,
         Type & PCA & DCF & minDCF \\
         \hline
         \hline
-        Raw & 9 & 0.401 & {\bf 0.362}  \\
-        Normalized &  7 & 0.464 & 0.420 \\
-        Whitened & 2 & 0.430 & 0.410 \\
+        Raw   & 8  & 0.375 & {\bf 0.321} \\
+        Raw   & 9  & {\bf 0.360} & 0.326 \\
+        Norm. & 10 & 0.419 & 0.330 \\
+        Norm. & 11 & 0.424 & 0.322 \\
+        Whit. & 11 & 0.424 & 0.322 \\
+        Whit. & 8  & 0.392 & 0.342 \\
         \hline
     \end{tabular}
     \caption{Full-Covariance MVG - Best Results}
@@ -131,9 +138,10 @@ For now we will run all possible combinations of preprocessing (Raw, Normalized,
         Type & PCA & DCF & minDCF \\
         \hline
         \hline
-        Raw & 7 & {\bf 0.375} & 0.366  \\
-        Normalized &  9 & {\bf 0.375} & 0.371 \\
-        Whitened & 11 & 0.402 & 0.401 \\
+        Raw   & 11 & {\bf 0.342} & 0.332 \\
+        Norm. & {\bf 5}  & 0.414 & {\bf 0.330} \\
+        Norm. & 11 & {\bf 0.342} & 0.332 \\
+        Whit. & 11 & {\bf 0.342} & 0.332 \\
         \hline
     \end{tabular}
     \caption{Tied-Covariance MVG - Best Results}
@@ -147,31 +155,32 @@ For now we will run all possible combinations of preprocessing (Raw, Normalized,
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
-            Raw & 7 & 0.383 & 0.366  \\
-            Normalized &  10 & 0.429 & 0.391 \\
-            Whitened & 5 & 0.402 & 0.386 \\
+            Raw   & 9  & 0.404 &  0.365 \\
+            Raw   & 7  & {\bf 0.391} &  0.370 \\
+            Norm. & 9  & 0.428 &  0.350 \\
+            Whit. & 11 & 0.460 &  {\bf 0.344} \\
+            Whit. & 5  & 0.394 &  0.374 \\
             \hline
     \end{tabular}
     \caption{Naive-Bayes MVG - Best Results}
     \label{naivetab}
 \end{table}
 
-The result validate some of our assumptions and invalidate others.
-By looking at the DCF\footnotemark values, our best model seems to be the Tied-Covariance ones.
-\footnotetext{By DCF we actually mean the {\it normalized} DCF, considering a prior $\pi = .5$ and equal costs}
-We are not very surprised to se that the Naive Bayes does sometimes outperform the Full-Covariance model as we noticed in Figure \ref{fig:2DRAW} that some features are not very correlated.
-The same can said about the the Tied covariance by looking at the same projection or feature {\it 8} of Figure \ref{fig:disthist}.
+The results seem in line with our assumptions.
+In fact, if  we look again at picture \ref{fig:2DRAW} we wouldn't expect the Naive Bayes to perform much differently from the Full Covariance one.
+The best model, with a modest margin, is the tied covariance one so we will keep it,
+and removing some dimensions seems to be helpful.
 
-Normalization and Whitening do not help, they harm, sometimes even significantly the classification, while it looks like PCA can be of modest help.
+Notice that while the Tied Covaraiance model achieved the best DCF\footnotemark of all classifiers,
+the MVG achieved the lowest Minimum DCF values, hiting that it is actually the one out of the three that could theoretically best separate classes.
+\footnotetext{By DCF we actually mean the {\it normalized} DCF, considering a prior $\pi_T = .5$ and equal costs}
 
-An interesting fact that is that while the Full-Covariance model looks like the worse perfoming one, it is the model with the lowest minDCF values.
-While it is not an important difference compared with other models, it is the one with the biggest difference between the DCF and minDCF values, hinting that score calibration could be required.
+Normalization and Whitening look irrelevant so we won't further experiment them.
 
 \subsection{Pre-Processing for GMMs}
 
-For GMMs we decide the number of components (for this dummy execution 4 was picked arbitrairly).
-We start with identity covariance matrices and by placing the means near the dataset mean.\footnotemark
-\footnotetext{The starting points are used in the same way also in the optimization part.}
+For our dummy GMM model we arbitrairly set the number of components to 4.
+The starting point for our EM algorithm is identity covariance matrices and means placed around the dataset mean.
 
 \begin{table}[H]
     \centering
@@ -189,33 +198,20 @@ We start with identity covariance matrices and by placing the means near the dat
     \label{tab:gmmresults}
 \end{table}
 
-As we would expect after the results of the Gaussian Classifiers, also here whitening does not look like a good choice and normalization looks ineffective.
-High dimensionality still looks preferred.
-
-The DCF values are close to the minDCF values, score calibration may be not necessary.
+As for our Gaussian Classifiers, Whitening and Normalization do not look promising. 
+However, as the difference between the Raw and Normalized does not look significant,
+we will further test both models.
+This first test shows us that high dimensionality is actually preferred.
 
 \subsection{Pre-Processing for Polynomial Kernel SVMs}
 
-The polynomial kernel mapping $\phi(\cdot)$ we will use is so defined:
+The polynomial kernel function is defined as:
 
-\begin{center}
-    \begin{align}
-        \phi({\bf x}) & = \begin{bmatrix}
-                            vec({\bf x}{\bf x}^T) \\
-                            \sqrt{2}{\bf x} \\
-                            1 \\
-                      \end{bmatrix}
-    \end{align}
-\end{center}
+$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2 + c)^d + b $$
 
-And we will be using the kernel function so described:
+We proceed to set our parameters arbitrairly for this dummy execution:
 
-$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = $$
-$$ = ({\bf x}_1^T{\bf x}_2 + c)^d + b = ({\bf x}_1^T{\bf x}_2+1)^2+0.5$$
-
-This formulation would require us to strictly use $ c = 1 $, as we do in our dummy model, but later on this will be an hyperparameter to be optimized.
-
-The results are interesting:
+$$k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2+1)^2+0.5 $$
 
 \begin{table}[H]
     \centering
