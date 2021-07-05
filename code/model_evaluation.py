@@ -6,15 +6,14 @@ import numpy as np
 
 p = 0.5
 
-
+train = utils.load_train_data()
+test = utils.load_test_data()
 
 # LogReg
 # Better results on validation set without calibration
 l = 0.01
 dim = 9
 
-train = utils.load_train_data()
-test = utils.load_test_data()
 trdataset, tedataset = utils.normalize(train, other=test)
 trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
 trlabels = trdataset[-1]
@@ -33,8 +32,6 @@ l = 0.001
 dim = 10
 
 ## Normalization
-train = utils.load_train_data()
-test = utils.load_test_data()
 trdataset, tedataset = utils.normalize(train, other=test)
 trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
 trdataset, tedataset = expand_feature_space(trdataset), expand_feature_space(tedataset)
@@ -51,9 +48,7 @@ mindcf, _ = utils.minDCF(tescores, telabels)
 print(f"logregquad | norm,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
 
 ## Whitening
-train = utils.load_train_data()
-test = utils.load_test_data()
-_, v = utils.whiten(train.copy())
+_, v = utils.whiten(train)
 trfeats, trlabels = train[:-1], train[-1]
 trfeats = v.T @ trfeats
 trdataset = np.vstack((trfeats, trlabels))

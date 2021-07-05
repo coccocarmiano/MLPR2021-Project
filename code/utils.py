@@ -244,8 +244,10 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tu
     '''
     
     feats, labels = dataset[:-1, :], dataset[-1, :]
+    feats, labels = feats.copy(), labels.copy()
     if other is not None:
         ofeats, olabels = other[:-1, :], other[-1, :]
+        ofeats, olabels = ofeats.copy(), olabels.copy()
 
     r, _ = feats.shape
     mean = fc_mean(feats)
