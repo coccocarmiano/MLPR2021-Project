@@ -427,10 +427,48 @@ For GMMs we decided inspect both raw and normalized optimization.
 
 As in table \ref{tab:gmmresults}, raw and normalized version both perform similarly, so both model could be of use, depending on the application.
 
-\subsection{Optimizing Kernel SVMs}
+\subsection{Optimizing SVMs}
 
 Diffrently from other models, for SVMs we will choose the best parameter based on only the minimum DCF values,
 given the non probabilistic nature of the scores generated.
+
+\subsubsection{Optimizing Linear SVMs}
+
+In the Linear SVMs model, we want to find out the best values for K (bias) and C (boundary) that give the minimum DCF
+value.
+We tried different combination of values in a range of $K = \left[0,100\right]$ and $C = \left[0.1, 10\right]$.
+
+\begin{table}[H] 
+    \centering
+    \tiny
+    \begin{tabular}{||c|c|c|c|c|c|c||}
+        \hline
+        Type & PCA & K & C & DCF & DCF$_{min}$ \\
+        \hline
+        \hline
+        Normalized & 9 & 10 & 0.1 & 0.350 & 0.330 \\
+        \hline
+    \end{tabular}
+    \caption{Best hyperparameters for Linear SVM}
+\end{table}
+
+Given the difference between DCF and minimum DCF, we also tried calibration.
+
+\begin{table}[H] 
+    \centering
+    \tiny
+    \begin{tabular}{||c|c|c|c|c|c|c||}
+        \hline
+        Type & PCA & K & C & DCF & DCF$_{min}$ \\
+        \hline
+        \hline
+        Normalized & 9 & 10 & 0.1 & \textcolor{green}{0.345} & 0.330 \\
+        \hline
+    \end{tabular}
+    \caption{Calibration for Linear SVM}
+\end{table}
+
+For the Linear SVM calibration helped to get better result for DCF.
 
 \subsubsection{Optimizing Polynomial SVMs}
 
