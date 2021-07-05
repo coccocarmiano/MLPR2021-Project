@@ -20,10 +20,10 @@ if __name__ == '__main__':
     dataset = utils.load_train_data()
     _, folds = utils.kfold(dataset, n=3)
     outfile = open(filename, 'w')
-    regbiases = [.1, .05]
-    gammas = [.05, .001]
-    bounds = [1, 1.5]
-    npca = [11, 10]
+    regbiases = [.005, .01, .05, .1]
+    gammas = [.05, .01, .1, .5]
+    bounds = [.5, .1, 1.5]
+    npca = [11, 10, 9, 8]
     w, v = utils.PCA(dataset)
 
     for gamma in gammas:

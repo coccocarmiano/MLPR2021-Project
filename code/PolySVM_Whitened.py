@@ -16,19 +16,21 @@ if __name__ == '__main__':
     dataset = utils.load_train_data()
     _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
-    constants = [0, .5, 1.5, 2.5, 5, 7.5, 10]
-    powers = [1, 1.5, 2, 2.5, 3]
-    bounds = [.1, .3, .5, .7, 1]
+    constants = [.5, 1, 3, 5]
+    powers = [1, 2, 3]
+    bounds = [.1, .5, 1]
+    npca = [11, 10, 9, 8]
+    w, v = utils.whiten(datset)
+    dataset = utils.normalize(dataset)
 
     for power in powers:
         for constant in constants:
             for bound in bounds:
                 poly_function = get_poly_function(power, constant)
                 scores, labels = [], []
+                vt = v[:, :n]
                 for fold in folds:
                     train, test = fold[0], fold[1]
-                    _, v = utils.whiten(train)
-                    train, test = utils.normalize(train, other=test)
                     fold_labels = test[-1, :]
                     labels.append(fold_labels)
 
@@ -52,5 +54,6 @@ if __name__ == '__main__':
                 mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
                 # Ignore the first field, is just handy for sorting
                 print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  Opt. Thr.: {optimal_threshold:.4f}  -  Power: {power:.2f}  -  Reg. Bias: {constant:.2f}  -  C:   {bound:.2f}", file=outfile)
+                np.save(f'../data/PolySVM-Whitened-PCA{n}-C{constant}-POW{power}Scores.npy', scores)
 
     outfile.close()

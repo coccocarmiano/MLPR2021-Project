@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
 
+
     # Tied Covariance Model
     train, test = utils.load_train_data(), utils.load_test_data()
     w, v = utils.PCA(train)
@@ -28,7 +29,7 @@ if __name__ == '__main__':
     er = dcf * 50
     print(f"Tied Covariance || PCA 7 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
 
-    plt.figure()
+    plt.figure(figsize=(14, 8))
     plt.title('Tied Covariance Bayes Error Plot')
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")
@@ -39,11 +40,12 @@ if __name__ == '__main__':
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
     tups = [ a for a, _ in tups]
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((-0.1, 1.1))
+    plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=14)
+    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
+    plt.tight_layout()
     plt.savefig('../img/MVGTiedBEP.jpg')
 
     # GMM Normalized
@@ -69,7 +71,7 @@ if __name__ == '__main__':
     print(f"GMM || Norm. PCA NO 3 Components ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
 
 
-    plt.figure()
+    plt.figure(figsize=(14, 8))
     plt.subplot(2, 1, 1).set_title("GMM, Normalized Features")
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")
@@ -80,7 +82,7 @@ if __name__ == '__main__':
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
     tups = [ a for a, _ in tups]
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((-0.1, 1.1))
+    plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
     plt.legend()
@@ -120,11 +122,12 @@ if __name__ == '__main__':
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
     tups = [ a for a, _ in tups]
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((-0.1, 1.1))
+    plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=14)
+    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
+    plt.tight_layout()
     plt.savefig('../img/GMMBEP.jpg')
 
 
@@ -159,7 +162,7 @@ if __name__ == '__main__':
 
 
 
-    plt.figure()
+    plt.figure(figsize=(14, 8))
     plt.title('Polynomial Kernel SVM Norm. Features Bayes Error Plot')
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")
@@ -170,11 +173,12 @@ if __name__ == '__main__':
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
     tups = [ a for a, _ in tups]
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((-0.1, 1.1))
+    plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=14)
+    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
+    plt.tight_layout()
     plt.savefig('../img/PolySVMNormBEP.jpg')
 
 
@@ -209,7 +213,7 @@ if __name__ == '__main__':
     print(f"RBFSVM || Norm PCA 10 Gamma = 0.05 RegBias = 0.1 Bound 1.5 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
 
 
-    plt.figure()
+    plt.figure(figsize=(14, 8))
     plt.title('RBF Kernel Normalized Features Bayes Error Plot')
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")
@@ -220,9 +224,10 @@ if __name__ == '__main__':
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
     tups = [ a for a, _ in tups]
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
-    plt.ylim((-0.1, 1.1))
+    plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=14)
+    plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
+    plt.tight_layout()
     plt.savefig('../img/RBFNormalizedBEP.jpg')

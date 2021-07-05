@@ -20,40 +20,35 @@ if __name__ == '__main__':
     dataset = utils.load_train_data()
     _, folds = utils.kfold(dataset, n=5)
     outfile = open(filename, 'w')
-    regbiases = [.01, .05, .1, .15, .25, .5]
-    gammas = [.1, .15, .3, .5, .7, 1., 1.5, 3, 5, 10]
-    bounds = [.1, .3, .5, .7, 1]
+    regbiases = [.005, .01, .05, .1]
+    gammas = [.05, .01, .1, .5]
+    bounds = [.5, .1, 1.5]
+    npca = [11, 10, 9, 8]
+    w, v = utils.whiten(dataset)
 
     for gamma in gammas:
-        for regbias in regbiases:
-            for bound in bounds:
-                kernel_function = get_kernel_function(gamma, regbias)
-                scores, labels = [], []
-                for fold in folds:
-                    train, test = fold[0], fold[1]
-                    _, v = utils.whiten(train)
-                    train, test = utils.normalize(train, other=test)
-                    fold_labels = test[-1, :]
-                    labels.append(fold_labels)
+            for regbias in regbiases:
+                for n in npca:
+                    vt = v[:, :n]
+                    for bound in bounds:
+                        kernel_function = get_kernel_function(gamma, regbias)
+                        scores, labels = [], []
+                        for fold in folds:
+                            train, test = fold[0], fold[1]
+                            train, test = np.vstack((vt.T @ train[:-1, :], train[-1])), np.vstack((vt.T @ test[:-1, :], test[-1]))
+                            fold_labels = test[-1, :]
+                            labels.append(fold_labels)
 
-                    feats, temp = train[:-1, :], train[-1, :]
-                    feats = v.T @ feats
-                    train = np.vstack((feats, temp))
+                            alphas = classifiers.DualSVM_Train(train, kernel_function, bound=bound)
+                            train, alphas = utils.support_vectors(train, alphas)
+                            fold_scores = classifiers.DualSVM_Score(train, kernel_function, alphas, test)
+                            scores.append(fold_scores)
 
-                    alphas = classifiers.DualSVM_Train(train, kernel_function, bound=bound)
-                    train, alphas = utils.support_vectors(train, alphas)
-
-                    feats, temp = test[:-1, :], test[-1, :]
-                    feats = v.T @ feats
-                    test = np.vstack((feats, temp))
-
-                    fold_scores = classifiers.DualSVM_Score(train, kernel_function, alphas, test)
-                    scores.append(fold_scores)
-                
-                scores = np.concatenate(scores)
-                labels = np.concatenate(labels)
-                mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
-                # Ignore the first field, is just handy for sorting
-                print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.2f}  -  Reg. Bias: {regbias:.2f}  -  C:   {bound:.2f}", file=outfile)
+                        scores = np.concatenate(scores)
+                        labels = np.concatenate(labels)
+                        mindcf, optimal_threshold = utils.minDCF(scores, labels, prior_t=.5)
+                        # Ignore the first field, is just handy for sorting
+                        print(f"{mindcf} |.| MinDCF: {mindcf:.4f}  -  PCA: {n} - Opt. Thr.: {optimal_threshold:.4f}  -  Gamma: {gamma:.4f}  -  Reg. Bias: {regbias:.4f}  -  C:   {bound:.4f}", file=outfile)
+                        np.save(f'../data/KernelSVM-Whitened-PCA{n}-RegBias{regbias}-Gamma{gamma}-Bound{bound}Scores.npy', scores)
 
     outfile.close()

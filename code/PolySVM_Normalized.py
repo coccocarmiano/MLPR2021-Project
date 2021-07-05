@@ -17,10 +17,10 @@ if __name__ == '__main__':
     dataset = utils.normalize(dataset)
     _, folds = utils.kfold(dataset, n=3)
     outfile = open(filename, 'w')
-    constants = [1, 5, 10]
-    powers = [2, 3, 4]
-    bounds = [.1,.5]
-    npca = [11, 10]
+    constants = [.5, 1, 3, 5]
+    powers = [1, 2, 3]
+    bounds = [.1, .5, 1]
+    npca = [11, 10, 9, 8]
     w, v = utils.PCA(dataset)
 
     for power in powers:
