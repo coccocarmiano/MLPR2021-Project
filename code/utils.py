@@ -42,9 +42,9 @@ def load_test_data():
     '''
     Returns the data from `Test.txt` organized as column samples. Last field is label.
     '''
-    test_fil = open(test_data_file, 'r')
-    lines = [line.strip() for line in test_fil]
-    test_fil.close()
+    test_file = open(test_data_file, 'r')
+    lines = [line.strip() for line in test_file]
+    test_file.close()
 
     splits = []
     for line in lines:
@@ -236,23 +236,23 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tu
     `dataset, other`, otherwise just normalized dataset.
     '''
     
-    dataset, dataset_labels = dataset[:-1, :], dataset[-1, :]
+    feats, labels = dataset[:-1, :], dataset[-1, :]
     if other is not None:
-        other, other_labels = other[:-1, :], other[-1, :]
+        ofeats, olabels = other[:-1, :], other[-1, :]
 
-    r, _ = dataset.shape
-    mean = fc_mean(dataset)
-    std = dataset.std(axis=1).reshape((r, 1))
-    dataset -= mean
-    dataset /= std
-    dataset = np.vstack((dataset, dataset_labels))
+    r, _ = feats.shape
+    mean = fc_mean(feats)
+    std = feats.std(axis=1).reshape((r, 1))
+    feats -= mean
+    feats /= std
+    rdataset = np.vstack((dataset, labels))
 
     if other is not None:
-        other = (other - mean) / std
-        other = np.vstack((other, other_labels))
-        return (dataset, other)
+        ofeats = (ofeats - mean) / std
+        rother = np.vstack((ofeats, olabels))
+        return (rdataset, rother)
 
-    return dataset
+    return rdataset
 
 
 def gaussianize(dataset : np.ndarray , other : np.ndarray = None, feat_label : bool = False) -> np.ndarray or Tuple[np.ndarray, np.ndarray]:
@@ -299,17 +299,17 @@ def support_vectors(dataset : np.ndarray, alphas : np.array, zero : float = .0) 
     Extracts only support vectors from a trained dual SVM model
     '''
     selector = alphas > zero
-    alphas = alphas[selector]
-    dataset = dataset[:, selector]
-    return dataset, alphas
+    ralphas = alphas[selector]
+    rdataset = dataset[:, selector]
+    return rdataset, ralphas
 
 def whiten(dataset : np.ndarray) -> np.ndarray:
     '''
     Returns the eigenvalues `w` and eigenvectors `v` used to whiten a dataset
     '''
 
-    dataset = normalize(dataset)
-    feats, labels = dataset[:-1, :], dataset[-1, :]
+    ndataset = normalize(dataset)
+    feats, labels = ndataset[:-1, :], ndataset[-1, :]
     cov = fc_cov(feats)
     w, v = PCA(cov, feat_label=False)
     w[w < 1e-10] = 1e-10
