@@ -9,9 +9,10 @@ if __name__ == '__main__':
 
 
     # Tied Covariance Model
-    train, test = utils.load_train_data(), utils.load_test_data()
+    """  train, test = utils.load_train_data(), utils.load_test_data()
+    train, test = utils.normalize(train, other=test)
     w, v = utils.PCA(train)
-    vt = v[:, :7]
+    vt = v[:, :5]
     trs, trl = vt.T @ train[:-1, :], train[-1, :]
     tes, tel = vt.T @ test[:-1, :], test[-1, :]
 
@@ -20,11 +21,11 @@ if __name__ == '__main__':
     scores = classifiers.gaussian_classifier(tes, [bmean, gmean], [cov, cov])
     dcf, _ = utils.DCF(scores > 0, tel)
     mindcf, _ = utils.minDCF(scores, tel)
-    temp = np.load('../data/MVGTiedScoresPCA7.npy')
+    temp = np.load('../data/MVG-TIED-NORMALIZED-PCA5.npy')
     _, t = utils.minDCF(temp, trl)
     dcf2, _ = utils.DCF(scores > t, tel)
     alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores - beta # -log(...)
+    calibrated = alpha * scores + beta # -log(...)
     dcf3, _ = utils.DCF(calibrated > 0, tel)
     er = dcf * 50
     print(f"Tied Covariance || PCA 7 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
@@ -47,28 +48,29 @@ if __name__ == '__main__':
     plt.legend()
     plt.tight_layout()
     plt.savefig('../img/MVGTiedBEP.jpg')
+    exit() """
 
-    # GMM Normalized
+    # GMM 
 
-    train, test = utils.load_train_data(), utils.load_test_data()
-    train, test = utils.normalize(train, other=test)
+    """ train, test = utils.load_train_data(), utils.load_test_data()
     trs, trl = train[:-1, :], train[-1, :]
     tes, tel = test[:-1, :], test[-1, :]
 
-    gw, gm, gc = classifiers.GMM_Train(trs[:, trl > 0], 3)
-    bw, bm, bc = classifiers.GMM_Train(trs[:, trl < 1], 3)
+    gw, gm, gc = classifiers.GMM_Train(trs[:, trl > 0], 2)
+    bw, bm, bc = classifiers.GMM_Train(trs[:, trl < 1], 2)
 
     scores = classifiers.GMM_Score(tes, gw, gm, gc) - classifiers.GMM_Score(tes, bw, bm, bc)
     dcf, _ = utils.DCF(scores > 0, tel)
     mindcf, _ = utils.minDCF(scores, tel)
-    temp = np.load('../data/GMMNorm-PCA11-3ComponentsScore.npy')
+    temp = np.load('../data/GMM-RAW-2COMPONENTS-PCA11.npy')
     _, t = utils.minDCF(temp, trl)
     dcf2, _ = utils.DCF(scores > t, tel)
     alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores - beta # -log(...)
+    calibrated = alpha * scores + beta # -log(...)
     dcf3, _ = utils.DCF(calibrated > 0, tel)
     er = dcf * 50
     print(f"GMM || Norm. PCA NO 3 Components ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
+    exit()
 
 
     plt.figure(figsize=(14, 8))
@@ -85,12 +87,12 @@ if __name__ == '__main__':
     plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
     plt.ylabel('DCF', size=16)
-    plt.legend()
+    plt.legend() """
 
 
     # GMM Raw
 
-    train, test = utils.load_train_data(), utils.load_test_data()
+    """ train, test = utils.load_train_data(), utils.load_test_data()
     w, v = utils.PCA(train)
     vt = v[:, :10]
     trs, trl = vt.T @ train[:-1, :], train[-1, :]
@@ -106,7 +108,7 @@ if __name__ == '__main__':
     _, t = utils.minDCF(temp, trl)
     dcf2, _ = utils.DCF(scores > t, tel)
     alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores - beta # -log(...)
+    calibrated = alpha * scores + beta # -log(...)
     dcf3, _ = utils.DCF(calibrated > 0, tel)
     er = dcf * 50
     print(f"GMM || Raw PCA 10 3 Components ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
@@ -128,10 +130,10 @@ if __name__ == '__main__':
     plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('../img/GMMBEP.jpg')
+    plt.savefig('../img/GMMBEP.jpg') """
 
 
-    # Normalized Polynomial
+    """ # Normalized Polynomial
 
     def fpoly(x1, x2):
         a = x1.T @ x2    
@@ -155,14 +157,14 @@ if __name__ == '__main__':
     _, t = utils.minDCF(temp, trl)
     dcf2, _ = utils.DCF(scores > t, tel)
     alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores - beta # -log(...)
+    calibrated = alpha * scores + beta # -log(...)
     dcf3, _ = utils.DCF(calibrated > 0, tel)
     er = dcf * 50
-    print(f"PolySVM || Normalized Features PCA 9 c = 1 pow = 2 bound = 0.5 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
+    print(f"PolySVM || Normalized Features PCA 9 c = 1 pow = 2 bound = 0.5 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}") """
 
 
 
-    plt.figure(figsize=(14, 8))
+    """ plt.figure(figsize=(14, 8))
     plt.title('Polynomial Kernel SVM Norm. Features Bayes Error Plot')
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")
@@ -179,7 +181,7 @@ if __name__ == '__main__':
     plt.xlabel(r'$t = -\log\frac{\pi_T}{1-\pi_T}$', size=12)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('../img/PolySVMNormBEP.jpg')
+    plt.savefig('../img/PolySVMNormBEP.jpg') """
 
 
     # Normalized RBF
@@ -196,7 +198,9 @@ if __name__ == '__main__':
     w, v = utils.PCA(train)
     vt = v[:, :10]
     train = np.vstack((vt.T @ train[:-1, :], train[-1, :]))
-    test = np.vstack((vt.T @ test[:-1, :], test[-1, :]))
+    test = np.vstack((vt.T@ test[:-1, :], test[-1, :]))
+    tel = test[-1, :]
+    trl = train[-1, :]
 
     alphas = classifiers.DualSVM_Train(train, frbf, bound=1.5)
     train, alphas = utils.support_vectors(train, alphas)
@@ -207,13 +211,13 @@ if __name__ == '__main__':
     _, t = utils.minDCF(temp, trl)
     dcf2, _ = utils.DCF(scores > t, tel)
     alpha, beta = utils.calibrate_scores_params(scores, tel, .5)
-    calibrated = alpha * scores - beta # -log(...)
+    calibrated = alpha * scores + beta # -log(...)
     dcf3, _ = utils.DCF(calibrated > 0, tel)
     er = dcf * 50
     print(f"RBFSVM || Norm PCA 10 Gamma = 0.05 RegBias = 0.1 Bound 1.5 ~ minDCF {mindcf} DCF {dcf} DCFValidation {dcf2} DCFLogreg {dcf3} ER {er}")
 
 
-    plt.figure(figsize=(14, 8))
+    plt.figure(figsize=(7, 4))
     plt.title('RBF Kernel Normalized Features Bayes Error Plot')
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")

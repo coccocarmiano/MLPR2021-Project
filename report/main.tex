@@ -1,4 +1,4 @@
-\documentclass[12pt, twocolumn]{article}
+\documentclass[hidelinks, 12pt, twocolumn]{article}
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{hyperref}
@@ -6,6 +6,7 @@
 \usepackage{amsmath, amssymb}
 \usepackage{cuted}
 \usepackage{amsbsy}
+\setlength{\columnsep}{1cm}
 \usepackage[margin=0.7in]{geometry}
 \usepackage[style=numeric-comp,useprefix,hyperref,backend=bibtex]{biblatex}
 \graphicspath{{../img/}}
@@ -36,8 +37,9 @@
 \section{Preliminary Data Analysis}
 \subsection{Feature Distribution}
 
-Before discussing the model, their implementation and their effectiveness we briefly take a look at how the features are distributed.
-For convenience we shall now report the legend just one, but keep in mind that in all pictures red color is associated to class 0 (which we will be referring to as class {\it Bad}) and green color is associated to class 1 (which will be class {\it Good}).
+Before discussing the models, their implementation and their effectiveness we briefly take a look at how the features are distributed.
+For convenience we shall now report the legend just once, but keep in mind that in the following pictures the red color is associated to class 0 
+(which we will also be referring to as class {\it Bad}) and the green color is associated to class 1 (which will be class {\it Good}).
 
 \begin{figure}[H] 
     \caption{Histogram of Class' Features}
@@ -50,22 +52,26 @@ In the next pages we will be classifying samples obtained from a K-Fold\footnote
 
 $$ t = -\log{\frac{\pi}{1-\pi}} $$
 
-For the threshold to be optimal, we should use the empirical prior $\pi \approx .33$ based on a frequentist approach;
+For the threshold to be optimal, we should use the empirical prior $\pi \approx 0.33$ based on a frequentist approach;
 Instead we will be using a non-optimal prior $\tilde{\pi} = .5$ as it is the application we are going to be targeting
 .
-\footnotetext{K varies through models. For fast ones, 5 or 10 is used. For slower ones, 3 is used.}
+\footnotetext{More on the value of K later}
 
-Coming back to features distributions, some things are to be noticed.
-While some features are similar between class Good and class Bad (see feature {\it 1}) others differ substantially and can be very helpful in discriminating samples (see feature {\it 8}).
+We can notice some things:
+while some features are similar between class Good and class Bad (e.g. Feature 1) others differ substantially 
+and could be helpful in discriminating samples (e.g. Feature 8).
 
-Moreover, the features are distributed in various ways: while some do look pretty Gaussian (see feature {\it 9}) and others are instead fairly regular (see feature {\it 5}) and could thus be well estimated by Gaussian models\footnotemark , other act in a more irregular way.
+The features are also distributed in different ways: 
+some do look Gaussian distributed (e.g. Feature 9) or regular enough
+(e.g. Feature 5) and could thus be well estimated by Gaussian models\footnotemark 
+, other act in a more irregular way.
 
-\footnotetext{Meaning both Gaussian Classifiers and Gaussian Mixture Models}.
+\footnotetext{Both Gaussian Classifiers and GMMs}.
 
-To take a closer look we now project the data on the two dimensional plane. 
-We will be using 3 methods to do so: PCA\footnotemark , Normalization + PCA, Normalization + Whitening.
+To take a closer look we project the data on the two dimensional plane. 
+We will be using 3 methods: PCA\footnotemark , Normalization + PCA, Normalization + Whitening.
 
-\footnotetext{Without data centering to appreciate the correlation}
+\footnotetext{No data centering applied before}
 
 \begin{figure}[H]     
     {\includegraphics[width=\linewidth]{2DRAW.png}}
@@ -73,8 +79,7 @@ We will be using 3 methods to do so: PCA\footnotemark , Normalization + PCA, Nor
     \label{fig:2DRAW}
 \end{figure}
 
-The points are very close one another, we thus expect linear models to be not so effective compared to others.
-The data is pretty {\it circularly} distributed, so correlation may not play an important role in discriminating samples.
+The points don't seem much correlated, we expect Whitening to not be of much use.
 
 \begin{figure}[H] 
     {\includegraphics[width=\linewidth]{2DNorm.png}}
@@ -82,13 +87,16 @@ The data is pretty {\it circularly} distributed, so correlation may not play an 
     \label{fig:2DNORM}
 \end{figure}
 
-The normalized projection seems to split data in two clusters, each containing some samples of either class, but some points of different class seem to get far apart from the other.
-So normalization is a technique worth trying.
+The normalized projection splits data in two clusters, 
+each containing some samples of each class, 
+but some points of different class also do get apart one another:
+normalization could be of use
 
-Note that for Normalization we refer to {\it Z-Normalization}. 
-From some early tests we found that {\it Min-Max} normalization was not very effective, and with {\it Gaussianization} centering and scaling data in the same way as Z while being slower, we decided to use this method.
+Our chosen normalization technique is Z-Normalization.
+From a preliminary, off-record analysis we found Gaussianization to produce
+similar results while being slower.
 
-Lastly we take a look at normalized and whitened data.
+Lastly, the Whitened data.
 
 \begin{figure}[H] 
     {\includegraphics[width=\linewidth]{2DWhitened.png}}
@@ -96,23 +104,18 @@ Lastly we take a look at normalized and whitened data.
     \caption{2D-PCA Projection, Whitened Data}
 \end{figure}
 
-Results do look interesting: points to get much apart, even if we can spot many outliers.
-With the distribution being this way, we could expect even linear models to achieve decent results.
-
+Results are more interesting than expected,
+doing well in getting points of different class
+apart one another.
 
 \section{Pre-Processing Analysis}
 
-In this section we will run some dummy\footnotemark models to learn how pre-processing affects the models for our task.
-\footnotetext{Simple model that run with arbitrary, non-optimized hyper-parameters}
-
-Note that we will be discarding combinations or entire models targeting our final application.
-A discussion about different applications will be made in the ending.
+In this section we will run the models without trying to optimize them as much as we can.
 
 \subsection{Pre-Processing MVG Classifiers}
 
 Since MVG classifiers are fairly similar, 
-we will now pick the most promising one and discarding the others, 
-while trying to infer its optimal working condition.
+we will discard the less promising ones now.
 
 \begin{table}[H] 
     \centering
@@ -169,20 +172,23 @@ while trying to infer its optimal working condition.
     \label{naivetab}
 \end{table}
 
-The results seem in line with our assumptions.
-In fact, if  we look again at picture \ref{fig:2DRAW} we wouldn't expect the Naive Bayes to perform much differently from the Full Covariance one.
-The best model, with a modest margin, is the tied covariance one so we will keep it,
-and removing some dimensions seems to be helpful.
+The results are in line with our assumptions.
+Looking again at picture \ref{fig:2DRAW} we wouldn't expect the Naive Bayes to perform much differently from the Full Covariance one.
+The best model, with a modest margin, is the Tied Covariance one so
+this will be our chosen one.
 
 Notice that while the Tied Covaraiance model achieved the best DCF\footnotemark of all classifiers,
-the MVG achieved the lowest Minimum DCF values, hiting that it is actually the one out of the three that could theoretically best separate classes.
-\footnotetext{By DCF we actually mean the {\it normalized} DCF, considering a prior $\pi_T = .5$ and equal costs}
+the MVG achieved the lowest Minimum DCF values, hiting that it may be the model
+wit the best theoretical separation capabilities.
+\footnotetext{Normalized DCF, $\pi_T = .5$, equal costs}
 
-Normalization and Whitening look irrelevant so we won't further experiment them.
+Whitening as expected is of no use, we won't further experiment it.
 
 \subsection{Pre-Processing for GMMs}
 
-For our dummy GMM model we arbitrairly set the number of components to 4.
+For the GMM model we arbitrairly train it with four components.
+Optimizations will be made later.
+
 The starting point for our EM algorithm is identity covariance matrices and means placed around the dataset mean.
 
 \begin{table}[H]
@@ -201,23 +207,40 @@ The starting point for our EM algorithm is identity covariance matrices and mean
     \label{tab:gmmresults}
 \end{table}
 
-As for our Gaussian Classifiers, Whitening and Normalization do not look promising. 
-However, as the difference between the Raw and Normalized does not look significant,
-we will further test both models.
-This first test shows us that high dimensionality is actually preferred.
+As for our Gaussian Classifiers, whitening is not useful, but we will further experiment with normalization.
+High dimensionality seems preferred.
 
-\subsection{Pre-Processing for Kernel SVMs}
+\subsection{Pre-Processing for SVMs}
 
 Differently for what we did up to now, given the non-probabilistic nature of SVM scores,
 we will be deciding our optimal model for both types of kernel SVMs on just minimum DCFs values.
 
+\subsubsection{Pre-Processing for Linear SVM}
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Type & K & C & PCA  & minDCF \\
+            \hline
+            \hline
+            Raw & 0 & 10.0 & 6 & 0.568  \\
+            Norm. & 10 & 0.1 & 9 &  {\bf 0.330}  \\
+            Whit. & 1.0 & 1.0 & 9 &  0.331  \\
+            \hline
+    \end{tabular}
+    \caption{Linear SVM - Best Results}
+\end{table}
+
+The Linear SVM model performed much better with normalization.
+Whitening looks again irrelevant.
+
+PCA is useful to obtain lower values of minimum DCF in all cases, even if the model trained
+with raw features performs worse than models trained with preprocessed features.
+
 \subsubsection{Pre-Processing for Polynomial Kernel SVMs}
 
-The polynomial kernel function is defined as:
-
-$$ \phi({\bf x}_1)^T\phi({\bf x}_2) = k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2 + c)^d + b $$
-
-We proceed to set our parameters arbitrairly for this dummy execution:
+The dummy parameters chosen for execution are:
 
 $$k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2+1)^2+0.5 $$
 
@@ -225,89 +248,84 @@ $$k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2+1)^2+0.5 $$
     \centering
         \begin{tabular}{||c|c|c|c||}
             \hline
-            Type & PCA & DCF & minDCF \\
+            Type & PCA & minDCF \\
             \hline
             \hline
-            Raw & 7 & 0.554 &  0.545  \\
-            Normalized & 6 & {\bf 0.393} &  {\bf 0.381}  \\
-            Whitened & 11 & 0.399 &  0.393  \\
+            Raw & 7 & 0.545  \\
+            Normalized & 6 & {\bf 0.381}  \\
+            Whitened & 11 & 0.393  \\
             \hline
         \end{tabular}
         \caption{Polynomail Kernel SVM - Best Results}
         \label{polypreprocessing}
 \end{table}
 
-While competitiveness with other models has to be made later, when each one will be fully used, here we see an interesting change:
-normalization greatly improves our classification.
-While a lower PCA has obtained the lowest DCF, it is not significantly lower than the one obtained with higher dimensionality, so we can say that here it's normalization helping us out.
-Whitening, again, does not make any difference, as the results are same or close to the ones obtained with normalization only.
+Here we notice some differences with previous models:
+normalization greatly improves our classification,
+and small dimensionality obtain lower DCFs, 
+even if not significanlty.
 
-Notice also how scores seems well calibration with our theoretical threshold even if they do not have a probabilistic interpretation.
+Again, whitening does not make any difference.
 
 \subsection{Pre-Processing for RBF Kernel SVMs}
 
-The dummy RBF function used here is the following:
+The dummy parameters for the RBF Kernel are:
 
 $$\displaystyle k({\bf x_1}, {\bf x_2}) = e^{-\gamma||{\bf x}_1 - {\bf x}_2||^2} + b = e^{-0.05||{\bf x}_1 - {\bf x}_2||^2} + 0.05 $$
 
-Small values of $\gamma$ and $b$ were picked to avoid numerical issues when using non-normalized models.
-
 \begin{table}[H]
     \centering
-        \begin{tabular}{||c|c|c|c||}
+        \begin{tabular}{||c|c|c||}
             \hline
-            Type & PCA & DCF & minDCF \\
+            Type & PCA & minDCF \\
             \hline
             \hline
-                Raw & 10 & 0.588 & 0.579 \\ 
-                Normalized & 11 & {\bf 0.356} & {\bf 0.352} \\ 
-                Whitened & 11 & {\bf 0.356} & {\bf 0.352} \\ 
+                Raw & 10 & 0.579 \\ 
+                Normalized & No & {\bf 0.352} \\ 
+                Whitened & No & {\bf 0.352} \\ 
             \hline
     \end{tabular}
     \caption{RBF Kernel SVM - Best Results}
 \end{table}
 
-Just like polynomial kernel, RBF prefers high dimensionality , so further testing in this direction is required.
-Again, normalization plays an important role while whitening seems to have no effect whatsoever and scores look extremely well calibrated.
+Opposed to polynomial SVMs,
+RBF prefers high dimensionality.
+Also in this case normalization plays and important role while whitening does not look useful.
 
-Just like polynomial kernel SVMs, here normalization has no effect whatsoever whilte normalization greatly improves our performance.
-The RBF Kernel works significantly better when working with all or most components. 
-
-We are not yet discussing perfomance in detail but so far, this is our most promising model.
+So far, this is our most promising model.
 
 \subsection{Pre-Processing for Logistic Regression Model}
 
-Regarding the Logistic Regression, we will consider both linear and quadratic model.
-
 \subsubsection{Linear Logistic Regression}
 
-In the Linear model, dimensionality reduction through PCA and prepocessing through normalization
-helped to obtain lower minimum DCF compared to raw features.
-For the whitened features, best results are obtained without applying PCA.
-As the Gaussian Classifiers, only a small numberof features can be removed.
 
-Only results with already optimized hyperparameters are reported.
+Normalization helps in obtaining lower minimum DCFs compared to raw features,
+and higher dimensionality is preferred.
+Whitening in this case looks extremely harmful and we won't further analyze it.
+
 \begin{table}[H]
     \centering
-    \tiny
+    \small
         \begin{tabular}{||c|c|c|c||}
             \hline
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
             Raw ($\lambda = 0.0001$) & 10 & 0.369 &  0.342  \\
-            Normalized ($\lambda = 0.01$) & 9 & 0.369 &  {\bf 0.336}  \\
-            Whitened ($\lambda = 0.0001$) & 11 & 0.549 &  0.503  \\
+            Norm. ($\lambda = 0.01$) & 9 & 0.369 &  {\bf 0.336}  \\
+            Whit. ($\lambda = 0.0001$) & No & 0.549 &  0.503  \\
             \hline
     \end{tabular}
     \caption{Linear Logistic Regression - Best Results}
 \end{table}
 
-Whitening didn't help so much to improve results, so it won't be considered in further analysis.
+The reported results are obtained through optimized parameters.
+
 \subsubsection{Quadratic Logistic Regression}
 
 In the Quadratic Logistic Regression, after the preprocessing stage, the features space
 was expanded through 
+
 $$ {\bf \boldsymbol{\phi}(x)} = {
     \begin{bmatrix}
     vec\langle{\bf xx^T}\rangle\\
@@ -315,76 +333,53 @@ $$ {\bf \boldsymbol{\phi}(x)} = {
     \end{bmatrix}}
 $$ 
 
-In contrast to linear model, whitening helped as well as normalization, PCA
-was useful in both cases, with and without preprocessing, but with a notable difference
-in the number of features used to obtain following results.
+Whitening does not harm as in the linear case but it isn't helpful either, and we will again discard it.
+PCA is more helpful when working with raw features.
 
 \begin{table}[H]
-    \tiny
     \centering
+    \small
         \begin{tabular}{||c|c|c|c||}
             \hline
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
             Raw ($\lambda = 0.1$) & 6 & 0.385 &  0.366  \\
-            Normalized ($\lambda = 0.001$) & 10 & 0.324 &  {\bf 0.307}  \\
-            Whitened ($\lambda = 0.001$) & 10 & 0.324 &  {\bf 0.307}  \\
+            Norm. ($\lambda = 0.001$) & 10 & 0.324 &  {\bf 0.307}  \\
+            Whit. ($\lambda = 0.001$) & 10 & 0.324 &  {\bf 0.307}  \\
             \hline
     \end{tabular}
     \caption{Quadratic Logistic Regression - Best Results}
 \end{table}
 
-\subsection{Pre-Processing for Linear SVM}
-
-The Linear SVM model performed much better with normalization and whitening rather than raw features.
-Applying PCA was useful to obtain low values of minimum DCF in all cases, even if the model trained
-with raw features performed worse than models trained with preprocessed features.
-
-\begin{table}[H]
-    \centering
-    \tiny
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
-            Type & K & C & PCA & DCF & minDCF \\
-            \hline
-            \hline
-            Raw & 0 & 10.0 & 6 & 0.911 &  0.568  \\
-            Normalized & 10 & 0.1 & 9 & 0.350 &  {\bf 0.330}  \\
-            Whitened & 1.0 & 1.0 & 9 & 0.364 &  0.331  \\
-            \hline
-    \end{tabular}
-    \caption{Linear SVM - Best Results}
-\end{table}
-
-The high difference between minimum DCF and DCF suggests us that scores are miscalibrated, but we will try to
-optimize it in next chapters.
-
 \section{Optimizing Models}
 
 \subsection{Optimizing Logistic Regression}
 
-Now we will try to find the $\lambda$ that gives us the best (lower) minimum DCF in the validation set, extracted
-from the training set through a 5-fold cross validation protocol.
-Several values of $\lambda$ have been tried, in a range between $\left[10^{-4}, 10^3\right]$ for both linear and quadratic model.
+To find the optimal value of $\lambda$ several have been tried in range  $\left[10^{-4}, 10^3\right]$ for both linear and quadratic model.
 
 \begin{table}[H]
-    \tiny
     \centering
+    \tiny
         \begin{tabular}{||c|c|c|c|c|c||}
             \hline
             Model & Type & $\lambda$ & PCA & DCF & minDCF \\
             \hline
             \hline
-            Linear & Normalized & 0.01 & 9 & 0.369 &  0.336  \\
-            Quadratic & Normalized & 0.001 & 10 & 0.324 &  0.307  \\
+            Linear & Norm. & 0.01 & 9 & 0.369 &  0.336  \\
+            Quadratic & Norm. & 0.001 & 10 & {\bf 0.324} &  0.307  \\
             \hline
     \end{tabular}
     \caption{Best $\lambda$ values for Logistic Regression}
 \end{table}
 
-We tried to lower the difference between the DCF and the minimum one, in both linear and and quadratic model.
-To reduce the DCF, we tried to calibrate the scores:
+To lower the difference between the DCF and the minimum DCF,
+we try recalibrating scores.
+To do so, we scale and shift as in:
+
+$$ s_{new} = f(s_{old}) = \alpha s + \beta $$
+
+Where $\alpha, \beta$ are extimated through logistic regression.
 
 \begin{table}[H]
     \tiny
@@ -402,12 +397,11 @@ To reduce the DCF, we tried to calibrate the scores:
     \label{logregcalibration}
 \end{table}
 
-As reported in table \ref{logregcalibration}, calibration helped in the quadratic case, 
-but DCF got worse in linear one.
+While the DCF lowered for the quadratic model, it increased for the linear one.
 
 \subsection{Optimizing Gaussian Mixture Models}
 
-For GMMs we decided inspect both raw and normalized optimization.
+For GMMs we decided inspect both raw and normalized features.
 
 \begin{table}[H] 
     \centering
@@ -425,50 +419,47 @@ For GMMs we decided inspect both raw and normalized optimization.
     \label{tab:gmmoptimization}
 \end{table}
 
-As in table \ref{tab:gmmresults}, raw and normalized version both perform similarly, so both model could be of use, depending on the application.
+As in table \ref{tab:gmmresults}, raw and normalized version perform similarly,
+so both could be of use, depending on the application.
 
 \subsection{Optimizing SVMs}
 
-Diffrently from other models, for SVMs we will choose the best parameter based on only the minimum DCF values,
-given the non probabilistic nature of the scores generated.
-
 \subsubsection{Optimizing Linear SVMs}
 
-In the Linear SVMs model, we want to find out the best values for K (bias) and C (boundary) that give the minimum DCF
-value.
-We tried different combination of values in a range of $K = \left[0,100\right]$ and $C = \left[0.1, 10\right]$.
+For Linear SVMs, we search the best value of K (bias) and C (boundary) that give the minimum DCFvalue.
+Different combinations of values for $K = \left[0,100\right]$ and $C = \left[0.1, 10\right]$ were tried.
 
 \begin{table}[H] 
     \centering
-    \tiny
+    \small
     \begin{tabular}{||c|c|c|c|c|c|c||}
         \hline
         Type & PCA & K & C & DCF & DCF$_{min}$ \\
         \hline
         \hline
-        Normalized & 9 & 10 & 0.1 & 0.350 & 0.330 \\
+        Norm. & 9 & 10 & 0.1 & 0.350 & 0.330 \\
         \hline
     \end{tabular}
-    \caption{Best hyperparameters for Linear SVM}
+    \caption{Best Hyperparameters for Linear SVM}
 \end{table}
 
-Given the difference between DCF and minimum DCF, we also tried calibration.
+Given the difference between DCF and minimum DCF, we also try calibration:
 
 \begin{table}[H] 
     \centering
-    \tiny
+    \small
     \begin{tabular}{||c|c|c|c|c|c|c||}
         \hline
         Type & PCA & K & C & DCF & DCF$_{min}$ \\
         \hline
         \hline
-        Normalized & 9 & 10 & 0.1 & \textcolor{green}{0.345} & 0.330 \\
+        Norm. & 9 & 10 & 0.1 & \textcolor{green}{\bf 0.345} & 0.330 \\
         \hline
     \end{tabular}
     \caption{Calibration for Linear SVM}
 \end{table}
 
-For the Linear SVM calibration helped to get better result for DCF.
+The DCF lowered, even if not significanlty.
 
 \subsubsection{Optimizing Polynomial SVMs}
 
@@ -488,10 +479,10 @@ For the Linear SVM calibration helped to get better result for DCF.
     \label{tab:polyoptimization}
 \end{table}
 
-As opposed to table \ref{polypreprocessing}, we find out that the normalized version is actually better than the raw features one.
+Opposed to table \ref{polypreprocessing}, we find out that the normalization is actually better than the raw features.
 
-However, our best performing polynomial model is of degree $ c = 1 $, in other words a linear model.
-This is not surpising given the effectiveness of the Linear Logist Regression model, but we won't further discuss it.
+However, our best performing polynomial model is of degree $ c = 1 $, a linear model.
+This does not surprise given the effectiveness of other linear models, but we won't further discuss polynomial kernels.
 
 \subsubsection{Optimizing RBF SVMs}
 
@@ -503,21 +494,52 @@ This is not surpising given the effectiveness of the Linear Logist Regression mo
         \hline
         \hline
         Norm. & 0.288 & 10 \\
-        Whit & 0.00 & X \\
+        Whit. & 0.488 & No \\
         \hline
     \end{tabular}
     \caption{RBF K. Optimization Results}
     \label{tab:rbfoptimization}
 \end{table}
 
-Here we determine that whitening has no more benefits than plain normalization, so we ultimately discard it.
+Whitening has no benefits, we discard it.
 
 \section{Experimental Results}
 
-After having run our models in order to find the best parameters, we now test them on previously unseen data.
+After running our models to find the best parameters, we now test them on previously unseen data.
 
 All the parameters here reported have been found through a K-Fold Cross-Validation approach.
-The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (lighter models, e.g. Gaussian Classifiers).
+The value of K used differs with the model, from low values (3, heavier models, e.g. Kernel SVMs) 
+up to higher ones (10, lighter models, e.g. Gaussian Classifiers).
+
+As mentioned earlier, up to now all models have been optimized for a balanced application ( $\pi_T = 0.5$ ).
+We will now examine how these models perform under different assumptions,
+and what can be done to get better predictions.
+
+To do so, we compare our DCF with the ones obtained from:
+
+\begin{itemize}
+    \item The best threshold for the test set (MinDCF)
+    \item The best threshold for the training set ( DCF Validation )
+    \item The theoretical best threshold and calibrating the scores (DCF Log. Reg.)
+\end{itemize}
+
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{logregquadBEP.jpg}}
+    \caption{Quadratic LR BEP}
+    \label{fig:quadlogregbep}
+\end{figure}
+
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{linsvmBEP.jpg}}
+    \caption{Linear SVM BEP}
+    \label{fig:linsvmbep}
+\end{figure}
+
+\begin{figure}[H] 
+    {\includegraphics[width=\linewidth]{RBFNormalizedBEP.jpg}}
+    \caption{RBF Kernel BEP}
+    \label{fig:rbfkernelbep}
+\end{figure}
 
 \begin{table*}[t] 
     \centering
@@ -533,30 +555,16 @@ The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (li
         RBF Kernel & No & Normalized & 10 & $\gamma = 0.05, C = 1.5, \xi = 0.1$  & {\bf 0.271} & 0.261 \\
         \hline
     \end{tabular}
+    \caption{Final Parameters and Results on Test Set}
 \end{table*}
 
-\newpage
+Recalibrating scores helps most of the time, but our best option is
+using a threshold computed from the validatiion scores.
 
-As mentioned earlier, up to now all models have been evaluated considering a balanced application ( $\pi_T = 0.5$ ).
-We will now examine how these models perform under different applications, where the class distribution is unbalanced,
-and how they can be tweaked to perform better under these circumstances.
+Note that we trained our model and selected the hyper-parameters for a balanced case:
+normally we should also tune them considering the target application,
+meaning we should have trained the models differently for different applications.
+In that case, score recalibrating may have been less important.
 
-\begin{figure}[H] 
-    {\includegraphics[width=\linewidth]{logregquadBEP.jpg}}
-    \caption{Quadratic LR BEP}
-    \label{fig:disthist}
-\end{figure}
-
-\begin{figure}[H] 
-    {\includegraphics[width=\linewidth]{linsvmBEP.jpg}}
-    \caption{Linear SVM BEP}
-    \label{fig:disthist}
-\end{figure}
-
-\begin{figure}[H] 
-    {\includegraphics[width=\linewidth]{RBFNormalizedBEP.jpg}}
-    \caption{RBF Kernel BEP}
-    \label{fig:disthist}
-\end{figure}
 
 \end{document}

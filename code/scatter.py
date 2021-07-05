@@ -48,7 +48,7 @@ if __name__ == '__main__':
     plt.scatter(bad[0], bad[1], marker='x', color=utils.red)    
 
     plt.figure()
-    plt.title("Whitened Features (Custom Lib)")
+    plt.title("Whitened Features")
     data = utils.load_train_data()
     data = utils.normalize(data)
     w, v = utils.whiten(data)

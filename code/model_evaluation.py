@@ -8,7 +8,7 @@ import numpy as np
 
 def plot_eval(scores, tel, calibrated, t, tag, filename):
     tag = tag + ' Bayes Error Plot'
-    plt.figure(figsize=(14, 8))
+    plt.figure(figsize=(7, 4))
     plt.title(tag)
     (dcfs, x), (mindcfs, x) = utils.BEP(scores, tel)
     plt.plot(x, dcfs, label="DCF")

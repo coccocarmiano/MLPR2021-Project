@@ -1,43 +1,34 @@
-- [Data Scheme](#data-scheme)
-- [Folder Structure](#folder-structure)
-- [Notes](#notes)
-  
-
-## Data Scheme
-
-Formato Righe:
-
-`5.9,0.645,0.12,2,0.075,32,44,0.99547,3.57,0.71,10.2,0` ( `\n` )
-
-Attributi:
-
-|   N   | Valore                   |
-| :---: | :----------------------- |
-|   1   | Fixed Acidity            |
-|   2   | Volatile Acidity         |
-|   3   | Citric Acidity           |
-|   4   | Residual Sugar           |
-|   5   | Chlorides                |
-|   6   | Free Sulfur Dioxide      |
-|   7   | Total Sulfur Dioxide     |
-|   8   | Density                  |
-|   9   | pH                       |
-|  10   | Sulphates                |
-|  11   | Alcohol                  |
-|  12   | **Quality** (0 < L < 10) |
-
-
-## Folder Structure
+## Folders Structure
 
 ```
-|--root
-    |--data (Train, Test, Models..)
-    |--code (Actual Code)
-    |--img  (Plots of Results)
-    |--junk (Temporary Files)
-    |--report   (TeX files, report goes in root)
+|-|
+  ├──|code 
+  |  |
+  |  ├── calibration.py             (Library Files)
+  |  ├── classifiers.py             (Library Files)
+  |  ├── dist.py                    (Generates Feature Distribution Plot)
+  |  ├── FinalEvaluation.py         (Generates Evaluation Data for GMMs, Tied Covariance, RBF SVM, ...)
+  |  ├── GMMOptimization.py         (Generates Optimized Parameters for GMMs)
+  |  ├── KernelSVM_Normalized.py    (Generates Optimized Parameters for Normalized RBF SVM)    
+  |  ├── KernelSVM.py               (Generates Optimized Parameters for RBF SVM)
+  |  ├── LinearSVM.py               (Generates Optimized Parameters for Linear SVM)
+  |  ├── LogReg.py                  (Generates Optimzed Parameters for Logistic Regression)  
+  |  ├── LogRegQuad.py              (Generates Optimzed Parameters for Quadratic Logistic Regression)
+  |  ├── model_evaluation.py        (Generates evalation data for logistic regressions and linear SVM)
+  |  ├── model_validation.py        (Process generated data for optimized parameters)
+  |  ├── MVG-FC-Optimization.py     (Generates Optimized Parameters for MVG Classifier)
+  |  ├── MVG-NB-Optimization.py     (Generates Optimized Parameters for MVG Classifier)
+  |  ├── MVG.py                     (Generates Optimized PCA for MVG Classifier)
+  |  ├── MVG-TC-Optimization.py     (Generates Optimized Parameters for MVG Classifier)
+  |  ├── PCA_Tests.py               (Tests to select good PCA values)
+  |  ├── PolySVM_Normalized.py      (Generates Optimzed Parameters for Normalized Polynomial SVM)
+  |  ├── PolySVM.py                 (Generates Optimzed Parameters for Polynomial SVM)
+  |  ├── PolySVM_Whitened.py        (Generates Optimzed Parameters for WhitenedPolynomial SVM)
+  |  ├── scatter.py                 (Generates scatter plots)
+  |  └── utils.py                   (Library files)
+  |
+  ├── data                          (Datasets and scores computed by validating for GMMs, Kernel SVMs, Gaussian Classifiers)
+  ├── img                           (Images for report)
+  ├── report                        (Report source folder)
+  └── trained                       (Scores computed by validating for linear SVMs and Logistic Regressions)
 ```
-
-## Notes
-* Some features ar gaussian-ish, some not (See `dist.jpg`)
-* Classes are note equally balaced
