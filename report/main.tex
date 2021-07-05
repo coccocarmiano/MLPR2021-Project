@@ -203,7 +203,12 @@ However, as the difference between the Raw and Normalized does not look signific
 we will further test both models.
 This first test shows us that high dimensionality is actually preferred.
 
-\subsection{Pre-Processing for Polynomial Kernel SVMs}
+\subsection{Pre-Processing for Kernel SVMs}
+
+Differently for what we did up to now, given the non-probabilistic nature of SVM scores,
+we will be deciding our optimal model for both types of kernel SVMs on just minimum DCFs values.
+
+\subsubsection{Pre-Processing for Polynomial Kernel SVMs}
 
 The polynomial kernel function is defined as:
 
@@ -224,8 +229,9 @@ $$k({\bf x_1}, {\bf x_2}) = ({\bf x}_1^T{\bf x}_2+1)^2+0.5 $$
             Normalized & 6 & {\bf 0.393} &  {\bf 0.381}  \\
             Whitened & 11 & 0.399 &  0.393  \\
             \hline
-    \end{tabular}
-    \caption{Polynomail Kernel SVM - Best Results}
+        \end{tabular}
+        \caption{Polynomail Kernel SVM - Best Results}
+        \label{polypreprocessing}
 \end{table}
 
 While competitiveness with other models has to be made later, when each one will be fully used, here we see an interesting change:
@@ -396,42 +402,9 @@ To reduce the DCF, we tried to calibrate the scores:
 As reported in table \ref{logregcalibration}, calibration helped in the quadratic case, 
 but DCF got worse in linear one.
 
-\subsection{Optimizing MVG Classifiers}
-
-Since the MVG Classifiers we will be only briefly discussing score calibration.
-In particular we will focus on Full-Covariance and Naive Bayes MVG Classifiers, as Tied Covariance already is very close to being optimal.
-
-The scores will be rebalanced using logistic regression as it follows:
-
-
-\begin{equation}
-    f(s) = \alpha s + \beta
-\end{equation}
-
-The scores are the ones that produced the best result for both models as in table \ref{fullcovtab} and \ref{naivetab}. 
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{||c|c|c||}
-            \hline
-            minDCF & $DCF_{Before}$ & $DCF_{After}$ \\
-            \hline
-            \hline
-            0.362 & 0.401 & \textcolor{green}{\bf0.390} \\ 
-            0.367 & {\bf 0.383} & \textcolor{red}{\bf 0.412} \\ 
-            \hline
-    \end{tabular}
-    \caption{MVG Recalibrated Scores DCFs}
-    \label{mvgcalibration}
-\end{table}
-
-Recalibration heavily damages our Naive Bayes classifiers so it's not a good choice.
-The Full Covariance one has a modest DCF decrement, but it's still worse than the plain Naive Bayes one.
-Lastly, by looking at table \ref{tiedcovtab}, we notice that both models perform worse than our Tied Covariance one, so we will be discarding them in our final evaluation.
-
 \subsection{Optimizing Gaussian Mixture Models}
 
-For GMMs we decided from table \ref{tab:gmmresults} to inspect both raw and normalized optimization.
+For GMMs we decided inspect both raw and normalized optimization.
 
 \begin{table}[H] 
     \centering
@@ -449,26 +422,51 @@ For GMMs we decided from table \ref{tab:gmmresults} to inspect both raw and norm
     \label{tab:gmmoptimization}
 \end{table}
 
+As in table \ref{tab:gmmresults}, raw and normalized version both perform similarly, so both model could be of use, depending on the application.
 
+\subsection{Optimizing Kernel SVMs}
+
+Diffrently from other models, for SVMs we will choose the best parameter based on only the minimum DCF values,
+given the non probabilistic nature of the scores generated.
+
+\subsubsection{Optimizing Polynomial SVMs}
 
 \begin{table}[H] 
     \centering
-    \begin{tabular}{||c|c|c|c||}
+    \begin{tabular}{||c|c|c|c|c||}
         \hline
-        Type & minDCF & DCF$_{Before}$ & DCF$_{After}$ \\
+        Type & DCF$_{min}$ & PCA \\
         \hline
         \hline
-        Norm. & 0.316 & 0.346 & \textcolor{green}{\bf 0.324} \\
-        Raw & 0.328 & 0.348 & \textcolor{green}{\bf 0.334} \\
+        Raw   & 0.380 & 9 \\
+        Norm. & {\bf 0.367} & No \\
+        Whit. & 0.381 & No \\
         \hline
     \end{tabular}
-    \caption{GMM Optimization Results}
-    \label{tab:gmmcalibration}
+    \caption{Polynomial K. Optimization Results}
+    \label{tab:polyoptimization}
 \end{table}
 
-Contrary to what we have seen in table \ref{tab:gmmresults}, here the scores are fairly distant from the minimum possible DCF, and recalibrating the scores did indeed help.
+As opposed to table \ref{polypreprocessing}, we find out that the normalized version is actually better than the raw features one.
 
-The normalized GMM is the best one, but data does not suggest that in general normalized GMMs are better, so both model will be used later on.
+\subsubsection{Optimizing RBF SVMs}
+
+\begin{table}[H] 
+    \centering
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        Type & DCF$_{min}$ & PCA \\
+        \hline
+        \hline
+        Norm. & 0.288 & 10 \\
+        Whit & 0.00 & X \\
+        \hline
+    \end{tabular}
+    \caption{RBF K. Optimization Results}
+    \label{tab:rbfoptimization}
+\end{table}
+
+Here we determine that whitening has no more benefits than plain normalization, so we ultimately discard it.
 
 \section{Experimental Results}
 
@@ -486,6 +484,8 @@ The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (li
         Linear LogReg & No & Normalized & 9 & $\lambda = 0.01$ & 0.303 & 0.299 \\
         Quadratic LogReg & Yes & Normalized & 10 & $\lambda = 0.001$ & 0.285 & 0.274 \\
         Linear SVM & Yes & Normalized & 9 & K = 10, C = 0.1 & 0.276 & 0.270 \\
+        MVG Tied Cov. & No & Normalized & 5 & - & 0.390 & 0.331 \\
+        GMM & No & Raw & No & $N_{Comp} = 2 $ & 0.327 & 0.294 \\ 
         \hline
     \end{tabular}
 \end{table*}
