@@ -17,7 +17,7 @@ def plot_eval(scores, tel, calibrated, t, tag, filename):
     plt.plot(x, dcfs, linestyle='--', label="DCF (Log.Reg. Cal.)")
     a = np.linspace(.01, .99, 100)
     tups = [ utils.DCF(scores > t, tel, prior_t=p) for p in a ]
-    tups = [ a for a, _ in tups]
+    tups = np.array([ a for a, _ in tups])
     plt.plot(x, tups, linestyle='--', label="DCF Val. Thresh.")
     plt.ylim((0.2, 1.1))
     plt.xlim((-2, 2))
@@ -47,8 +47,10 @@ trscores, _, _ = logreg_scores(trdataset, w, b)
 tescores, _, _ = logreg_scores(tedataset, w, b)
 
 tescores_cal = calibration.calibrate_scores(trscores, trlabels, tescores, p)
+
+_, t = utils.minDCF(trscores, trlabels)
+mindcf, _ = utils.minDCF(tescores, telabels)
 actdcf, _ = utils.DCF(tescores > 0, telabels)
-mindcf, t = utils.minDCF(tescores, telabels)
 print(f"logreg | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
 plot_eval(tescores, telabels, tescores_cal, t, 'Linear Logistic Regression', 'logreg')
 # LogRegQuad
@@ -71,7 +73,8 @@ tescores, _, _ = logreg_scores(tedataset, w, b)
 
 tescores_cal = calibration.calibrate_scores(trscores, trlabels, tescores, p)
 actdcf, _ = utils.DCF(tescores_cal > 0, telabels)
-mindcf, t = utils.minDCF(tescores_cal, telabels)
+mindcf, _ = utils.minDCF(tescores_cal, telabels)
+_, t = utils.minDCF(trscores, trlabels)
 print(f"logregquad | norm,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
 plot_eval(tescores, telabels, tescores_cal, t, 'Quadratic Logistic Regression', 'logregquad')
 
@@ -97,6 +100,7 @@ tescores, _, _ = SVM_lin_scores(tedataset, w, b)
 
 tescores_cal = calibration.calibrate_scores(trscores, trlabels, tescores, p)
 actdcf, _ = utils.DCF(tescores_cal > 0, telabels)
-mindcf, t = utils.minDCF(tescores_cal, telabels)
+mindcf, _ = utils.minDCF(tescores_cal, telabels)
+_, t = utils.minDCF(trscores, trlabels)
 print(f"linsvm | norm,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
 plot_eval(tescores, telabels, tescores_cal, t, 'Linear SVM', 'linsvm')
