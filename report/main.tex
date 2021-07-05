@@ -476,4 +476,29 @@ Contrary to what we have seen in table \ref{tab:gmmresults}, here the scores are
 
 The normalized GMM is the best one, but data does not suggest that in general normalized GMMs are better, so both model will be used later on.
 
+\section{Experimental Results}
+
+After having run our models in order to find the best parameters, we now test them on previously unseen data.
+
+All the parameters here reported have been found through a K-Fold Cross-Validation approach.
+The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (lighter models, e.g. Gaussian Classifiers).
+
+\begin{table*}[t] 
+    \centering
+    \begin{tabular}{||c|c|c|c|c|c||}
+        \hline 
+        Model & Features & PCA & Hyper-Parameters & DCF & DCF$_{min}$ \\
+        \hline
+        - & - & - & - &  - & - \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+\newpage
+
+As mentioned earlier, up to now all models have been evaluated considering a balanced application ( $pi_T = 0.5$ ).
+
+
+
+
 \end{document}
