@@ -28,10 +28,12 @@ print(f"logreg | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
 
 # LogRegQuad
 # Better results on validation set with calibration
+
+
+## Normalization
 l = 0.001
 dim = 10
 
-## Normalization
 trdataset, tedataset = utils.normalize(train, other=test)
 trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
 trdataset, tedataset = expand_feature_space(trdataset), expand_feature_space(tedataset)
@@ -73,3 +75,4 @@ print(f"logregquad | whiten,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f
 
 # Linear SVM
 # Better results on validation set without calibration
+
