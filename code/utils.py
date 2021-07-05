@@ -245,7 +245,7 @@ def normalize(dataset: np.ndarray, other: np.ndarray = None) -> np.ndarray or Tu
     std = feats.std(axis=1).reshape((r, 1))
     feats -= mean
     feats /= std
-    rdataset = np.vstack((dataset, labels))
+    rdataset = np.vstack((feats, labels))
 
     if other is not None:
         ofeats = (ofeats - mean) / std
