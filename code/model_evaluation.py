@@ -1,75 +1,80 @@
 import utils
-import LinearSVM, LogReg, LogRegQuad
-from calibration import calibrate_scores
-from sys import stdout
-import matplotlib.pyplot as plt
+from classifiers import logreg, logreg_scores
+from LogRegQuad import expand_feature_space
+import calibration
 import numpy as np
-trainedBase = '../trained'
-classifiers = {'linsvm': LinearSVM, 'logreg': LogReg, 'logregquad': LogRegQuad}
-outfile = stdout
 
-def evaluate_model(data, classifier, tag='standard'):
-    result = data[0]
-    nPCA = sorted(result.keys(), reverse=True)
-    p = 0.5
-
-    if classifier == 'linsvm':
-        biases, boundaries = data[1], data[2]
-    else:
-        lambdas = data[1]
-    best = []
-    for n in nPCA:
-            if classifier == 'linsvm':
-                for i, bias in enumerate(biases):
-                    for j, bound in enumerate(boundaries):
-                        scores = result[n][i, j, 0, :]
-                        labels = result[n][i, j, 1, :]
-                        mindcf, optimal_threshold = utils.minDCF(scores, labels, p)
-                        actdcf, _ = utils.DCF(scores > 0, labels)
-                        best.append((mindcf, n, bias, bound, scores, labels))
-                        print(f"{mindcf} |.| [{classifier}|{tag}] ActDCF: {actdcf:.4f} MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Bias: {bias:.2f}  -  C: {bound:.2f}", file=outfile)
-            else:
-                for i, lam in enumerate(lambdas):
-                    scores = result[n][i, 0, :]
-                    labels = result[n][i, 1, :]
-                    mindcf, optimal_threshold = utils.minDCF(scores, labels, p)
-                    actdcf, _ = utils.DCF(scores > 0, labels)
-                    best.append((mindcf, n, lam, scores, labels))
-                    print(f"{mindcf} |.| [{classifier}|{tag}] ActDCF: {actdcf:.4f} MinDCF: {mindcf:.4f}  -  PCA: {n}  -  Lambda: {lam}", file=outfile)
-
-    best = sorted(best, key=lambda x: x[0])[0]
-    plt.figure()
-    if classifier == 'linsvm':
-        scores = best[4]
-        labels = best[5]
-        plt.title(f"{classifier} [{tag}] (PCA: {best[1]}, Bias: {best[2]}, Bound: {best[3]})")
-    else:
-        scores = best[3]
-        labels = best[4]
-        plt.title(f"{classifier} [{tag}] (PCA: {best[1]}, λ: {best[2]})")
-    
-    (actdcf_points, xaxis), (mindcf_points, xaxis) = utils.BEP(scores, labels)
-
-    plt.plot(xaxis, mindcf_points, 'r--', label='minDCF')
-    plt.plot(xaxis, actdcf_points, 'b', label="actDCF")
-    plt.xlim([min(xaxis), max(xaxis)])
-    plt.ylim([0, 1.5])
-
-    if tag == 'standard':
-        scores = calibrate_scores(scores, labels, p)
-        (calibrated_actdcf_points, xaxis), (_, _) = utils.BEP(scores, labels)
-        plt.plot(xaxis, calibrated_actdcf_points, color='tab:green', label="actDCF (calibrated)")
-        plt.ylim([0, 1.5])
-    
-    #plt.show()
-    plt.legend()
-    plt.savefig(f"../img/BEP_{classifier}_{tag}.jpg")
+p = 0.5
 
 
-if __name__ == '__main__':
 
-    for c in classifiers:
-        evaluate_model(classifiers[c].result, c)
-        evaluate_model(classifiers[c].result_norm, c, 'norm')
-        evaluate_model(classifiers[c].result_gau, c, 'gau')
-        evaluate_model(classifiers[c].result_whiten, c, 'whiten')
+# LogReg
+# Better results on validation set without calibration
+l = 0.01
+dim = 9
+
+train = utils.load_train_data()
+test = utils.load_test_data()
+trdataset, tedataset = utils.normalize(train, other=test)
+trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
+trlabels = trdataset[-1]
+telabels = tedataset[-1]
+
+w, b = logreg(trdataset, l)
+tescores, _, _ = logreg_scores(tedataset, w, b)
+
+actdcf, _ = utils.DCF(tescores > 0, telabels)
+mindcf, _ = utils.minDCF(tescores, telabels)
+print(f"logreg | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
+
+# LogRegQuad
+# Better results on validation set with calibration
+l = 0.001
+dim = 10
+
+## Normalization
+train = utils.load_train_data()
+test = utils.load_test_data()
+trdataset, tedataset = utils.normalize(train, other=test)
+trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
+trdataset, tedataset = expand_feature_space(trdataset), expand_feature_space(tedataset)
+trlabels = trdataset[-1]
+telabels = tedataset[-1]
+
+w, b = logreg(trdataset, l)
+trscores, _, _ = logreg_scores(trdataset, w, b)
+tescores, _, _ = logreg_scores(tedataset, w, b)
+
+tescores = calibration.calibrate_scores(trscores, trlabels, tescores, p)
+actdcf, _ = utils.DCF(tescores > 0, telabels)
+mindcf, _ = utils.minDCF(tescores, telabels)
+print(f"logregquad | norm,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
+
+## Whitening
+train = utils.load_train_data()
+test = utils.load_test_data()
+_, v = utils.whiten(train.copy())
+trfeats, trlabels = train[:-1], train[-1]
+trfeats = v.T @ trfeats
+trdataset = np.vstack((trfeats, trlabels))
+
+tefeats, telabels = test[:-1], test[-1]
+tefeats = v.T @ tefeats
+tedataset = np.vstack((tefeats, telabels))
+
+trdataset, tedataset = utils.reduce_dataset(trdataset, other=tedataset, n=dim)
+trdataset, tedataset = expand_feature_space(trdataset), expand_feature_space(tedataset)
+trlabels = trdataset[-1]
+telabels = tedataset[-1]
+
+w, b = logreg(trdataset, l)
+trscores, _, _ = logreg_scores(trdataset, w, b)
+tescores, _, _ = logreg_scores(tedataset, w, b)
+
+tescores = calibration.calibrate_scores(trscores, trlabels, tescores, p)
+actdcf, _ = utils.DCF(tescores > 0, telabels)
+mindcf, _ = utils.minDCF(tescores, telabels)
+print(f"logregquad | whiten,calibrated | actDCF {actdcf:.3f}, minDCF {mindcf:.3f}")
+
+# Linear SVM
+# Better results on validation set without calibration

@@ -81,7 +81,7 @@ def PCA(dataset: np.ndarray, feat_label: bool = True) -> Tuple[np.ndarray, np.nd
 
     return w, v
 
-def reduce_dataset(dataset, n=None):
+def reduce_dataset(dataset, other=None, n=None):
     samples, labels = dataset[:-1], dataset[-1]
     r, c = samples.shape
     if n == None:
@@ -93,6 +93,13 @@ def reduce_dataset(dataset, n=None):
     vt = v[:, :n]
     reduced_samples = vt.T @ samples
     reduced_dataset = np.vstack([reduced_samples, labels])
+
+    if other is not None:
+        other_samples, other_labels = other[:-1], other[-1]
+        reduced_other_samples = vt.T @ other_samples
+        reduced_other = np.vstack([reduced_other_samples, other_labels])
+        return reduced_dataset, reduced_other
+
     return reduced_dataset
 
 def get_patches() -> List[ptc.Patch]:

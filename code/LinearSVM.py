@@ -63,7 +63,7 @@ dataset = utils.load_train_data()
 result = compute_scores(dataset)
 
 norm_dataset = utils.normalize(dataset)
-result_norm = compute_scores(dataset, tag='norm')
+result_norm = compute_scores(norm_dataset, tag='norm')
 
 trd, trl = dataset[:-1, :], dataset[-1, :]
 trd = utils.gaussianize(trd)
