@@ -63,7 +63,7 @@ def SVM_lin(dataset: np.ndarray, K: float, C: float) -> Tuple[np.ndarray, float]
     def hat_Ld(alphas, hat_H):
         return  -(-1/2*np.dot(alphas.T, np.dot(hat_H, alphas)) + np.dot(alphas.T, np.ones(alphas.shape[0]))).item()
 
-    best_alphas, _, _ = scipy.optimize.fmin_l_bfgs_b(hat_Ld, alphas*C, fprime=grad_hat_Ld, args=(hat_H,), bounds=boundaries, factr=0.0)
+    best_alphas, _, _ = scipy.optimize.fmin_l_bfgs_b(hat_Ld, alphas*C, fprime=grad_hat_Ld, args=(hat_H,), bounds=boundaries)
     w = (best_alphas*z*hat_data).sum(axis=1)
     return w[:-1], K*w[-1]
 
