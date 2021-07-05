@@ -120,6 +120,7 @@ def kfold(dataset: np.ndarray, n: int = 5) -> Tuple[List[np.ndarray], List[Tuple
     Second element are `n` tuples. Each tuple contains in the first element a subset of
     `N-1` parts of `dataset` and in the second the remaining one.
     '''
+    dataset = dataset.copy()
     if (len(dataset.shape) > 2):
         print("Error: Wrong Dataset Shape")
         exit()

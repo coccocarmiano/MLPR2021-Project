@@ -83,5 +83,5 @@ if __name__ == '__main__':
     for c in classifiers:
         evaluate_model(classifiers[c].result, c)
         evaluate_model(classifiers[c].result_norm, c, 'norm')
-        evaluate_model(classifiers[c].result_gau, c, 'gau')
+        #evaluate_model(classifiers[c].result_gau, c, 'gau')
         evaluate_model(classifiers[c].result_whiten, c, 'whiten')

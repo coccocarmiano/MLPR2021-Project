@@ -273,8 +273,9 @@ Regarding the Logistic Regression, we will consider both linear and quadratic mo
 \subsubsection{Linear Logistic Regression}
 
 In the Linear model, dimensionality reduction through PCA and prepocessing through normalization
-helped to obtain lower minimum DCF compared to raw features. As the Gaussian Classifiers, only a small number
-of features can be removed.
+helped to obtain lower minimum DCF compared to raw features.
+For the whitened features, best results are obtained without applying PCA.
+As the Gaussian Classifiers, only a small numberof features can be removed.
 
 Only results with already optimized hyperparameters are reported.
 \begin{table}[H]
@@ -285,9 +286,9 @@ Only results with already optimized hyperparameters are reported.
             Type & PCA & DCF & minDCF \\
             \hline
             \hline
-            Raw ($\lambda = 0.01$) & 10 & 0.369 &  0.342  \\
-            Normalized ($\lambda = 0.0001$) & 9 & 0.369 &  {\bf 0.336}  \\
-            Whitened ($\lambda = 0.001$) & 6 & 0.554 &  0.537  \\
+            Raw ($\lambda = 0.0001$) & 10 & 0.369 &  0.342  \\
+            Normalized ($\lambda = 0.01$) & 9 & 0.369 &  {\bf 0.336}  \\
+            Whitened ($\lambda = 0.0001$) & 11 & 0.549 &  0.503  \\
             \hline
     \end{tabular}
     \caption{Linear Logistic Regression - Best Results}
@@ -327,9 +328,9 @@ in the number of features used to obtain following results.
 
 \subsection{Pre-Processing for Linear SVM}
 
-The Linear SVM model performed better with normalization and whitening rather than raw features.
-Applying PCA to raw features and whitened ones was useful to obtain low values of minimum DCF, in
-contrast to normalization which performed better without dimensionality reduction.
+The Linear SVM model performed much better with normalization and whitening rather than raw features.
+Applying PCA was useful to obtain low values of minimum DCF in all cases, even if the model trained
+with raw features performed worse than models trained with preprocessed features.
 
 \begin{table}[H]
     \centering
@@ -339,15 +340,62 @@ contrast to normalization which performed better without dimensionality reductio
             Type & K & C & PCA & DCF & minDCF \\
             \hline
             \hline
-            Raw & 100 & 0.1 & 8 & 0.369 &  0.363  \\
-            Normalized & 0.1 & 1.0 & 11 & 0.344 &  {\bf 0.336}  \\
-            Whitened & 1.0 & 0.1 & 10 & 0.366 &  {\bf 0.336}  \\
+            Raw & 0 & 10.0 & 6 & 0.911 &  0.568  \\
+            Normalized & 10 & 0.1 & 9 & 0.350 &  {\bf 0.330}  \\
+            Whitened & 1.0 & 1.0 & 9 & 0.364 &  0.331  \\
             \hline
     \end{tabular}
     \caption{Linear SVM - Best Results}
 \end{table}
 
+The high difference between minimum DCF and DCF suggests us that scores are miscalibrated, but we will try to
+optimize it in next chapters.
+
 \section{Optimizing Models}
+
+\subsection{Optimizing Logistic Regression}
+
+Now we will try to find the $\lambda$ that gives us the best (lower) minimum DCF in the validation set, extracted
+from the training set through a 5-fold cross validation protocol.
+Several values of $\lambda$ have been tried, in a range between $\left[10^{-4}, 10^3\right]$ for both linear and quadratic model.
+
+\begin{table}[H]
+    \tiny
+    \centering
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Model & Type & $\lambda$ & PCA & DCF & minDCF \\
+            \hline
+            \hline
+            Linear & Normalized & 0.01 & 9 & 0.369 &  0.336  \\
+            Quadratic & Normalized & 0.001 & 10 & 0.324 &  0.307  \\
+            \hline
+    \end{tabular}
+    \caption{Best $\lambda$ values for Logistic Regression}
+\end{table}
+
+We tried to lower the difference between the DCF and the minimum one, in both linear and and quadratic model.
+To reduce the DCF, we tried to calibrate the scores:
+
+\begin{table}[H]
+    \tiny
+    \centering
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Model & Type & $\lambda$ & PCA & DCF & minDCF \\
+            \hline
+            \hline
+            Linear & Normalized & 0.01 & 9 & \textcolor{red}{0.373} &  0.336  \\
+            Quadratic & Normalized & 0.001 & 10 & \textcolor{green}{0.312} &  0.307  \\
+            \hline
+    \end{tabular}
+    \caption{Calibrated scores for logistic regression}
+    \label{logregcalibration}
+\end{table}
+
+As reported in table \ref{logregcalibration}, calibration helped in the quadratic case, 
+but DCF got worse in linear one.
+
 \subsection{Optimizing MVG Classifiers}
 
 Since the MVG Classifiers we will be only briefly discussing score calibration.
