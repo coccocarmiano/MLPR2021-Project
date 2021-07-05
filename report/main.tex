@@ -431,31 +431,25 @@ Lastly, by looking at table \ref{tiedcovtab}, we notice that both models perform
 
 \subsection{Optimizing Gaussian Mixture Models}
 
-For GMMs we need to optimize the number of subcomponents each density has.
-We should also inspect normalization more and try recalibrating scores as we did for gaussian classifiers with Gaussian Classifiers.
+For GMMs we decided from table \ref{tab:gmmresults} to inspect both raw and normalized optimization.
 
 \begin{table}[H] 
     \centering
-    \begin{tabular}{||c|c|c|c||}
+    \begin{tabular}{||c|c|c|c|c||}
         \hline
-        DCF & Type & \# Components & PCA \\
+        Type & DCF & DCF$_{min}$ & PCA & \# Comp. \\
         \hline
         \hline
-        0.346 & Norm. & 3 & No \\ 
-        0.348 & Raw & 3 &  10 \\
-        0.359 & Raw & 2 &  No \\
-        0.360 & Raw & 3 &  No \\
-        0.365 & Raw & 2 &  9  \\
-        0.375 & Norm. & 3 & 8 \\ 
-        0.377 & Norm. & 5 & 9 \\ 
-        0.378 & Norm. & 3 & 10 \\ 
+        Raw  & {\bf 0.347} & {\bf 0.308} & No & 2 \\
+        Norm & 0.365 & 0.311 & 6  & 3 \\
+        Norm & 0.348 & 0.317 & No & 2 \\
         \hline
     \end{tabular}
     \caption{GMM Optimization Results}
     \label{tab:gmmoptimization}
 \end{table}
 
-Our two top models are very similar in some ways, like using 3 components, high dimensionality and DCF-wise, but differ for Normalization.
+
 
 \begin{table}[H] 
     \centering
@@ -497,8 +491,9 @@ The value of K used spans from 3 (heavier models, e.g. Kernel SVMs) up to 10 (li
 \newpage
 
 As mentioned earlier, up to now all models have been evaluated considering a balanced application ( $pi_T = 0.5$ ).
+We now want to discuss how or best models, based on the table above, perform in different conditions.
 
-
+....
 
 
 \end{document}
